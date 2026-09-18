@@ -80,13 +80,10 @@
       if (whitePitches.has(midi%12)) whites.push({midi,x:whiteIndex++*10});
       else blacks.push({midi,x:whiteIndex*10-3});
     }
-    const selected = whites.filter(key => key.midi>=start && key.midi<=end);
-    const selectionX = selected[0].x;
-    const selectionWidth = selected.at(-1).x+10-selectionX;
-    const whiteShapes = whites.map(key => `<rect x="${key.x+.25}" y="10" width="9.5" height="64" rx="1.4" fill="${key.midi>=start && key.midi<=end ? '#f5c9b6' : '#fff'}" stroke="#d7d2c9" stroke-width=".7"/>`).join('');
-    const blackShapes = blacks.map(key => `<rect x="${key.x}" y="10" width="6" height="41" rx="1" fill="${key.midi>=start && key.midi<=end ? '#a95439' : '#252525'}"/>`).join('');
-    const labels = expanded ? `<text x="5" y="94" text-anchor="middle">A0</text>${whites.filter(key => key.midi%12===0).map(key => `<text x="${key.x+5}" y="94" text-anchor="middle">C${Math.floor(key.midi/12)-1}</text>`).join('')}` : '';
-    return `<svg viewBox="0 0 520 ${expanded ? 101 : 77}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="${selectionX}" y="1" width="${selectionWidth}" height="5" rx="2.5" fill="#d97757"/>${whiteShapes}${blackShapes}<rect x="${selectionX+.5}" y="10" width="${selectionWidth-1}" height="64" rx="2" fill="none" stroke="#d97757" stroke-width="2"/>${expanded ? `<g fill="#777168" font-family="JetBrains Mono,monospace" font-size="9">${labels}</g>` : ''}</svg>`;
+    const whiteShapes = whites.map(key => `<rect x="${key.x+.25}" y="1" width="9.5" height="64" rx="1.4" fill="${key.midi>=start && key.midi<=end ? '#e6a78d' : '#fff'}" stroke="#d7d2c9" stroke-width=".7"/>`).join('');
+    const blackShapes = blacks.map(key => `<rect x="${key.x}" y="1" width="6" height="41" rx="1" fill="${key.midi>=start && key.midi<=end ? '#a95439' : '#252525'}"/>`).join('');
+    const labels = expanded ? `<text x="5" y="85" text-anchor="middle">A0</text>${whites.filter(key => key.midi%12===0).map(key => `<text x="${key.x+5}" y="85" text-anchor="middle">C${Math.floor(key.midi/12)-1}</text>`).join('')}` : '';
+    return `<svg viewBox="0 0 520 ${expanded ? 92 : 66}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${whiteShapes}${blackShapes}${expanded ? `<g fill="#777168" font-family="JetBrains Mono,monospace" font-size="9">${labels}</g>` : ''}</svg>`;
   }
 
   function setKeyboardReference(hand,whiteList) {
