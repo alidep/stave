@@ -103,7 +103,7 @@
     button.setAttribute('aria-label',both ? `Show keyboard position: left hand ${noteName(leftRange[0])} to ${noteName(leftRange[1])}, right hand ${noteName(rightRange[0])} to ${noteName(rightRange[1])}, middle C in blue` : `Show ${leftRange ? 'left' : 'right'}-hand position, ${noteName(activeRange[0])} to ${noteName(activeRange[1])}, on the full keyboard; middle C is blue`);
     button.onclick = () => {
       const title = byId('keyboard-map-title');
-      title.innerHTML = `${leftRange ? `<span class="map-left">LEFT HAND · ${noteName(leftRange[0])}–${noteName(leftRange[1])}</span>` : ''}${rightRange ? `<span class="map-right">RIGHT HAND · ${noteName(rightRange[0])}–${noteName(rightRange[1])}</span>` : ''}`;
+      title.innerHTML = `${leftRange ? `<span class="map-left">Left hand · ${noteName(leftRange[0])}–${noteName(leftRange[1])}</span>` : ''}${rightRange ? `<span class="map-right">Right hand · ${noteName(rightRange[0])}–${noteName(rightRange[1])}</span>` : ''}`;
       title.setAttribute('aria-label',`${leftRange ? `Left hand ${noteName(leftRange[0])} to ${noteName(leftRange[1])}` : ''}${both ? '; ' : ''}${rightRange ? `Right hand ${noteName(rightRange[0])} to ${noteName(rightRange[1])}` : ''}`);
       byId('keyboard-map-large').innerHTML = keyboardOverview(leftRange,rightRange,true);
       byId('keyboard-map-large').setAttribute('aria-label',`Full piano keyboard from A0 to C8, with ${leftRange ? `left hand ${noteName(leftRange[0])} through ${noteName(leftRange[1])} in orange` : ''}${both ? ', ' : ''}${rightRange ? `right hand ${noteName(rightRange[0])} through ${noteName(rightRange[1])} in teal` : ''}, and middle C in blue`);
