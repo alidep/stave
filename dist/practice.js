@@ -76,7 +76,7 @@
     return `${['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi%12]}${Math.floor(midi/12)-1}`;
   }
 
-  function keyboardOverview(start,end,expanded=false) {
+  function keyboardOverview(start,end,otherRange=null,expanded=false) {
     const whitePitches = new Set([0,2,4,5,7,9,11]);
     const whites = [], blacks = [];
     let whiteIndex = 0;
@@ -84,21 +84,24 @@
       if (whitePitches.has(midi%12)) whites.push({midi,x:whiteIndex++*10});
       else blacks.push({midi,x:whiteIndex*10-3});
     }
-    const whiteShapes = whites.map(key => `<rect x="${key.x+.25}" y="1" width="9.5" height="64" rx="1.4" fill="${key.midi>=start && key.midi<=end ? '#e6a78d' : '#fff'}" stroke="#d7d2c9" stroke-width=".7"/>`).join('');
-    const blackShapes = blacks.map(key => `<rect x="${key.x}" y="1" width="6" height="41" rx="1" fill="${key.midi>=start && key.midi<=end ? '#a95439' : '#252525'}"/>`).join('');
-    const labels = expanded ? `<text x="5" y="85" text-anchor="middle">A0</text>${whites.filter(key => key.midi%12===0).map(key => `<text x="${key.x+5}" y="85" text-anchor="middle">C${Math.floor(key.midi/12)-1}</text>`).join('')}` : '';
+    const inOtherRange = midi => otherRange && midi>=otherRange[0] && midi<=otherRange[1];
+    const whiteShapes = whites.map(key => `<rect x="${key.x+.25}" y="1" width="9.5" height="64" rx="1.4" fill="${key.midi===60 ? '#3B94D9' : key.midi>=start && key.midi<=end ? '#e6a78d' : inOtherRange(key.midi) ? '#d7dadd' : '#fff'}" stroke="#d7d2c9" stroke-width=".7"/>`).join('');
+    const blackShapes = blacks.map(key => `<rect x="${key.x}" y="1" width="6" height="41" rx="1" fill="${key.midi>=start && key.midi<=end ? '#a95439' : inOtherRange(key.midi) ? '#7e8588' : '#252525'}"/>`).join('');
+    const labels = expanded ? `<text x="5" y="85" text-anchor="middle">A0</text>${whites.filter(key => key.midi%12===0).map(key => `<text x="${key.x+5}" y="85" text-anchor="middle"${key.midi===60 ? ' fill="#3B94D9" font-weight="700"' : ''}>C${Math.floor(key.midi/12)-1}</text>`).join('')}` : '';
     return `<svg viewBox="0 0 520 ${expanded ? 92 : 66}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${whiteShapes}${blackShapes}${expanded ? `<g fill="#777168" font-family="JetBrains Mono,monospace" font-size="9">${labels}</g>` : ''}</svg>`;
   }
 
-  function setKeyboardReference(hand,whiteList) {
+  function setKeyboardReference(hand,whiteList,otherWhiteList=null) {
     const start = whiteList[0][0], end = whiteList.at(-1)[0];
+    const otherRange = otherWhiteList ? [otherWhiteList[0][0],otherWhiteList.at(-1)[0]] : null;
     const button = byId(`practice-${hand}-map`);
-    button.innerHTML = keyboardOverview(start,end);
-    button.setAttribute('aria-label',`Show ${hand}-hand position, ${noteName(start)} to ${noteName(end)}, on the full keyboard`);
+    button.innerHTML = keyboardOverview(start,end,otherRange);
+    button.setAttribute('aria-label',`Show ${hand}-hand position, ${noteName(start)} to ${noteName(end)}, on the full keyboard; middle C is blue${otherRange ? ' and the other hand is grey' : ''}`);
     button.onclick = () => {
       byId('keyboard-map-title').textContent = `${hand === 'left' ? 'Left' : 'Right'} hand · ${noteName(start)}–${noteName(end)}`;
-      byId('keyboard-map-large').innerHTML = keyboardOverview(start,end,true);
-      byId('keyboard-map-large').setAttribute('aria-label',`Full piano keyboard from A0 to C8, with ${noteName(start)} through ${noteName(end)} highlighted`);
+      mapDialog.querySelector('.keyboard-map-description').textContent = `Orange shows this hand. ${otherRange ? 'Grey shows the other hand. ' : ''}Blue marks middle C.`;
+      byId('keyboard-map-large').innerHTML = keyboardOverview(start,end,otherRange,true);
+      byId('keyboard-map-large').setAttribute('aria-label',`Full piano keyboard from A0 to C8, with ${noteName(start)} through ${noteName(end)} in orange${otherRange ? `, ${noteName(otherRange[0])} through ${noteName(otherRange[1])} in grey` : ''}, and middle C in blue`);
       mapDialog.showModal();
     };
   }
@@ -120,8 +123,8 @@
     else piano.replaceChildren();
     if (leftOnly || both) appendKeyboard(leftPiano,leftWhiteKeys,leftBlackKeys);
     else leftPiano.replaceChildren();
-    setKeyboardReference('left',leftWhiteKeys);
-    setKeyboardReference('right',rightWhites);
+    setKeyboardReference('left',leftWhiteKeys,both ? rightWhites : null);
+    setKeyboardReference('right',rightWhites,both ? leftWhiteKeys : null);
     keyboardMap = new Map((leftOnly ? [...leftWhiteKeys,...leftBlackKeys] : both ? [...rightWhites,...rightBlacks,...leftWhiteKeys,...leftBlackKeys] : [...whiteKeys,...blackKeys]).map(([midi,,key]) => [key.toLowerCase(),midi]));
     byId('practice-keys-hint').textContent = `Keys ${[...keyboardMap.keys()].map(key => key.toUpperCase()).join(' ')}`;
   }
