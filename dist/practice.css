@@ -67,7 +67,19 @@
 .practice-hand[hidden]{display:none}
 .practice-keyboard-wrap.is-both{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:clamp(24px,4vw,64px);width:100%;max-width:1060px;margin-inline:auto}
 .practice-keyboard-wrap.is-both .practice-hand{width:100%}
-.practice-keyboard-label{width:100%;margin:0 0 11px;color:#777168;font:600 11px/1.3 JetBrains,monospace;letter-spacing:.12em}
+.practice-hand-header{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:31px;margin-bottom:11px}
+.practice-keyboard-label{margin:0;color:#777168;font:600 11px/1.3 JetBrains,monospace;letter-spacing:.12em;white-space:nowrap}
+.keyboard-map-trigger{display:block;flex:none;width:130px;height:31px;padding:3px 5px;border:1px solid #ded8ca;border-radius:7px;background:#fff;cursor:pointer}
+.keyboard-map-trigger:hover{border-color:var(--accent);background:#fffaf4}
+.keyboard-map-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.keyboard-map-trigger svg{display:block;width:100%;height:100%}
+.keyboard-map-dialog{max-width:min(860px,calc(100vw - 32px));padding:31px 34px 27px}
+.keyboard-map-dialog .keyboard-map-kicker{margin:0 0 9px;color:#777168;font:600 10px/1.3 JetBrains,monospace;letter-spacing:.14em}
+.keyboard-map-dialog h2{margin:0 32px 8px 0;font-size:26px}
+.keyboard-map-dialog .keyboard-map-description{margin:0 0 23px;color:#777168;font-size:13px}
+.keyboard-map-close{position:absolute;top:16px;right:20px;padding:0 5px;border:0;background:transparent;color:#777168;font:400 27px/1 Visuelt,sans-serif;cursor:pointer}
+.keyboard-map-close:hover{color:var(--ink)}
+#keyboard-map-large svg{display:block;width:100%;height:auto}
 .practice-piano{position:relative;display:flex;width:100%;height:190px;user-select:none;touch-action:manipulation}
 .practice-keyboard-wrap.is-both .practice-piano{height:148px}
 .practice-piano button:focus,.practice-piano button:focus-visible{outline:none;-webkit-tap-highlight-color:transparent}
@@ -112,4 +124,5 @@
 @media(max-width:959px){.practice-card{padding-bottom:14px}.practice-connect-strip{margin-top:22px;padding-top:13px}}
 @media(max-width:959px){.practice-keyboard-wrap.is-both{display:flex;flex-direction:column;gap:20px;max-width:740px}.practice-keyboard-wrap.is-both .practice-hand{width:100%}.practice-keyboard-wrap.is-both .practice-piano{height:125px}.practice-piano.is-seven .practice-black{height:80px}}
 @media(max-width:959px){.practice-piano.is-wide .practice-black{height:76px}.practice-piano.is-wide .practice-white .key-label{width:18px;height:19px;font-size:9px}.practice-piano.is-wide .practice-black .key-label{width:16px;height:17px;font-size:8px}}
+@media(max-width:959px){.keyboard-map-trigger{width:99px;height:27px}.practice-hand-header{min-height:27px}.keyboard-map-dialog{padding:25px 18px 21px}.keyboard-map-dialog h2{font-size:20px}.keyboard-map-dialog .keyboard-map-description{font-size:12px;margin-bottom:16px}}
 @media(prefers-reduced-motion:reduce){.practice-white,.practice-black{transition:none}.practice-piano .hint::after{animation-duration:2.2s}}

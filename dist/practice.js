@@ -35,6 +35,7 @@
   const leftPiano = byId('practice-left-piano');
   const keyboardRoot = byId('practice-keyboard-wrap');
   const card = byId('practice-card');
+  const mapDialog = byId('keyboard-map-dialog');
   let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true;
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
   let completedNotes = new Set();
@@ -67,6 +68,40 @@
     }
   }
 
+  function noteName(midi) {
+    return `${['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi%12]}${Math.floor(midi/12)-1}`;
+  }
+
+  function keyboardOverview(start,end,expanded=false) {
+    const whitePitches = new Set([0,2,4,5,7,9,11]);
+    const whites = [], blacks = [];
+    let whiteIndex = 0;
+    for (let midi=21; midi<=108; midi++) {
+      if (whitePitches.has(midi%12)) whites.push({midi,x:whiteIndex++*10});
+      else blacks.push({midi,x:whiteIndex*10-3});
+    }
+    const selected = whites.filter(key => key.midi>=start && key.midi<=end);
+    const selectionX = selected[0].x;
+    const selectionWidth = selected.at(-1).x+10-selectionX;
+    const whiteShapes = whites.map(key => `<rect x="${key.x+.25}" y="10" width="9.5" height="64" rx="1.4" fill="${key.midi>=start && key.midi<=end ? '#f5c9b6' : '#fff'}" stroke="#d7d2c9" stroke-width=".7"/>`).join('');
+    const blackShapes = blacks.map(key => `<rect x="${key.x}" y="10" width="6" height="41" rx="1" fill="${key.midi>=start && key.midi<=end ? '#a95439' : '#252525'}"/>`).join('');
+    const labels = expanded ? `<text x="5" y="94" text-anchor="middle">A0</text>${whites.filter(key => key.midi%12===0).map(key => `<text x="${key.x+5}" y="94" text-anchor="middle">C${Math.floor(key.midi/12)-1}</text>`).join('')}` : '';
+    return `<svg viewBox="0 0 520 ${expanded ? 101 : 77}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="${selectionX}" y="1" width="${selectionWidth}" height="5" rx="2.5" fill="#d97757"/>${whiteShapes}${blackShapes}<rect x="${selectionX+.5}" y="10" width="${selectionWidth-1}" height="64" rx="2" fill="none" stroke="#d97757" stroke-width="2"/>${expanded ? `<g fill="#777168" font-family="JetBrains Mono,monospace" font-size="9">${labels}</g>` : ''}</svg>`;
+  }
+
+  function setKeyboardReference(hand,whiteList) {
+    const start = whiteList[0][0], end = whiteList.at(-1)[0];
+    const button = byId(`practice-${hand}-map`);
+    button.innerHTML = keyboardOverview(start,end);
+    button.setAttribute('aria-label',`Show ${hand}-hand position, ${noteName(start)} to ${noteName(end)}, on the full keyboard`);
+    button.onclick = () => {
+      byId('keyboard-map-title').textContent = `${hand === 'left' ? 'Left' : 'Right'} hand · ${noteName(start)}–${noteName(end)}`;
+      byId('keyboard-map-large').innerHTML = keyboardOverview(start,end,true);
+      byId('keyboard-map-large').setAttribute('aria-label',`Full piano keyboard from A0 to C8, with ${noteName(start)} through ${noteName(end)} highlighted`);
+      mapDialog.showModal();
+    };
+  }
+
   function buildKeyboard() {
     const leftOnly = passage.soloHand === 'left';
     const both = !!passage.leftBars;
@@ -83,6 +118,8 @@
     else piano.replaceChildren();
     if (leftOnly || both) appendKeyboard(leftPiano,leftWhiteKeys,leftBlackKeys);
     else leftPiano.replaceChildren();
+    setKeyboardReference('left',leftWhiteKeys);
+    setKeyboardReference('right',rightWhites);
     keyboardMap = new Map((leftOnly ? [...leftWhiteKeys,...leftBlackKeys] : both ? [...rightWhites,...rightBlacks,...leftWhiteKeys,...leftBlackKeys] : [...whiteKeys,...blackKeys]).map(([midi,,key]) => [key.toLowerCase(),midi]));
     byId('practice-keys-hint').textContent = `Keys ${[...keyboardMap.keys()].map(key => key.toUpperCase()).join(' ')}`;
   }
@@ -312,6 +349,8 @@
     catch (_) { /* Fullscreen is unavailable in this browser. */ }
   });
   byId('practice-midi').addEventListener('click',() => { window.practiceMidiActive = true; byId('midi-dialog').showModal(); });
+  byId('keyboard-map-close').addEventListener('click',() => mapDialog.close());
+  mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
   document.addEventListener('keydown',event => {
     if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
     const midi = keyboardMap.get(event.key.toLowerCase());
