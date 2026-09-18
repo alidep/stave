@@ -55,12 +55,16 @@
       button.addEventListener('click',() => playNote(midi));
       target.append(button);
     }
-    for (const [midi,note,key,left] of blackList) {
+    target.children[whiteList.length-1].style.borderTopRightRadius = '8px';
+    const blackWidth = target.classList.contains('is-wide') ? 6.5 : whiteList.length <= 7 ? 9 : 7;
+    for (const [midi,note,key] of blackList) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'practice-black';
       button.dataset.midi = midi;
-      button.style.left = `${left}%`;
+      const precedingWhites = whiteList.filter(([whiteMidi]) => whiteMidi < midi).length;
+      button.style.left = `${precedingWhites / whiteList.length * 100 - blackWidth / 2}%`;
+      button.style.width = `${blackWidth}%`;
       button.setAttribute('aria-label',`${note} note, ${key} key`);
       button.innerHTML = `<span class="key-label">${key}</span>`;
       button.addEventListener('click',() => playNote(midi));
@@ -105,12 +109,13 @@
     keyboardRoot.classList.toggle('is-both',both);
     byId('practice-left-hand').hidden = !leftOnly && !both;
     byId('practice-right-hand').hidden = leftOnly;
-    piano.classList.remove('is-seven');
     piano.classList.toggle('is-right',!both);
     piano.classList.toggle('is-wide',both);
     leftPiano.classList.add('is-seven');
-    const rightWhites = both ? duetWhiteKeys : whiteKeys;
-    const rightBlacks = both ? duetBlackKeys : blackKeys;
+    const highestNote = Math.max(...passage.bars.flat().filter(note => !note.rest).map(note => note.midi));
+    const rightWhites = (both ? duetWhiteKeys : whiteKeys).filter(([midi]) => midi <= Math.max(71,highestNote));
+    const rightBlacks = (both ? duetBlackKeys : blackKeys).filter(([midi]) => midi < rightWhites.at(-1)[0]);
+    piano.classList.toggle('is-seven',rightWhites.length <= 7);
     if (!leftOnly) appendKeyboard(piano,rightWhites,rightBlacks);
     else piano.replaceChildren();
     if (leftOnly || both) appendKeyboard(leftPiano,leftWhiteKeys,leftBlackKeys);
