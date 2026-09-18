@@ -1,0 +1,384 @@
+(() => {
+  const byId = id => document.getElementById(id);
+  const whiteKeys = [[60,'C','Z'],[62,'D','X'],[64,'E','C'],[65,'F','V'],[67,'G','B'],[69,'A','N'],[71,'B','M'],[72,'C',','],[74,'D','Q'],[76,'E','W'],[77,'F','E'],[79,'G','R']];
+  const blackKeys = [[61,'C♯','S',4.8],[63,'D♯','D',13.2],[66,'F♯','G',29.8],[68,'G♯','H',38.2],[70,'A♯','J',46.5],[73,'C♯','L',63.2],[75,'D♯','P',71.5],[78,'F♯','T',88.2]];
+  const leftWhiteKeys = [[48,'C','Z'],[50,'D','X'],[52,'E','C'],[53,'F','V'],[55,'G','B'],[57,'A','N'],[59,'B','M']];
+  const leftBlackKeys = [[49,'C♯','S',9.8],[51,'D♯','D',24.1],[54,'F♯','G',52.6],[56,'G♯','H',66.9],[58,'A♯','J',81.2]];
+  const duetWhiteKeys = [[60,'C','Q'],[62,'D','W'],[64,'E','E'],[65,'F','R'],[67,'G','T'],[69,'A','Y'],[71,'B','U'],[72,'C','I'],[74,'D','O'],[76,'E','P'],[77,'F','['],[79,'G',']']];
+  const duetBlackKeys = [[61,'C♯','2',4.8],[63,'D♯','3',13.2],[66,'F♯','5',29.8],[68,'G♯','6',38.2],[70,'A♯','7',46.5],[73,'C♯','9',63.2],[75,'D♯','0',71.5],[78,'F♯','=',88.2]];
+  let keyboardMap = new Map();
+  const positions = {60:[150,''],61:[150,'♯'],62:[140,''],63:[140,'♯'],64:[130,''],65:[120,''],66:[120,'♯'],67:[110,''],68:[110,'♯'],69:[100,''],70:[100,'♯'],71:[90,''],72:[80,''],73:[80,'♯'],74:[70,''],75:[70,'♯'],76:[60,''],77:[50,''],78:[50,'♯'],79:[40,'']};
+  const n = (midi,duration=1) => ({midi,duration});
+  const r = {rest:true,duration:1};
+  const eliseBars = [
+    [n(76),n(75)],
+    [n(76),n(75),n(76),n(71),n(74),n(72)],
+    [n(69,2),r,n(60),n(64),n(69)],
+    [n(71,2),r,n(64),n(68),n(71)],
+    [n(72,2),r,n(64),n(76),n(75)],
+    [n(76),n(75),n(76),n(71),n(74),n(72)],
+    [n(69,2),r,n(60),n(64),n(69)]
+  ];
+  const q = notes => notes.map(midi => n(midi,2));
+  const songs = {
+    moon: {title:'Au clair de la lune',composer:'Traditional',meter:'4/4',bars:[q([60,60,60,62]),q([64,62,60,64]),q([62,62,60,62]),[n(60,8)]],bass:[48,55,48,48]},
+    mary: {title:'Mary Had a Little Lamb',composer:'Traditional',meter:'4/4',bars:[q([64,62,60,62]),[n(64,2),n(64,2),n(64,4)],[n(62,2),n(62,2),n(62,4)],[n(64,2),n(67,2),n(67,4)]],bass:[48,48,55,48]},
+    brother: {title:'Frère Jacques',composer:'Traditional',meter:'4/4',bars:[q([60,62,64,60]),q([60,62,64,60]),[n(64,2),n(65,2),n(67,4)],[n(64,2),n(65,2),n(67,4)]],bass:[48,48,53,48]},
+    joy: {title:'Ode to Joy',composer:'Beethoven',meter:'4/4',bars:[q([64,64,65,67]),q([67,65,64,62]),q([60,60,62,64]),[n(64,2),n(62,2),n(62,4)],q([64,64,65,67]),q([67,65,64,62])],bass:[48,55,48,55,48,55]},
+    twinkle: {title:'Twinkle, Twinkle, Little Star',composer:'Traditional',meter:'4/4',bars:[q([60,60,67,67]),[n(69,2),n(69,2),n(67,4)],q([65,65,64,64]),[n(62,2),n(62,2),n(60,4)],q([67,67,65,65]),[n(64,2),n(64,2),n(62,4)]],bass:[48,48,53,48,55,48]},
+    elise: {title:'Für Elise',composer:'Beethoven',meter:'3/8',bars:eliseBars,bass:[null,57,57,52,57,57,57]},
+    jingle: {title:'Jingle Bells',composer:'James Pierpont',meter:'4/4',bars:[[n(64,2),n(64,2),n(64,4)],[n(64,2),n(64,2),n(64,4)],q([64,67,60,62]),[n(64,8)],q([65,65,65,65]),q([65,64,64,64])],bass:[48,48,55,48,53,48]},
+    bridge: {title:'London Bridge',composer:'Traditional',meter:'4/4',bars:[q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],[n(62,2),n(64,2),n(65,4)],[n(64,2),n(65,2),n(67,4)]],bass:[48,48,55,48]},
+    saints: {title:'When the Saints Go Marching In',composer:'Traditional',meter:'4/4',bars:[q([60,64,65,67]),q([60,64,65,67]),q([60,64,65,67]),q([64,60,64,62])],bass:[48,48,53,55]}
+  };
+  const piano = byId('practice-piano');
+  const leftPiano = byId('practice-left-piano');
+  const keyboardRoot = byId('practice-keyboard-wrap');
+  const card = byId('practice-card');
+  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true;
+  let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
+  let completedNotes = new Set();
+  const previewTimers = [];
+  let microphoneStream, microphoneContext, microphoneSource, microphoneAnalyser, microphoneFrame;
+  let lastDetectedNote = -1, stableFrames = 0, lastMicrophonePlay = 0;
+
+  function appendKeyboard(target,whiteList,blackList) {
+    target.replaceChildren();
+    for (const [midi,note,key] of whiteList) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'practice-white';
+      button.dataset.midi = midi;
+      button.setAttribute('aria-label',`${note} note, ${key === ',' ? 'comma' : key} key`);
+      button.innerHTML = `<span class="key-label">${key}</span>`;
+      button.addEventListener('click',() => playNote(midi));
+      target.append(button);
+    }
+    for (const [midi,note,key,left] of blackList) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'practice-black';
+      button.dataset.midi = midi;
+      button.style.left = `${left}%`;
+      button.setAttribute('aria-label',`${note} note, ${key} key`);
+      button.innerHTML = `<span class="key-label">${key}</span>`;
+      button.addEventListener('click',() => playNote(midi));
+      target.append(button);
+    }
+  }
+
+  function buildKeyboard() {
+    const leftOnly = passage.soloHand === 'left';
+    const both = !!passage.leftBars;
+    keyboardRoot.classList.toggle('is-both',both);
+    byId('practice-left-hand').hidden = !leftOnly && !both;
+    byId('practice-right-hand').hidden = leftOnly;
+    piano.classList.remove('is-seven');
+    piano.classList.toggle('is-right',!both);
+    piano.classList.toggle('is-wide',both);
+    leftPiano.classList.add('is-seven');
+    const rightWhites = both ? duetWhiteKeys : whiteKeys;
+    const rightBlacks = both ? duetBlackKeys : blackKeys;
+    if (!leftOnly) appendKeyboard(piano,rightWhites,rightBlacks);
+    else piano.replaceChildren();
+    if (leftOnly || both) appendKeyboard(leftPiano,leftWhiteKeys,leftBlackKeys);
+    else leftPiano.replaceChildren();
+    keyboardMap = new Map((leftOnly ? [...leftWhiteKeys,...leftBlackKeys] : both ? [...rightWhites,...rightBlacks,...leftWhiteKeys,...leftBlackKeys] : [...whiteKeys,...blackKeys]).map(([midi,,key]) => [key.toLowerCase(),midi]));
+    byId('practice-keys-hint').textContent = `Keys ${[...keyboardMap.keys()].map(key => key.toUpperCase()).join(' ')}`;
+  }
+
+  function keyFor(midi) { return keyboardRoot.querySelector(`[data-midi="${midi}"]`); }
+
+  function sampleKeys() {
+    if (level === 1) return ['moon','mary','brother'];
+    if (level === 2) return ['elise','joy','twinkle'];
+    const keys = ['joy','twinkle','brother','mary','elise','jingle','bridge','saints'];
+    const offset = (level-3)%keys.length;
+    return keys.slice(offset).concat(keys.slice(0,offset));
+  }
+
+  function bassBar(root,duration) {
+    if (root === null) return [{rest:true,duration:2}];
+    const fifth = {48:55,50:57,52:59,53:48,55:50,57:52}[root] || root;
+    const third = {48:52,50:53,52:55,53:57,55:59,57:52}[root] || root;
+    if (level < 5) return [n(root,duration)];
+    if (level < 7) return [n(root,duration/2),n(fifth,duration/2)];
+    if (level < 9) return duration === 8 ? [n(root,2),n(third,2),n(fifth,4)] : [n(root,2),n(third,2),n(fifth,2)];
+    return duration === 8 ? [n(root,2),n(third,2),n(fifth,2),n(third,2)] : [n(root,1),n(third,2),n(fifth,1),n(third,2)];
+  }
+
+  function makePassage() {
+    const key = sampleKeys()[sampleIndex];
+    const song = songs[key];
+    const soloHand = level >= 3 ? 'both' : level === 1 && sampleIndex !== 1 ? 'left' : 'right';
+    const bars = soloHand === 'left' ? song.bars.map(bar => bar.map(note => n(note.midi-12,note.duration))) : song.bars;
+    const duration = song.meter === '3/8' ? 6 : 8;
+    const leftBars = soloHand === 'both' ? song.bass.map(root => bassBar(root,duration)) : null;
+    const subtitle = `${song.composer} · ${soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
+    const events = [];
+    const collect = (voiceBars,hand) => {
+      let tick = 0, ordinal = 0;
+      voiceBars?.forEach((bar,barIndex) => bar.forEach(event => {
+        if (!event.rest) events.push({id:`${hand}-${ordinal++}`,midi:event.midi,time:tick,hand,barIndex});
+        tick += event.duration;
+      }));
+      return tick;
+    };
+    const rightTicks = collect(bars,soloHand === 'left' ? 'left' : 'right');
+    const leftTicks = collect(leftBars,'left');
+    events.sort((a,b) => a.time-b.time || (a.hand === 'left' ? -1 : 1));
+    const steps = [];
+    events.forEach(event => {
+      if (steps.at(-1)?.time !== event.time) steps.push({time:event.time,notes:[]});
+      steps.at(-1).notes.push(event);
+    });
+    return {bars,leftBars,steps,events,totalTicks:Math.max(rightTicks,leftTicks),title:song.title,subtitle,soloHand,meter:song.meter,key:key === 'elise' ? 'Am' : 'C'};
+  }
+
+  function updateHint() {
+    keyboardRoot.querySelectorAll('.hint').forEach(key => key.classList.remove('hint'));
+    if (hintEnabled && !previewPlaying && !wrongNote && currentStep < passage.steps.length) {
+      passage.steps[currentStep].notes.filter(note => !completedNotes.has(note.id)).forEach(note => keyFor(note.midi)?.classList.add('hint'));
+    }
+  }
+
+  function abcPitch(midi) {
+    const names = ['C','^C','D','^D','E','F','^F','G','^G','A','^A','B'];
+    const name = names[midi%12];
+    const octave = Math.floor(midi/12)-1;
+    if (octave < 4) return name + ','.repeat(4-octave);
+    if (octave > 4) return name.toLowerCase() + "'".repeat(octave-5);
+    return name;
+  }
+  let renderedPassage = null;
+  let scoreNotes = new Map();
+
+  function scoreAbc() {
+    const voiceAbc = bars => bars.map(bar => {
+      const sharps = new Set();
+      return bar.map(event => {
+        if (event.rest) return 'z' + (event.duration === 1 ? '' : event.duration);
+        let pitch = abcPitch(event.midi);
+        if (pitch.startsWith('^')) {
+          if (sharps.has(event.midi)) pitch = pitch.slice(1);
+          sharps.add(event.midi);
+        }
+        return pitch + (event.duration === 1 ? '' : event.duration);
+      }).join('');
+    });
+    const notes = voiceAbc(passage.bars).join('|') + '|';
+    if (passage.leftBars) {
+      const bass = voiceAbc(passage.leftBars).join('|') + '|';
+      return `X:1\n%%score {R|L}\n%%stretchlast 1\nM:${passage.meter}\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:${passage.key}\n[V:R] ${notes}\n[V:L] ${bass}`;
+    }
+    if (passage.soloHand === 'left') return `X:1\n%%stretchlast 1\nM:${passage.meter}\nL:1/16\nK:${passage.key} clef=bass\n${notes}`;
+    return `X:1\n%%stretchlast 1\nM:${passage.meter}\nL:1/16\nK:${passage.key}\n${notes}`;
+  }
+
+  function drawStaff() {
+    const container = byId('practice-staff');
+    if (renderedPassage !== passage) {
+      if (!window.ABCJS) { container.textContent = 'Music notation is unavailable.'; return; }
+      window.ABCJS.renderAbc(container,scoreAbc(),{
+        add_classes:true,staffwidth:1900,scale:1.25,paddingtop:0,paddingbottom:0,
+        paddingleft:0,paddingright:0,oneSvgPerLine:false
+      });
+      const svg = container.querySelector('svg');
+      if (svg) svg.setAttribute('viewBox',`0 0 ${svg.getAttribute('width')} ${svg.getAttribute('height')}`);
+      scoreNotes = new Map();
+      const allNotes = [...container.querySelectorAll('.abcjs-note')];
+      const rightNotes = [...container.querySelectorAll('.abcjs-note.abcjs-v0')];
+      const leftNotes = [...container.querySelectorAll('.abcjs-note.abcjs-v1')];
+      passage.events.forEach(event => {
+        const ordinal = Number(event.id.split('-')[1]);
+        scoreNotes.set(event.id,(passage.leftBars ? event.hand === 'left' ? leftNotes : rightNotes : allNotes)[ordinal] || null);
+      });
+      renderedPassage = passage;
+    }
+    const previewNotes = new Set(previewPlaying ? passage.steps.slice(0,previewIndex+1).flatMap(step => step.notes.map(note => note.id)) : []);
+    scoreNotes.forEach((note,id) => {
+      if (!note) return;
+      note.classList.toggle('is-done',previewPlaying ? previewNotes.has(id) : completedNotes.has(id));
+      note.classList.toggle('is-wrong',!previewPlaying && id === wrongNote);
+    });
+    container.setAttribute('aria-label',previewPlaying ? `Playing ${passage.title}, step ${previewIndex+1} of ${passage.steps.length}` : `${passage.title}, step ${Math.min(currentStep+1,passage.steps.length)} of ${passage.steps.length}`);
+  }
+
+  function render() {
+    byId('practice-title').textContent = passage.title;
+    byId('practice-subtitle').textContent = passage.subtitle;
+    byId('practice-level-value').textContent = `Level ${level}`;
+    byId('practice-level-prev').disabled = level === 1;
+    byId('practice-level-next').disabled = level === 10;
+    byId('practice-sample-prev').disabled = sampleIndex === 0;
+    byId('practice-sample-next').disabled = sampleIndex === sampleKeys().length-1;
+    drawStaff();
+    updateHint();
+  }
+
+  function stopPreview() {
+    previewTimers.forEach(clearTimeout);
+    previewTimers.length = 0;
+    previewPlaying = false;
+    previewIndex = -1;
+    keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
+  }
+
+  function resetPassage() {
+    stopPreview();
+    clearTimeout(wrongTimer);
+    currentStep = 0;
+    wrongNote = null;
+    completedNotes = new Set();
+    passage = makePassage();
+    buildKeyboard();
+    render();
+    byId('practice-score-viewport').scrollLeft = 0;
+  }
+
+  function keepNoteVisible(index) {
+    const viewport = byId('practice-score-viewport');
+    const event = passage.steps[Math.min(index,passage.steps.length-1)]?.notes[0];
+    const note = event && scoreNotes.get(event.id);
+    if (!note || viewport.scrollWidth <= viewport.clientWidth+1) return;
+    const x = note.getBoundingClientRect().left-viewport.getBoundingClientRect().left+viewport.scrollLeft;
+    viewport.scrollTo({left:Math.max(0,x-viewport.clientWidth*.42),behavior:'smooth'});
+  }
+
+  function showPreviewNote(index) {
+    previewIndex = index;
+    keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
+    passage.steps[index].notes.forEach(note => {
+      keyFor(note.midi)?.classList.add('is-preview-correct');
+      window.playStaveNote?.(note.midi,.33);
+    });
+    drawStaff();
+    updateHint();
+    keepNoteVisible(index);
+  }
+
+  function playPreview() {
+    stopPreview();
+    if (microphoneStream) stopMicrophone();
+    window.practiceMidiActive = true;
+    previewPlaying = true;
+    showPreviewNote(0);
+    for (let index=1; index<passage.steps.length; index++) previewTimers.push(setTimeout(() => showPreviewNote(index),passage.steps[index].time*155));
+    previewTimers.push(setTimeout(() => { stopPreview(); render(); keepNoteVisible(currentStep); },passage.totalTicks*155+150));
+  }
+
+  function playNote(midi,fromMicrophone=false) {
+    window.practiceMidiActive = true;
+    if (previewPlaying) stopPreview();
+    if (currentStep === passage.steps.length) return;
+    if (!fromMicrophone) window.playStaveNote?.(midi);
+    const key = keyFor(midi);
+    key?.classList.add('is-pressed');
+    setTimeout(() => key?.classList.remove('is-pressed'),160);
+    clearTimeout(wrongTimer);
+    keyboardRoot.querySelectorAll('.is-correct,.is-wrong').forEach(button => button.classList.remove('is-correct','is-wrong'));
+    const step = passage.steps[currentStep];
+    const matched = step.notes.find(note => note.midi === midi && !completedNotes.has(note.id));
+    if (!matched) {
+      wrongNote = step.notes.find(note => !completedNotes.has(note.id))?.id || null;
+      key?.classList.add('is-wrong');
+      render();
+      wrongTimer = setTimeout(() => { wrongNote = null; key?.classList.remove('is-wrong'); render(); },550);
+      return;
+    }
+    wrongNote = null;
+    key?.classList.add('is-correct');
+    completedNotes.add(matched.id);
+    if (step.notes.every(note => completedNotes.has(note.id))) currentStep++;
+    render();
+    keepNoteVisible(currentStep);
+    setTimeout(() => key?.classList.remove('is-correct'),200);
+  }
+
+  byId('practice-level-prev').addEventListener('click',() => { if (level > 1) { level--; sampleIndex = 0; resetPassage(); } });
+  byId('practice-level-next').addEventListener('click',() => { if (level < 10) { level++; sampleIndex = 0; resetPassage(); } });
+  byId('practice-sample-prev').addEventListener('click',() => { if (sampleIndex > 0) { sampleIndex--; resetPassage(); } });
+  byId('practice-sample-next').addEventListener('click',() => { if (sampleIndex < sampleKeys().length-1) { sampleIndex++; resetPassage(); } });
+  byId('practice-hints').addEventListener('click',() => {
+    hintEnabled = !hintEnabled;
+    byId('practice-hints').setAttribute('aria-checked',String(hintEnabled));
+    byId('practice-hints').title = hintEnabled ? 'Hints on' : 'Hints off';
+    updateHint();
+  });
+  byId('practice-play').addEventListener('click',playPreview);
+  window.playPracticePreview = playPreview;
+  byId('practice-expand').addEventListener('click',async () => {
+    try { if (document.fullscreenElement === card) await document.exitFullscreen(); else await card.requestFullscreen(); }
+    catch (_) { /* Fullscreen is unavailable in this browser. */ }
+  });
+  byId('practice-midi').addEventListener('click',() => { window.practiceMidiActive = true; byId('midi-dialog').showModal(); });
+  document.addEventListener('keydown',event => {
+    if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
+    const midi = keyboardMap.get(event.key.toLowerCase());
+    if (midi === undefined) return;
+    event.preventDefault();
+    playNote(midi);
+  });
+  window.practiceMidiInput = playNote;
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) window.practiceMidiActive = true;
+  },{root:window.innerWidth < 960 ? byId('home') : null,threshold:.55}).observe(byId('practice'));
+
+  function detectPitch(samples,sampleRate) {
+    let energy = 0;
+    for (let i=0; i<samples.length; i++) energy += samples[i]*samples[i];
+    if (Math.sqrt(energy/samples.length) < .014) return null;
+    const minLag = Math.floor(sampleRate/800), maxLag = Math.floor(sampleRate/125);
+    let bestLag = 0, bestError = Infinity;
+    for (let lag=minLag; lag<=maxLag; lag++) {
+      let error = 0;
+      for (let i=0; i<900; i++) { const difference = samples[i]-samples[i+lag]; error += difference*difference; }
+      if (error < bestError) { bestError = error; bestLag = lag; }
+    }
+    if (bestError > energy*.42 || !bestLag) return null;
+    return Math.round(69+12*Math.log2(sampleRate/bestLag/440));
+  }
+
+  function listenToMicrophone() {
+    if (!microphoneAnalyser) return;
+    const data = new Float32Array(microphoneAnalyser.fftSize);
+    microphoneAnalyser.getFloatTimeDomainData(data);
+    const midi = detectPitch(data,microphoneContext.sampleRate);
+    if (midi === lastDetectedNote) stableFrames++;
+    else { lastDetectedNote = midi; stableFrames = 0; }
+    if (midi !== null && midi >= 48 && midi <= 79 && stableFrames >= 3 && performance.now()-lastMicrophonePlay > 200) {
+      lastMicrophonePlay = performance.now();
+      playNote(midi,true);
+    }
+    microphoneFrame = requestAnimationFrame(listenToMicrophone);
+  }
+
+  function stopMicrophone() {
+    cancelAnimationFrame(microphoneFrame);
+    microphoneSource?.disconnect();
+    microphoneStream?.getTracks().forEach(track => track.stop());
+    microphoneContext?.close();
+    microphoneStream = microphoneContext = microphoneSource = microphoneAnalyser = null;
+    byId('practice-mic').textContent = 'Use microphone';
+  }
+
+  byId('practice-mic').addEventListener('click',async () => {
+    window.practiceMidiActive = true;
+    if (microphoneStream) { stopMicrophone(); return; }
+    try {
+      microphoneStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+      microphoneContext = new (window.AudioContext || window.webkitAudioContext)();
+      microphoneSource = microphoneContext.createMediaStreamSource(microphoneStream);
+      microphoneAnalyser = microphoneContext.createAnalyser();
+      microphoneAnalyser.fftSize = 2048;
+      microphoneSource.connect(microphoneAnalyser);
+      byId('practice-mic').textContent = 'Stop microphone';
+      listenToMicrophone();
+    } catch (_) {
+      stopMicrophone();
+      window.alert('Microphone access is unavailable in this browser.');
+    }
+  });
+
+  resetPassage();
+})();
