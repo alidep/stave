@@ -220,5 +220,8 @@ body.song-page .screen{padding-bottom:36px}
 body.library-page .desktop-layout,body.library-page .practice-section{display:none}
 body.library-page .screen{min-height:100svh}
 @media(max-width:959px){.song-picker-dialog{margin-top:34px}.song-library-shell{width:100%;padding:0 0 38px}}
-.song-search-actions{grid-template-columns:minmax(340px,1fr) minmax(260px,360px);grid-template-areas:"search actions";align-items:center}
+.song-search-actions{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"search actions";align-items:center}
 .song-search-actions .sheet-actions{grid-template-columns:1fr}
+
+body.library-page .song-picker-dialog{margin-top:58px}
+@media(max-width:959px){body.library-page .song-picker-dialog{margin-top:38px}}
