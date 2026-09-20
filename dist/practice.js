@@ -365,6 +365,47 @@
   });
   byId('keyboard-map-close').addEventListener('click',() => mapDialog.close());
   mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
+  const songPicker = byId('song-picker-dialog');
+  const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],jingle:[3,5],bridge:[3,6],saints:[3,7]};
+  byId('pick-song').addEventListener('click',() => songPicker.showModal());
+  songPicker.addEventListener('click',event => { if (event.target === songPicker) songPicker.close(); });
+  byId('song-grid').addEventListener('click',event => {
+    const tile = event.target.closest('.song-tile');
+    if (!tile) return;
+    [level,sampleIndex] = songLocations[tile.dataset.song];
+    resetPassage();
+    songPicker.close();
+    requestAnimationFrame(() => card.scrollIntoView({behavior:'smooth',block:'center'}));
+  });
+  let songFilter = 'all';
+  function filterSongs() {
+    const query = byId('song-search').value.trim().toLowerCase();
+    let visible = 0;
+    document.querySelectorAll('.song-tile').forEach(tile => {
+      const show = (songFilter === 'all' || tile.dataset.level === songFilter) && (!query || tile.dataset.search.includes(query));
+      tile.hidden = !show;
+      if (show) visible++;
+    });
+    byId('song-count').textContent = `${visible} ${visible === 1 ? 'song' : 'songs'}`;
+    byId('song-empty').hidden = visible > 0;
+  }
+  byId('song-search').addEventListener('input',filterSongs);
+  document.querySelector('.song-level-filters').addEventListener('click',event => {
+    const button = event.target.closest('[data-song-filter]');
+    if (!button) return;
+    songFilter = button.dataset.songFilter;
+    document.querySelectorAll('[data-song-filter]').forEach(item => item.classList.toggle('is-active',item === button));
+    filterSongs();
+  });
+  function chooseSheetFile(input) {
+    const file = input.files?.[0];
+    if (!file) return;
+    byId('sheet-file-status').textContent = `Selected: ${file.name}`;
+  }
+  byId('upload-sheet').addEventListener('click',() => byId('sheet-file-input').click());
+  byId('photo-sheet').addEventListener('click',() => byId('sheet-camera-input').click());
+  byId('sheet-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
+  byId('sheet-camera-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   document.addEventListener('keydown',event => {
     if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
     const midi = keyboardMap.get(event.key.toLowerCase());
