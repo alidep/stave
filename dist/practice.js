@@ -403,12 +403,11 @@
       document.body.classList.remove('library-page','song-page');
     }
   }
-  let songFilter = 'all';
   function filterSongs() {
     const query = byId('song-search').value.trim().toLowerCase();
     let visible = 0;
     document.querySelectorAll('.song-tile').forEach(tile => {
-      const show = (songFilter === 'all' || tile.dataset.level === songFilter) && (!query || tile.dataset.search.includes(query));
+      const show = !query || tile.dataset.search.includes(query);
       tile.hidden = !show;
       if (show) visible++;
     });
@@ -416,13 +415,6 @@
     byId('song-empty').hidden = visible > 0;
   }
   byId('song-search').addEventListener('input',filterSongs);
-  document.querySelector('.song-level-filters').addEventListener('click',event => {
-    const button = event.target.closest('[data-song-filter]');
-    if (!button) return;
-    songFilter = button.dataset.songFilter;
-    document.querySelectorAll('[data-song-filter]').forEach(item => item.classList.toggle('is-active',item === button));
-    filterSongs();
-  });
   function chooseSheetFile(input) {
     const files = [...(input.files || [])];
     if (!files.length) return;
@@ -453,10 +445,7 @@
     preview.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
   byId('upload-sheet').addEventListener('click',() => byId('sheet-file-input').click());
-  byId('photo-sheet').addEventListener('click',() => byId(matchMedia('(max-width: 959px)').matches ? 'sheet-camera-input' : 'picture-file-input').click());
   byId('sheet-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
-  byId('picture-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
-  byId('sheet-camera-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   document.addEventListener('keydown',event => {
     if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]') || !songPicker.hidden) return;
     const midi = keyboardMap.get(event.key.toLowerCase());
