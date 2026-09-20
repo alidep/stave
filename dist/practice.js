@@ -21,15 +21,15 @@
   ];
   const q = notes => notes.map(midi => n(midi,2));
   const songs = {
-    moon: {title:'Au clair de la lune',composer:'Traditional',meter:'4/4',bars:[q([60,60,60,62]),q([64,62,60,64]),q([62,62,60,62]),[n(60,8)]],bass:[48,55,48,48]},
-    mary: {title:'Mary Had a Little Lamb',composer:'Traditional',meter:'4/4',bars:[q([64,62,60,62]),[n(64,2),n(64,2),n(64,4)],[n(62,2),n(62,2),n(62,4)],[n(64,2),n(67,2),n(67,4)]],bass:[48,48,55,48]},
-    brother: {title:'Frère Jacques',composer:'Traditional',meter:'4/4',bars:[q([60,62,64,60]),q([60,62,64,60]),[n(64,2),n(65,2),n(67,4)],[n(64,2),n(65,2),n(67,4)]],bass:[48,48,53,48]},
-    joy: {title:'Ode to Joy',composer:'Beethoven',meter:'4/4',bars:[q([64,64,65,67]),q([67,65,64,62]),q([60,60,62,64]),[n(64,2),n(62,2),n(62,4)],q([64,64,65,67]),q([67,65,64,62])],bass:[48,55,48,55,48,55]},
-    twinkle: {title:'Twinkle, Twinkle, Little Star',composer:'Traditional',meter:'4/4',bars:[q([60,60,67,67]),[n(69,2),n(69,2),n(67,4)],q([65,65,64,64]),[n(62,2),n(62,2),n(60,4)],q([67,67,65,65]),[n(64,2),n(64,2),n(62,4)]],bass:[48,48,53,48,55,48]},
+    moon: {title:'Au clair de la lune',composer:'Traditional',meter:'4/4',bars:[q([60,60,60,62]),q([64,62,60,64]),q([62,62,60,62]),[n(60,8)],q([60,60,60,62]),q([64,62,60,64]),q([62,62,60,62]),[n(60,8)]],bass:[48,55,48,48,48,55,48,48]},
+    mary: {title:'Mary Had a Little Lamb',composer:'Traditional',meter:'4/4',bars:[q([64,62,60,62]),[n(64,2),n(64,2),n(64,4)],[n(62,2),n(62,2),n(62,4)],[n(64,2),n(67,2),n(67,4)],q([64,62,60,62]),[n(64,2),n(64,2),n(64,2),n(64,2)],q([62,62,64,62]),[n(60,8)]],bass:[48,48,55,48,48,53,55,48]},
+    brother: {title:'Frère Jacques',composer:'Traditional',meter:'4/4',bars:[q([60,62,64,60]),q([60,62,64,60]),[n(64,2),n(65,2),n(67,4)],[n(64,2),n(65,2),n(67,4)],q([67,69,67,65]),q([64,60,67,69]),q([67,65,64,60]),[n(60,8)]],bass:[48,48,53,48,55,48,55,48]},
+    joy: {title:'Ode to Joy',composer:'Beethoven',meter:'4/4',bars:[q([64,64,65,67]),q([67,65,64,62]),q([60,60,62,64]),[n(64,2),n(62,2),n(62,4)],q([64,64,65,67]),q([67,65,64,62]),q([60,60,62,64]),[n(62,2),n(60,2),n(60,4)]],bass:[48,55,48,55,48,55,48,48]},
+    twinkle: {title:'Twinkle, Twinkle, Little Star',composer:'Traditional',meter:'4/4',bars:[q([60,60,67,67]),[n(69,2),n(69,2),n(67,4)],q([65,65,64,64]),[n(62,2),n(62,2),n(60,4)],q([67,67,65,65]),[n(64,2),n(64,2),n(62,4)],q([67,67,65,65]),[n(64,2),n(64,2),n(62,4)],q([60,60,67,67]),[n(69,2),n(69,2),n(67,4)],q([65,65,64,64]),[n(62,2),n(62,2),n(60,4)]],bass:[48,48,53,48,55,48,55,48,48,48,53,48]},
     elise: {title:'Für Elise',composer:'Beethoven',meter:'3/8',bars:eliseBars,bass:[null,57,57,52,57,57,57]},
-    jingle: {title:'Jingle Bells',composer:'James Pierpont',meter:'4/4',bars:[[n(64,2),n(64,2),n(64,4)],[n(64,2),n(64,2),n(64,4)],q([64,67,60,62]),[n(64,8)],q([65,65,65,65]),q([65,64,64,64])],bass:[48,48,55,48,53,48]},
-    bridge: {title:'London Bridge',composer:'Traditional',meter:'4/4',bars:[q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],[n(62,2),n(64,2),n(65,4)],[n(64,2),n(65,2),n(67,4)]],bass:[48,48,55,48]},
-    saints: {title:'When the Saints Go Marching In',composer:'Traditional',meter:'4/4',bars:[q([60,64,65,67]),q([60,64,65,67]),q([60,64,65,67]),q([64,60,64,62])],bass:[48,48,53,55]}
+    jingle: {title:'Jingle Bells',composer:'James Pierpont',meter:'4/4',bars:[[n(64,2),n(64,2),n(64,4)],[n(64,2),n(64,2),n(64,4)],q([64,67,60,62]),[n(64,8)],q([65,65,65,65]),q([65,64,64,64]),q([64,62,62,64]),[n(62,4),n(67,4)]],bass:[48,48,55,48,53,48,55,48]},
+    bridge: {title:'London Bridge',composer:'Traditional',meter:'4/4',bars:[q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],[n(62,2),n(64,2),n(65,4)],[n(64,2),n(65,2),n(67,4)],q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],q([62,67,64,60]),[n(60,8)]],bass:[48,48,55,48,48,55,48,48]},
+    saints: {title:'When the Saints Go Marching In',composer:'Traditional',meter:'4/4',bars:[q([60,64,65,67]),q([60,64,65,67]),q([60,64,65,67]),q([64,60,64,62]),q([64,64,62,60]),q([60,64,67,67]),q([67,65,64,62]),[n(60,8)]],bass:[48,48,53,55,48,55,53,48]}
   };
   const piano = byId('practice-piano');
   const leftPiano = byId('practice-left-piano');
@@ -367,16 +367,46 @@
   mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
   const songPicker = byId('song-picker-dialog');
   const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],jingle:[3,5],bridge:[3,6],saints:[3,7]};
-  byId('pick-song').addEventListener('click',() => songPicker.showModal());
-  songPicker.addEventListener('click',event => { if (event.target === songPicker) songPicker.close(); });
+  function showSongLibrary(push=true) {
+    songPicker.hidden = false;
+    document.body.classList.add('library-page');
+    document.body.classList.remove('song-page');
+    if (push) history.pushState({view:'songs'},'', '?view=songs');
+    byId('song-search').focus({preventScroll:true});
+  }
+  function showSong(songId,push=true) {
+    const location = songLocations[songId];
+    if (!location) return;
+    [level,sampleIndex] = location;
+    resetPassage();
+    songPicker.hidden = true;
+    document.body.classList.remove('library-page');
+    document.body.classList.add('song-page');
+    if (push) history.pushState({song:songId},'', `?song=${songId}`);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  byId('pick-song').addEventListener('click',event => { event.preventDefault(); showSongLibrary(); });
+  document.querySelector('.song-picker-close').addEventListener('click',() => {
+    songPicker.hidden = true;
+    document.body.classList.remove('library-page');
+    history.pushState({},'',location.pathname);
+  });
   byId('song-grid').addEventListener('click',event => {
     const tile = event.target.closest('.song-tile');
     if (!tile) return;
-    [level,sampleIndex] = songLocations[tile.dataset.song];
-    resetPassage();
-    songPicker.close();
-    requestAnimationFrame(() => card.scrollIntoView({behavior:'smooth',block:'center'}));
+    showSong(tile.dataset.song);
   });
+  window.addEventListener('popstate',() => applyRoute());
+  function applyRoute() {
+    const params = new URLSearchParams(location.search);
+    const songId = params.get('song');
+    if (songId && songLocations[songId]) showSong(songId,false);
+    else if (params.get('view') === 'songs') showSongLibrary(false);
+    else {
+      songPicker.hidden = true;
+      document.body.classList.remove('library-page','song-page');
+    }
+  }
   let songFilter = 'all';
   function filterSongs() {
     const query = byId('song-search').value.trim().toLowerCase();
@@ -407,7 +437,7 @@
   byId('sheet-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   byId('sheet-camera-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   document.addEventListener('keydown',event => {
-    if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
+    if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]') || !songPicker.hidden) return;
     const midi = keyboardMap.get(event.key.toLowerCase());
     if (midi === undefined) return;
     event.preventDefault();
@@ -478,4 +508,5 @@
   });
 
   resetPassage();
+  applyRoute();
 })();
