@@ -120,6 +120,15 @@
 .song-tile strong,.song-tile small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .song-tile strong{font-size:14px}.song-tile small{margin-top:3px;color:#858079;font-size:11px}
 .song-empty{margin:35px 0;text-align:center;color:#858079}
+.song-search-actions{display:grid;grid-template-columns:minmax(340px,1fr) minmax(390px,.9fr);grid-template-areas:"search actions" "filters actions";align-items:center;gap:12px 18px;max-width:100%}
+.song-search-actions .song-search{grid-area:search;max-width:none}
+.song-search-actions .song-level-filters{grid-area:filters;margin:0}
+.song-search-actions .sheet-actions{grid-area:actions;max-width:none}
+.photo-label-mobile{display:none}
+@keyframes song-record-spin{to{transform:rotate(360deg)}}
+.song-grid .song-disc{animation:song-record-spin 38s linear infinite}
+.song-grid .song-tile:nth-child(2) .song-disc{animation-delay:-5s}.song-grid .song-tile:nth-child(3) .song-disc{animation-delay:-11s}.song-grid .song-tile:nth-child(4) .song-disc{animation-delay:-17s}.song-grid .song-tile:nth-child(5) .song-disc{animation-delay:-23s}.song-grid .song-tile:nth-child(6) .song-disc{animation-delay:-29s}.song-grid .song-tile:nth-child(7) .song-disc{animation-delay:-34s}.song-grid .song-tile:nth-child(8) .song-disc{animation-delay:-8s}.song-grid .song-tile:nth-child(9) .song-disc{animation-delay:-20s}
+.song-tile:hover .song-disc{animation-play-state:paused}
 .practice-piano{position:relative;display:flex;width:100%;height:190px;user-select:none;touch-action:manipulation}
 .practice-keyboard-wrap.is-both .practice-piano{height:148px}
 .practice-piano button:focus,.practice-piano button:focus-visible{outline:none;-webkit-tap-highlight-color:transparent}
@@ -197,6 +206,9 @@ body.song-page .screen{padding-bottom:36px}
   .song-picker-dialog .song-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 14px}
   .song-picker-dialog .song-disc{width:min(122px,100%)}
   body.song-page .practice-section{margin-top:24px}
+  .song-search-actions{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .song-search-actions .song-level-filters{margin:15px 0 20px}
+  .photo-label-desktop{display:none}.photo-label-mobile{display:inline}
 }
 @media(max-width:430px){.song-library-shell{padding-inline:20px}.song-picker-dialog .song-grid{gap-inline:10px}.song-picker-dialog .song-disc{width:min(106px,100%)}}
 
@@ -207,3 +219,4 @@ body.song-page .screen{padding-bottom:36px}
 body.library-page .desktop-layout,body.library-page .practice-section{display:none}
 body.library-page .screen{min-height:100svh}
 @media(max-width:959px){.song-picker-dialog{margin-top:34px}.song-library-shell{width:100%;padding:0 0 38px}}
+@media(prefers-reduced-motion:reduce){.song-grid .song-disc{animation:none}}
