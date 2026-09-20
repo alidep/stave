@@ -270,6 +270,7 @@ function updateMidiConnectionState() {
   const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
   const menu = $('practice-connect-menu');
   menu?.classList.toggle('is-connected',!!connected);
+  if (connected && menu) menu.open = false;
   if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'KEYBOARD CONNECTED' : 'CONNECT KEYBOARD';
   if ($('practice-midi')) $('practice-midi').textContent = connected ? 'MIDI piano connected' : 'Connect MIDI piano';
   if (connected && $('midi-dialog').open) $('midi-dialog').close();
