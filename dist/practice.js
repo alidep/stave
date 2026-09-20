@@ -366,6 +366,7 @@
   byId('keyboard-map-close').addEventListener('click',() => mapDialog.close());
   mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
   const songPicker = byId('song-picker-dialog');
+  document.querySelector('.screen').append(songPicker);
   const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],jingle:[3,5],bridge:[3,6],saints:[3,7]};
   function showSongLibrary(push=true) {
     songPicker.hidden = false;
@@ -386,11 +387,6 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   byId('pick-song').addEventListener('click',event => { event.preventDefault(); showSongLibrary(); });
-  document.querySelector('.song-picker-close').addEventListener('click',() => {
-    songPicker.hidden = true;
-    document.body.classList.remove('library-page');
-    history.pushState({},'',location.pathname);
-  });
   byId('song-grid').addEventListener('click',event => {
     const tile = event.target.closest('.song-tile');
     if (!tile) return;
@@ -428,9 +424,11 @@
     filterSongs();
   });
   function chooseSheetFile(input) {
-    const file = input.files?.[0];
-    if (!file) return;
-    byId('sheet-file-status').textContent = `Selected: ${file.name}`;
+    const files = [...(input.files || [])];
+    if (!files.length) return;
+    byId('sheet-file-status').textContent = files.length === 1
+      ? `Ready to import: ${files[0].name}`
+      : `${files.length} sheet-music pages ready to import`;
   }
   byId('upload-sheet').addEventListener('click',() => byId('sheet-file-input').click());
   byId('photo-sheet').addEventListener('click',() => byId('sheet-camera-input').click());

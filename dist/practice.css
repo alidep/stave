@@ -105,7 +105,7 @@
 .sheet-actions>button{min-height:54px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 18px;border:0;border-radius:28px;background:var(--accent);color:#fff;font:700 15px Visuelt,sans-serif;cursor:pointer}
 .sheet-actions>button:last-of-type{background:#fff;border:1px solid #ded8ca;color:var(--ink)}
 .sheet-actions>button:hover{filter:brightness(.96)}
-.sheet-file-status{min-height:18px;margin:10px 4px 0;color:#0c7f72;font-size:12px}
+.sheet-upload-note{margin:9px 4px 0;color:#858079;font-size:11px}.sheet-file-status{min-height:18px;margin:10px 4px 0;color:#0c7f72;font-size:12px}
 .song-picker-heading{display:flex;align-items:baseline;justify-content:space-between;margin:23px 0 15px}
 .song-picker-heading span{font-size:22px;font-weight:700}
 .song-picker-heading small{color:#858079;font-size:12px}
@@ -199,3 +199,11 @@ body.song-page .screen{padding-bottom:36px}
   body.song-page .practice-section{margin-top:24px}
 }
 @media(max-width:430px){.song-library-shell{padding-inline:20px}.song-picker-dialog .song-grid{gap-inline:10px}.song-picker-dialog .song-disc{width:min(106px,100%)}}
+
+/* The library is a normal page below the persistent Stave navigation. */
+.song-picker-dialog{position:static;inset:auto;width:100%;max-width:none;max-height:none;margin:42px 0 0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
+.song-library-shell{width:100%;margin:0;padding:0 0 34px}
+.song-page-topbar,.song-picker-close{display:none}
+body.library-page .desktop-layout,body.library-page .practice-section{display:none}
+body.library-page .screen{min-height:100svh}
+@media(max-width:959px){.song-picker-dialog{margin-top:34px}.song-library-shell{width:100%;padding:0 0 38px}}
