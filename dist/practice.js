@@ -357,7 +357,12 @@
     try { if (document.fullscreenElement === card) await document.exitFullscreen(); else await card.requestFullscreen(); }
     catch (_) { /* Fullscreen is unavailable in this browser. */ }
   });
-  byId('practice-midi').addEventListener('click',() => { window.practiceMidiActive = true; byId('midi-dialog').showModal(); });
+  byId('practice-midi').addEventListener('click',() => {
+    window.practiceMidiActive = true;
+    const menu = byId('practice-connect-menu');
+    if (menu.classList.contains('is-connected')) { menu.open = false; return; }
+    byId('midi-dialog').showModal();
+  });
   byId('keyboard-map-close').addEventListener('click',() => mapDialog.close());
   mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
   document.addEventListener('keydown',event => {

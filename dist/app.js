@@ -265,13 +265,14 @@ document.addEventListener('keydown', event => {
   if (note) { event.preventDefault(); play(note[0]); }
 });
 
-$('connect-midi').onclick = () => $('midi-dialog').showModal();
+$('connect-midi').onclick = () => { if (!updateMidiConnectionState()) $('midi-dialog').showModal(); };
 function updateMidiConnectionState() {
   const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
   const menu = $('practice-connect-menu');
   menu?.classList.toggle('is-connected',!!connected);
   if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'KEYBOARD CONNECTED' : 'CONNECT KEYBOARD';
   if ($('practice-midi')) $('practice-midi').textContent = connected ? 'MIDI piano connected' : 'Connect MIDI piano';
+  if (connected && $('midi-dialog').open) $('midi-dialog').close();
   return connected;
 }
 $('midi-connect').onclick = async () => {
