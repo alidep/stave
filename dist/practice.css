@@ -106,6 +106,8 @@
 .sheet-actions>button:last-of-type{background:#fff;border:1px solid #ded8ca;color:var(--ink)}
 .sheet-actions>button:hover{filter:brightness(.96)}
 .sheet-upload-note{margin:9px 4px 0;color:#858079;font-size:11px}.sheet-file-status{min-height:18px;margin:10px 4px 0;color:#0c7f72;font-size:12px}
+.sheet-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin:14px 0 8px;padding:16px;border:1px solid #e8e1d4;border-radius:16px;background:#fffdf7}
+.sheet-preview[hidden]{display:none}.sheet-preview-page{position:relative;min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;border:1px solid #e4dfd5;border-radius:10px;background:#f5f2ea;color:#777168}.sheet-preview-page img{width:100%;height:168px;display:block;object-fit:contain;background:#fff}.sheet-page-number{position:absolute;right:7px;bottom:7px;padding:4px 7px;border-radius:999px;background:rgba(28,28,28,.76);color:#fff;font:600 9px JetBrains,monospace}.sheet-pdf-icon{font:700 23px JetBrains,monospace;color:var(--accent)}.sheet-preview-page small{max-width:90%;margin-top:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .song-picker-heading{display:flex;align-items:baseline;justify-content:space-between;margin:23px 0 15px}
 .song-picker-heading span{font-size:22px;font-weight:700}
 .song-picker-heading small{color:#858079;font-size:12px}

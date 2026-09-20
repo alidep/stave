@@ -427,12 +427,35 @@
     const files = [...(input.files || [])];
     if (!files.length) return;
     byId('sheet-file-status').textContent = files.length === 1
-      ? `Ready to import: ${files[0].name}`
-      : `${files.length} sheet-music pages ready to import`;
+      ? `Added: ${files[0].name}`
+      : `Added ${files.length} sheet-music pages`;
+    const preview = byId('sheet-preview');
+    preview.replaceChildren();
+    files.forEach((file,index) => {
+      const item = document.createElement('div');
+      item.className = 'sheet-preview-page';
+      if (file.type.startsWith('image/')) {
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(file);
+        image.alt = `Uploaded sheet music page ${index+1}`;
+        image.onload = () => URL.revokeObjectURL(image.src);
+        item.append(image);
+      } else {
+        item.innerHTML = `<span class="sheet-pdf-icon">PDF</span><small>${file.name}</small>`;
+      }
+      const number = document.createElement('span');
+      number.className = 'sheet-page-number';
+      number.textContent = `Page ${index+1}`;
+      item.append(number);
+      preview.append(item);
+    });
+    preview.hidden = false;
+    preview.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
   byId('upload-sheet').addEventListener('click',() => byId('sheet-file-input').click());
-  byId('photo-sheet').addEventListener('click',() => byId('sheet-camera-input').click());
+  byId('photo-sheet').addEventListener('click',() => byId(matchMedia('(max-width: 959px)').matches ? 'sheet-camera-input' : 'picture-file-input').click());
   byId('sheet-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
+  byId('picture-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   byId('sheet-camera-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   document.addEventListener('keydown',event => {
     if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]') || !songPicker.hidden) return;
