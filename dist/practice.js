@@ -367,7 +367,10 @@
     event.preventDefault();
     playNote(midi);
   });
-  window.practiceMidiInput = playNote;
+  window.practiceMidiInput = midi => {
+    const expected = passage.steps[currentStep]?.notes.find(note => !completedNotes.has(note.id) && note.midi % 12 === midi % 12);
+    playNote(expected?.midi ?? midi);
+  };
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) window.practiceMidiActive = true;
   },{root:window.innerWidth < 960 ? byId('home') : null,threshold:.55}).observe(byId('practice'));

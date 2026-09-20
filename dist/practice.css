@@ -116,6 +116,8 @@
 .practice-connect-strip summary{display:flex;align-items:center;gap:10px;width:max-content;padding:10px 15px;border:1px solid #ded8ca;border-radius:40px;background:#fff;color:#55514b;font:700 11px JetBrains,monospace;letter-spacing:.08em;cursor:pointer;list-style:none}
 .practice-connect-strip summary::-webkit-details-marker{display:none}
 .connection-dot{width:8px;height:8px;border-radius:50%;background:#8f9599}
+.practice-connect-strip details.is-connected .connection-dot{background:var(--green);box-shadow:0 0 0 3px rgba(20,181,162,.14)}
+.practice-connect-strip details.is-connected summary{color:#0c7f72}
 .practice-connect-strip .chevron{display:block;flex:none;margin-left:3px;transition:transform .18s ease}
 .practice-connect-strip details[open] .chevron{transform:rotate(180deg)}
 .practice-connect-options{position:absolute;z-index:5;bottom:calc(100% + 7px);left:0;min-width:175px;padding:6px;border:1px solid #e8e1d4;border-radius:10px;background:#fffdf7;box-shadow:0 8px 24px rgba(44,38,27,.12)}

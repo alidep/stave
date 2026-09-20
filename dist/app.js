@@ -266,6 +266,14 @@ document.addEventListener('keydown', event => {
 });
 
 $('connect-midi').onclick = () => $('midi-dialog').showModal();
+function updateMidiConnectionState() {
+  const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
+  const menu = $('practice-connect-menu');
+  menu?.classList.toggle('is-connected',!!connected);
+  if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'KEYBOARD CONNECTED' : 'CONNECT KEYBOARD';
+  if ($('practice-midi')) $('practice-midi').textContent = connected ? 'MIDI piano connected' : 'Connect MIDI piano';
+  return connected;
+}
 $('midi-connect').onclick = async () => {
   const message = $('midi-message');
   if (!navigator.requestMIDIAccess) {
@@ -280,14 +288,18 @@ $('midi-connect').onclick = async () => {
           const [status, midi, velocity] = event.data;
           if ((status & 0xf0) === 0x90 && velocity > 0) {
             if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(midi);
-            else play(midi);
+            else {
+              const expected = melody[step];
+              play(expected !== undefined && expected % 12 === midi % 12 ? expected : midi);
+            }
           }
         };
       }
+      updateMidiConnectionState();
     };
     bind();
     midiAccess.onstatechange = bind;
-    message.textContent = 'Connected. Play a note on your piano to begin.';
+    message.textContent = updateMidiConnectionState() ? 'Keyboard connected. Play a note to begin.' : 'MIDI access is ready. Connect or turn on your keyboard.';
   } catch (_) {
     message.textContent = 'MIDI access was not granted. You can still use the on-screen keys.';
   }
