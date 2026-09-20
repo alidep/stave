@@ -257,6 +257,7 @@
     byId('practice-level-next').disabled = level === 10;
     byId('practice-sample-prev').disabled = sampleIndex === 0;
     byId('practice-sample-next').disabled = sampleIndex === sampleKeys().length-1;
+    byId('practice-complete').hidden = previewPlaying || currentStep < passage.steps.length;
     drawStaff();
     updateHint();
   }

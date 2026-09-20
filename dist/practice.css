@@ -63,6 +63,10 @@
 .practice-inputs button{padding:0;border:0;background:transparent;color:#a6593f;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .practice-inputs button:hover{color:#763923}
 .practice-keyboard-wrap{display:flex;flex-direction:column;align-items:center}
+.practice-complete{display:flex;align-items:center;justify-content:center;gap:9px;width:max-content;max-width:100%;margin:17px auto 4px;padding:10px 16px;border-radius:999px;background:rgba(20,181,162,.11);color:#0c7f72;font-size:14px}
+.practice-complete[hidden]{display:none}
+.practice-complete span{width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:#fff;font-size:12px}
+.practice-complete strong{font-weight:700}
 .practice-hand{width:min(740px,100%)}
 .practice-hand[hidden]{display:none}
 .practice-keyboard-wrap.is-both{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:clamp(24px,4vw,64px);width:100%;max-width:1060px;margin-inline:auto}
@@ -124,6 +128,7 @@
 @media(max-width:959px){.practice-toolbar{gap:18px;margin-top:18px}.practice-toolbar-top,.practice-toolbar-bottom{gap:8px}.practice-score-nav{height:35px}.practice-score-nav button{width:35px}.practice-score-nav svg{width:17px;height:17px}.practice-level-stepper button{width:32px;font-size:18px}#practice-level-value{min-width:58px}#practice-hints{padding-inline:10px}}
 @media(max-width:959px){#practice-hints{height:30px;padding-inline:4px}#practice-play,#practice-expand{width:30px;height:30px}#practice-play img{width:12px;height:14px}#practice-expand{font-size:16px}}
 @media(max-width:959px){.practice-card{padding-bottom:14px}.practice-connect-strip{margin-top:22px;padding-top:13px}}
+@media(max-width:959px){.practice-complete{margin-top:12px;padding:8px 12px;font-size:11px}.practice-complete span{width:18px;height:18px;font-size:10px}}
 @media(max-width:959px){.practice-keyboard-wrap.is-both{display:flex;flex-direction:column;gap:20px;max-width:740px}.practice-keyboard-wrap.is-both .practice-hand{width:100%}.practice-keyboard-wrap.is-both .practice-piano{height:125px}.practice-piano.is-seven .practice-black{height:80px}}
 @media(max-width:959px){.practice-piano.is-wide .practice-black{height:76px}.practice-piano.is-wide .practice-white .key-label{width:18px;height:19px;font-size:9px}.practice-piano.is-wide .practice-black .key-label{width:16px;height:17px;font-size:8px}}
 @media(max-width:959px){.keyboard-map-trigger{width:190px;height:30px;margin-left:auto}.practice-hand-header{min-height:27px}.keyboard-map-dialog{padding:25px 18px 21px}.keyboard-map-dialog h2{font-size:15px;margin-bottom:16px}}
