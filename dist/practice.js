@@ -256,6 +256,10 @@
   function render() {
     byId('practice-title').textContent = passage.title;
     byId('practice-subtitle').textContent = passage.subtitle;
+    const playLabel = fullSongId ? 'Play full song' : 'Play passage';
+    byId('practice-play').setAttribute('aria-label',playLabel);
+    byId('practice-play').title = playLabel;
+    byId('practice-complete').querySelector('strong').textContent = fullSongId ? 'Nicely played — song complete.' : 'Nicely played — passage complete.';
     byId('practice-level-value').textContent = `Level ${level}`;
     byId('practice-level-prev').disabled = level === 1;
     byId('practice-level-next').disabled = level === 10;
