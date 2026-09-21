@@ -230,3 +230,7 @@ body.library-page .song-picker-dialog{margin-top:58px}
 #upload-sheet{background:var(--accent);border-color:var(--accent);color:#fff}
 #upload-sheet:hover{background:#c96849;filter:none}
 .song-search-actions{grid-template-columns:minmax(0,2fr) minmax(220px,280px)}
+.practice-nav-link{padding:8px 2px;border:0;background:transparent;color:var(--ink);font:700 14px/1 Visuelt,sans-serif;cursor:pointer;text-decoration:none;transform:translateY(-7px)}
+.practice-nav-link:hover{color:var(--accent)}.practice-nav-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+body.practice-only-page .practice-section{margin-top:34px}
+@media(max-width:959px){.practice-nav-link{font-size:12px}.topbar-actions{gap:12px}body.practice-only-page .practice-section{margin-top:26px}}

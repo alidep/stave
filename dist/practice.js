@@ -371,7 +371,7 @@
   function showSongLibrary(push=true) {
     songPicker.hidden = false;
     document.body.classList.add('library-page');
-    document.body.classList.remove('song-page');
+    document.body.classList.remove('song-page','practice-only-page');
     if (push) history.pushState({view:'songs'},'', '?view=songs');
     byId('song-search').focus({preventScroll:true});
   }
@@ -381,11 +381,19 @@
     [level,sampleIndex] = location;
     resetPassage();
     songPicker.hidden = true;
-    document.body.classList.remove('library-page');
+    document.body.classList.remove('library-page','practice-only-page');
     document.body.classList.add('song-page');
     if (push) history.pushState({song:songId},'', `?song=${songId}`);
     window.scrollTo({top:0,behavior:'smooth'});
   }
+  function showPracticePage(push=true) {
+    songPicker.hidden = true;
+    document.body.classList.remove('library-page');
+    document.body.classList.add('song-page','practice-only-page');
+    if (push) history.pushState({view:'practice'},'', '?view=practice');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  byId('practice-nav').addEventListener('click',event => { event.preventDefault(); showPracticePage(); });
   byId('pick-song').addEventListener('click',event => { event.preventDefault(); showSongLibrary(); });
   byId('song-grid').addEventListener('click',event => {
     const tile = event.target.closest('.song-tile');
@@ -398,9 +406,10 @@
     const songId = params.get('song');
     if (songId && songLocations[songId]) showSong(songId,false);
     else if (params.get('view') === 'songs') showSongLibrary(false);
+    else if (params.get('view') === 'practice') showPracticePage(false);
     else {
       songPicker.hidden = true;
-      document.body.classList.remove('library-page','song-page');
+      document.body.classList.remove('library-page','song-page','practice-only-page');
     }
   }
   function filterSongs() {
