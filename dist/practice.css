@@ -227,3 +227,5 @@ body.library-page .song-picker-dialog{margin-top:58px}
 @media(max-width:959px){body.library-page .song-picker-dialog{margin-top:38px}}
 .song-search-actions{align-items:start}
 .song-search-actions .sheet-upload-note{margin:8px 4px 0;text-align:left}
+#upload-sheet{background:var(--accent);border-color:var(--accent);color:#fff}
+#upload-sheet:hover{background:#c96849;filter:none}
