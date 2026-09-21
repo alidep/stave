@@ -253,3 +253,20 @@ body.practice-only-page .practice-section{margin-top:34px}
 .practice-nav-link{border:1px solid var(--accent);background:var(--accent);color:#fff}.practice-nav-link:hover{border-color:#c96849;background:#c96849;color:#fff}
 .pick-song-link{border:1px solid #d9d4c9;background:transparent}.pick-song-link:hover{border-color:var(--accent);background:rgba(217,119,87,.05);color:var(--accent)}
 @media(max-width:959px){.practice-nav-link,.pick-song-link{min-height:34px;padding:0 12px;font-size:11px}}
+
+/* Readability pass */
+.lesson-meta{font-size:13px}.hand-label{font-size:13px}.home-feedback{font-size:14px}.instrument-caption{font-size:15px}.audio-credit{font-size:12px!important}
+.practice-title-block h3{font-size:27px}.practice-title-block p{font-size:14px;letter-spacing:.08em}
+#practice-level-value{font-size:15px}#practice-hints{font-size:13px}.practice-keyboard-label{font-size:13px}.keyboard-map-legend{font-size:12px}
+.practice-connect-instruction,.practice-connect-strip summary{font-size:13px}.practice-connect-options button{font-size:14px}
+.sheet-upload-note{font-size:13px!important}.sheet-file-status{font-size:13px}.sheet-page-number{font-size:11px}
+.song-tile strong{font-size:16px}.song-tile small{font-size:13px}.library-tabs small{font-size:13px}.song-art-credit{font-size:12px}.artist-tile small{font-size:13px}
+.practice-nav-link,.pick-song-link{font-size:14px}
+@media(max-width:959px){
+  .lesson-meta,.hand-label{font-size:12px}.practice-title-block h3{font-size:23px}.practice-title-block p{font-size:12px}
+  #practice-level-value{font-size:13px}#practice-hints{font-size:12px}.practice-keyboard-label{font-size:11px}
+  .practice-connect-instruction{font-size:11px}.practice-connect-strip summary{font-size:12px}.practice-complete{font-size:13px}
+  .practice-piano .key-label{font-size:11px}.practice-black .key-label{font-size:10px}.practice-piano.is-wide .practice-white .key-label{font-size:10px}.practice-piano.is-wide .practice-black .key-label{font-size:9px}
+  .song-tile strong{font-size:14px}.song-tile small{font-size:12px}.artist-tile strong{font-size:16px}.artist-tile small{font-size:12px}
+  .practice-nav-link,.pick-song-link{font-size:12px}.sheet-upload-note{font-size:12px!important}.song-art-credit{font-size:11px}
+}
