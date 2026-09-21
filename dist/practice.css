@@ -270,3 +270,7 @@ body.practice-only-page .practice-section{margin-top:34px}
   .song-tile strong{font-size:14px}.song-tile small{font-size:12px}.artist-tile strong{font-size:16px}.artist-tile small{font-size:12px}
   .practice-nav-link,.pick-song-link{font-size:12px}.sheet-upload-note{font-size:12px!important}.song-art-credit{font-size:11px}
 }
+.song-picker-dialog .song-search-actions{grid-template-columns:minmax(0,1fr) 280px;column-gap:16px}
+.song-picker-dialog .song-search-actions .song-search{width:100%;max-width:none}
+.song-picker-dialog .song-search-actions .sheet-actions{width:100%;max-width:none}
+@media(max-width:959px){.song-picker-dialog .song-search-actions{display:flex;gap:14px}.song-picker-dialog .song-search-actions .sheet-actions{width:100%}}
