@@ -229,8 +229,11 @@
     const container = byId('practice-staff');
     if (renderedPassage !== passage) {
       if (!window.ABCJS) { container.textContent = 'Music notation is unavailable.'; return; }
+      const staffWidth = Math.max(1900,passage.bars.length*238);
+      container.style.width = `${staffWidth}px`;
+      container.style.minWidth = `${staffWidth}px`;
       window.ABCJS.renderAbc(container,scoreAbc(),{
-        add_classes:true,staffwidth:1900,scale:1.25,paddingtop:0,paddingbottom:0,
+        add_classes:true,staffwidth:staffWidth,scale:1.25,paddingtop:0,paddingbottom:0,
         paddingleft:0,paddingright:0,oneSvgPerLine:false
       });
       const svg = container.querySelector('svg');
