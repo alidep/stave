@@ -368,8 +368,19 @@
   const songPicker = byId('song-picker-dialog');
   document.querySelector('.screen').append(songPicker);
   const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],jingle:[3,5],bridge:[3,6],saints:[3,7]};
+  function renderRelatedSongs(songId) {
+    const current = songs[songId];
+    const ids = Object.keys(songLocations).filter(id => id !== songId);
+    ids.sort((a,b) => Number(songs[b].composer === current.composer)-Number(songs[a].composer === current.composer));
+    const related = ids.slice(0,4);
+    const sameArtistCount = related.filter(id => songs[id].composer === current.composer).length;
+    byId('related-songs-title').textContent = sameArtistCount ? `More by ${current.composer}` : 'More songs';
+    byId('related-song-grid').innerHTML = related.map((id,index) => `<button class="related-song-tile" type="button" data-song="${id}"><span class="song-disc has-art" style="--spin-offset:-${index*9+4}s"><img src="assets/songs/${id}.webp" alt=""></span><strong>${songs[id].title}</strong><small>${songs[id].composer}</small></button>`).join('');
+    byId('related-songs').hidden = false;
+  }
   function showSongLibrary(push=true) {
     songPicker.hidden = false;
+    byId('related-songs').hidden = true;
     document.body.classList.add('library-page');
     document.body.classList.remove('song-page','practice-only-page');
     if (push) history.pushState({view:'songs'},'', '?view=songs');
@@ -383,6 +394,7 @@
     songPicker.hidden = true;
     document.body.classList.remove('library-page','practice-only-page');
     document.body.classList.add('song-page');
+    renderRelatedSongs(songId);
     if (push) history.pushState({song:songId},'', `?song=${songId}`);
     window.scrollTo({top:0,behavior:'smooth'});
   }
@@ -390,15 +402,22 @@
     songPicker.hidden = true;
     document.body.classList.remove('library-page');
     document.body.classList.add('song-page','practice-only-page');
+    byId('related-songs').hidden = true;
     if (push) history.pushState({view:'practice'},'', '?view=practice');
     window.scrollTo({top:0,behavior:'smooth'});
   }
   byId('practice-nav').addEventListener('click',event => { event.preventDefault(); showPracticePage(); });
   byId('pick-song').addEventListener('click',event => { event.preventDefault(); showSongLibrary(); });
+  byId('related-practice-link').addEventListener('click',event => { event.preventDefault(); showPracticePage(); });
+  byId('related-all-songs').addEventListener('click',event => { event.preventDefault(); showSongLibrary(); });
   byId('song-grid').addEventListener('click',event => {
     const tile = event.target.closest('.song-tile');
     if (!tile) return;
     showSong(tile.dataset.song);
+  });
+  byId('related-song-grid').addEventListener('click',event => {
+    const tile = event.target.closest('.related-song-tile');
+    if (tile) showSong(tile.dataset.song);
   });
   window.addEventListener('popstate',() => applyRoute());
   function applyRoute() {
@@ -409,6 +428,7 @@
     else if (params.get('view') === 'practice') showPracticePage(false);
     else {
       songPicker.hidden = true;
+      byId('related-songs').hidden = true;
       document.body.classList.remove('library-page','song-page','practice-only-page');
     }
   }
