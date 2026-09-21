@@ -31,12 +31,13 @@
     bridge: {title:'London Bridge',composer:'Traditional',meter:'4/4',bars:[q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],[n(62,2),n(64,2),n(65,4)],[n(64,2),n(65,2),n(67,4)],q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],q([62,67,64,60]),[n(60,8)]],bass:[48,48,55,48,48,55,48,48]},
     saints: {title:'When the Saints Go Marching In',composer:'Traditional',meter:'4/4',bars:[q([60,64,65,67]),q([60,64,65,67]),q([60,64,65,67]),q([64,60,64,62]),q([64,64,62,60]),q([60,64,67,67]),q([67,65,64,62]),[n(60,8)]],bass:[48,48,53,55,48,55,53,48]}
   };
+  const fullSongRepeats = {moon:3,mary:4,brother:2,joy:2,twinkle:1,elise:4,jingle:3,bridge:3,saints:3};
   const piano = byId('practice-piano');
   const leftPiano = byId('practice-left-piano');
   const keyboardRoot = byId('practice-keyboard-wrap');
   const card = byId('practice-card');
   const mapDialog = byId('keyboard-map-dialog');
-  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true;
+  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null;
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
   let completedNotes = new Set();
   const previewTimers = [];
@@ -153,13 +154,16 @@
   }
 
   function makePassage() {
-    const key = sampleKeys()[sampleIndex];
+    const key = fullSongId || sampleKeys()[sampleIndex];
     const song = songs[key];
     const soloHand = level >= 3 ? 'both' : level === 1 && sampleIndex !== 1 ? 'left' : 'right';
-    const bars = soloHand === 'left' ? song.bars.map(bar => bar.map(note => n(note.midi-12,note.duration))) : song.bars;
+    const repeats = fullSongId ? fullSongRepeats[key] || 1 : 1;
+    const songBars = Array.from({length:repeats},() => song.bars).flat();
+    const songBass = Array.from({length:repeats},() => song.bass).flat();
+    const bars = soloHand === 'left' ? songBars.map(bar => bar.map(note => note.rest ? {...note} : n(note.midi-12,note.duration))) : songBars;
     const duration = song.meter === '3/8' ? 6 : 8;
-    const leftBars = soloHand === 'both' ? song.bass.map(root => bassBar(root,duration)) : null;
-    const subtitle = `${song.composer} · ${soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
+    const leftBars = soloHand === 'both' ? songBass.map(root => bassBar(root,duration)) : null;
+    const subtitle = `${song.composer} · ${fullSongId ? 'full song' : soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
     const events = [];
     const collect = (voiceBars,hand) => {
       let tick = 0, ordinal = 0;
@@ -390,6 +394,7 @@
     const location = songLocations[songId];
     if (!location) return;
     [level,sampleIndex] = location;
+    fullSongId = songId;
     resetPassage();
     songPicker.hidden = true;
     document.body.classList.remove('library-page','practice-only-page');
@@ -399,6 +404,8 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   function showPracticePage(push=true) {
+    fullSongId = null;
+    resetPassage();
     songPicker.hidden = true;
     document.body.classList.remove('library-page');
     document.body.classList.add('song-page','practice-only-page');
