@@ -161,7 +161,14 @@
     const repeats = fullSongId ? fullSongRepeats[key] || 1 : 1;
     const songBars = Array.from({length:repeats},() => song.bars).flat();
     const songBass = Array.from({length:repeats},() => song.bass).flat();
-    const bars = soloHand === 'left' ? songBars.map(bar => bar.map(note => note.rest ? {...note} : n(note.midi-12,note.duration))) : songBars;
+    const fitRightHand = note => {
+      if (note.rest) return {...note};
+      let midi = note.midi;
+      while (midi < 60) midi += 12;
+      while (midi > 79) midi -= 12;
+      return n(midi,note.duration);
+    };
+    const bars = soloHand === 'left' ? songBars.map(bar => bar.map(note => note.rest ? {...note} : n(note.midi-12,note.duration))) : soloHand === 'right' ? songBars.map(bar => bar.map(fitRightHand)) : songBars;
     const duration = song.meter === '3/8' ? 6 : 8;
     const leftBars = soloHand === 'both' ? songBass.map(root => bassBar(root,duration)) : null;
     const subtitle = `${song.composer} · ${fullSongId ? song.arrangement || 'full song' : soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
