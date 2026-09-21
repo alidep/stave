@@ -275,6 +275,13 @@ body.practice-only-page .practice-section{margin-top:34px}
 .song-picker-dialog .song-search-actions .sheet-actions{width:100%;max-width:none}
 @media(max-width:959px){.song-picker-dialog .song-search-actions{display:flex;gap:14px}.song-picker-dialog .song-search-actions .sheet-actions{width:100%}}
 .artist-tile small{text-transform:uppercase;font-family:JetBrains,monospace;font-weight:600;letter-spacing:.1em}
+.sheet-file-status:empty{display:none}
+.library-tabs{margin-top:24px}
+@media(max-width:959px){.library-tabs{margin-top:22px}}
+@media(min-width:960px){
+  .song-search-actions .sheet-actions{position:relative}
+  .song-search-actions .sheet-upload-note{position:absolute;top:calc(100% + 7px);right:0;left:0;margin:0 4px}
+}
 
 /* Recommendations below a full-song player */
 .related-songs{margin:58px 0 18px;padding-top:46px;border-top:1px solid #ded9cf}
