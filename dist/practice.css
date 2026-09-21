@@ -306,3 +306,13 @@ body.song-page:not(.practice-only-page) .pick-song-link{border-color:var(--accen
 body.practice-only-page .practice-nav-link:hover,
 body.library-page .pick-song-link:hover,
 body.song-page:not(.practice-only-page) .pick-song-link:hover{border-color:#c96849;background:#c96849;color:#fff}
+
+/* Let the playing surface use the full screen width. */
+@media(min-width:960px){
+  .practice-section{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+  .practice-card{padding-inline:clamp(34px,5vw,82px);border-right:0;border-left:0;border-radius:0}
+}
+@media(max-width:959px){
+  .practice-section{width:calc(100% + 44px);margin-right:-22px;margin-left:-22px}
+  .practice-card{padding-right:22px;padding-left:22px;border:0;border-radius:0;background:transparent;box-shadow:none}
+}
