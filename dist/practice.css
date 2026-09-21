@@ -274,3 +274,4 @@ body.practice-only-page .practice-section{margin-top:34px}
 .song-picker-dialog .song-search-actions .song-search{width:100%;max-width:none}
 .song-picker-dialog .song-search-actions .sheet-actions{width:100%;max-width:none}
 @media(max-width:959px){.song-picker-dialog .song-search-actions{display:flex;gap:14px}.song-picker-dialog .song-search-actions .sheet-actions{width:100%}}
+.artist-tile small{text-transform:uppercase;font-family:JetBrains,monospace;font-weight:600;letter-spacing:.1em}
