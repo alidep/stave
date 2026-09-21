@@ -229,3 +229,4 @@ body.library-page .song-picker-dialog{margin-top:58px}
 .song-search-actions .sheet-upload-note{margin:8px 4px 0;text-align:left}
 #upload-sheet{background:var(--accent);border-color:var(--accent);color:#fff}
 #upload-sheet:hover{background:#c96849;filter:none}
+.song-search-actions{grid-template-columns:minmax(0,2fr) minmax(220px,280px)}
