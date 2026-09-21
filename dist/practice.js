@@ -29,9 +29,10 @@
     elise: {title:'Für Elise',composer:'Beethoven',meter:'3/8',bars:eliseBars,bass:[null,57,57,52,57,57,57]},
     jingle: {title:'Jingle Bells',composer:'James Pierpont',meter:'4/4',bars:[[n(64,2),n(64,2),n(64,4)],[n(64,2),n(64,2),n(64,4)],q([64,67,60,62]),[n(64,8)],q([65,65,65,65]),q([65,64,64,64]),q([64,62,62,64]),[n(62,4),n(67,4)]],bass:[48,48,55,48,53,48,55,48]},
     bridge: {title:'London Bridge',composer:'Traditional',meter:'4/4',bars:[q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],[n(62,2),n(64,2),n(65,4)],[n(64,2),n(65,2),n(67,4)],q([67,69,67,65]),[n(64,2),n(65,2),n(67,4)],q([62,67,64,60]),[n(60,8)]],bass:[48,48,55,48,48,55,48,48]},
-    saints: {title:'When the Saints Go Marching In',composer:'Traditional',meter:'4/4',bars:[q([60,64,65,67]),q([60,64,65,67]),q([60,64,65,67]),q([64,60,64,62]),q([64,64,62,60]),q([60,64,67,67]),q([67,65,64,62]),[n(60,8)]],bass:[48,48,53,55,48,55,53,48]}
+    saints: {title:'When the Saints Go Marching In',composer:'Traditional',meter:'4/4',bars:[q([60,64,65,67]),q([60,64,65,67]),q([60,64,65,67]),q([64,60,64,62]),q([64,64,62,60]),q([60,64,67,67]),q([67,65,64,62]),[n(60,8)]],bass:[48,48,53,55,48,55,53,48]},
+    hallelujah: {title:'Hallelujah',composer:'Leonard Cohen',arrangement:'practice arrangement',meter:'4/4',bars:[q([60,64,67,64]),q([57,60,64,60]),q([60,64,67,72]),q([67,64,62,60]),q([65,69,72,69]),q([67,71,74,71]),q([60,64,67,64]),[n(60,8)]],bass:[48,45,48,55,53,55,48,48]}
   };
-  const fullSongRepeats = {moon:3,mary:4,brother:2,joy:2,twinkle:1,elise:4,jingle:3,bridge:3,saints:3};
+  const fullSongRepeats = {moon:3,mary:4,brother:2,joy:2,twinkle:1,elise:4,jingle:3,bridge:3,saints:3,hallelujah:4};
   const piano = byId('practice-piano');
   const leftPiano = byId('practice-left-piano');
   const keyboardRoot = byId('practice-keyboard-wrap');
@@ -163,7 +164,7 @@
     const bars = soloHand === 'left' ? songBars.map(bar => bar.map(note => note.rest ? {...note} : n(note.midi-12,note.duration))) : songBars;
     const duration = song.meter === '3/8' ? 6 : 8;
     const leftBars = soloHand === 'both' ? songBass.map(root => bassBar(root,duration)) : null;
-    const subtitle = `${song.composer} · ${fullSongId ? 'full song' : soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
+    const subtitle = `${song.composer} · ${fullSongId ? song.arrangement || 'full song' : soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
     const events = [];
     const collect = (voiceBars,hand) => {
       let tick = 0, ordinal = 0;
@@ -263,8 +264,8 @@
     byId('practice-level-value').textContent = `Level ${level}`;
     byId('practice-level-prev').disabled = level === 1;
     byId('practice-level-next').disabled = level === 10;
-    byId('practice-sample-prev').disabled = sampleIndex === 0;
-    byId('practice-sample-next').disabled = sampleIndex === sampleKeys().length-1;
+    byId('practice-sample-prev').disabled = !!fullSongId || sampleIndex === 0;
+    byId('practice-sample-next').disabled = !!fullSongId || sampleIndex === sampleKeys().length-1;
     byId('practice-complete').hidden = previewPlaying || currentStep < passage.steps.length;
     drawStaff();
     updateHint();
@@ -375,7 +376,7 @@
   mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
   const songPicker = byId('song-picker-dialog');
   document.querySelector('.screen').append(songPicker);
-  const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],jingle:[3,5],bridge:[3,6],saints:[3,7]};
+  const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],hallelujah:[2,3],jingle:[3,5],bridge:[3,6],saints:[3,7]};
   function renderRelatedSongs(songId) {
     const current = songs[songId];
     const ids = Object.keys(songLocations).filter(id => id !== songId);
