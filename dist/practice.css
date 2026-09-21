@@ -234,3 +234,22 @@ body.library-page .song-picker-dialog{margin-top:58px}
 .practice-nav-link:hover{color:var(--accent)}.practice-nav-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
 body.practice-only-page .practice-section{margin-top:34px}
 @media(max-width:959px){.practice-nav-link{font-size:12px}.topbar-actions{gap:12px}body.practice-only-page .practice-section{margin-top:26px}}
+.song-search-actions{column-gap:10px}
+.song-search-actions .sheet-upload-note{font-size:12px;line-height:1.35;color:#777168}
+.library-tabs{display:flex;align-items:baseline;gap:28px;margin:45px 0 20px}
+.library-tabs button{padding:0;border:0;background:transparent;color:#b5b1a8;font:700 26px/1.1 Visuelt,sans-serif;cursor:pointer}
+.library-tabs button.is-active{color:var(--ink)}
+.library-tabs small{margin-left:auto;color:#858079;font-size:12px}
+.artist-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:34px 26px}
+.artist-grid[hidden],.song-grid[hidden]{display:none}
+.artist-tile{min-width:0;padding:0;border:0;background:transparent;color:var(--ink);text-align:center;cursor:pointer}
+.artist-tile strong,.artist-tile small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.artist-tile strong{margin-top:2px;font-size:18px}.artist-tile small{margin-top:8px;color:#8c867e;font:500 11px JetBrains,monospace;letter-spacing:.12em}
+.artist-grid .song-disc{width:min(170px,100%)}
+.artist-grid .song-disc img{width:100%;height:100%;object-fit:cover;animation:song-record-spin 32s linear infinite;will-change:transform}
+.artist-grid .artist-tile:nth-child(2) img{animation-delay:-11s}.artist-grid .artist-tile:nth-child(3) img{animation-delay:-23s}
+@media(max-width:959px){.library-tabs{margin-top:34px;gap:22px}.library-tabs button{font-size:22px}.artist-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 14px}.artist-grid .song-disc{width:min(122px,100%)}.artist-tile strong{font-size:14px}}
+.practice-nav-link,.pick-song-link{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0 17px;border-radius:999px;font-size:13px;transform:translateY(-7px)}
+.practice-nav-link{border:1px solid var(--accent);background:var(--accent);color:#fff}.practice-nav-link:hover{border-color:#c96849;background:#c96849;color:#fff}
+.pick-song-link{border:1px solid #d9d4c9;background:transparent}.pick-song-link:hover{border-color:var(--accent);background:rgba(217,119,87,.05);color:var(--accent)}
+@media(max-width:959px){.practice-nav-link,.pick-song-link{min-height:34px;padding:0 12px;font-size:11px}}

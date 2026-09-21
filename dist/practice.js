@@ -412,6 +412,7 @@
       document.body.classList.remove('library-page','song-page','practice-only-page');
     }
   }
+  let libraryView = 'songs';
   function filterSongs() {
     const query = byId('song-search').value.trim().toLowerCase();
     let visible = 0;
@@ -420,10 +421,36 @@
       tile.hidden = !show;
       if (show) visible++;
     });
-    byId('song-count').textContent = `${visible} ${visible === 1 ? 'song' : 'songs'}`;
-    byId('song-empty').hidden = visible > 0;
+    let artists = 0;
+    document.querySelectorAll('.artist-tile').forEach(tile => {
+      const show = !query || tile.dataset.artist.includes(query);
+      tile.hidden = !show;
+      if (show) artists++;
+    });
+    const count = libraryView === 'artists' ? artists : visible;
+    byId('song-count').textContent = `${count} ${libraryView === 'artists' ? (count === 1 ? 'artist' : 'artists') : (count === 1 ? 'song' : 'songs')}`;
+    byId('song-empty').hidden = count > 0;
   }
   byId('song-search').addEventListener('input',filterSongs);
+  document.querySelector('.library-tabs').addEventListener('click',event => {
+    const tab = event.target.closest('[data-library-tab]');
+    if (!tab) return;
+    libraryView = tab.dataset.libraryTab;
+    document.querySelectorAll('[data-library-tab]').forEach(item => {
+      const active = item === tab;
+      item.classList.toggle('is-active',active);
+      item.setAttribute('aria-selected',String(active));
+    });
+    byId('artist-grid').hidden = libraryView !== 'artists';
+    byId('song-grid').hidden = libraryView !== 'songs';
+    filterSongs();
+  });
+  byId('artist-grid').addEventListener('click',event => {
+    const artist = event.target.closest('.artist-tile')?.dataset.artist;
+    if (!artist) return;
+    byId('song-search').value = artist;
+    document.querySelector('[data-library-tab="songs"]').click();
+  });
   function chooseSheetFile(input) {
     const files = [...(input.files || [])];
     if (!files.length) return;
