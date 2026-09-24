@@ -272,7 +272,6 @@ function updateMidiConnectionState() {
   menu?.classList.toggle('is-connected',!!connected);
   if (connected && menu) menu.open = false;
   if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'KEYBOARD CONNECTED' : 'CONNECT KEYBOARD';
-  if ($('practice-midi')) $('practice-midi').textContent = connected ? 'MIDI piano connected' : 'Connect MIDI piano';
   if (connected && $('midi-dialog').open) $('midi-dialog').close();
   return connected;
 }
@@ -305,6 +304,12 @@ $('midi-connect').onclick = async () => {
   } catch (_) {
     message.textContent = 'MIDI access was not granted. You can still use the on-screen keys.';
   }
+};
+$('midi-bluetooth').onclick = () => {
+  $('midi-message').textContent = 'Pair your piano in your device’s Bluetooth settings, then return here and choose Connect with a USB cable to allow MIDI access.';
+};
+$('midi-help').onclick = () => {
+  $('midi-message').textContent = 'Turn on your piano, connect it by USB or Bluetooth MIDI, then allow MIDI access when your browser asks.';
 };
 
 showSide('intro');

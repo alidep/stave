@@ -377,7 +377,8 @@
     try { if (document.fullscreenElement === card) await document.exitFullscreen(); else await card.requestFullscreen(); }
     catch (_) { /* Fullscreen is unavailable in this browser. */ }
   });
-  byId('practice-midi').addEventListener('click',() => {
+  byId('practice-connect-menu').querySelector('summary').addEventListener('click',event => {
+    event.preventDefault();
     window.practiceMidiActive = true;
     const menu = byId('practice-connect-menu');
     if (menu.classList.contains('is-connected')) { menu.open = false; return; }
@@ -575,7 +576,7 @@
     microphoneStream?.getTracks().forEach(track => track.stop());
     microphoneContext?.close();
     microphoneStream = microphoneContext = microphoneSource = microphoneAnalyser = null;
-    byId('practice-mic').textContent = 'Use microphone';
+    byId('practice-mic').querySelector('strong').textContent = 'Use your microphone';
   }
 
   byId('practice-mic').addEventListener('click',async () => {
@@ -588,8 +589,9 @@
       microphoneAnalyser = microphoneContext.createAnalyser();
       microphoneAnalyser.fftSize = 2048;
       microphoneSource.connect(microphoneAnalyser);
-      byId('practice-mic').textContent = 'Stop microphone';
+      byId('practice-mic').querySelector('strong').textContent = 'Stop microphone';
       listenToMicrophone();
+      byId('midi-dialog').close();
     } catch (_) {
       stopMicrophone();
       window.alert('Microphone access is unavailable in this browser.');
