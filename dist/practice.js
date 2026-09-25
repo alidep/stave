@@ -52,13 +52,13 @@
       button.type = 'button';
       button.className = 'practice-white';
       button.dataset.midi = midi;
-      button.setAttribute('aria-label',`${note} note, ${key === ',' ? 'comma' : key} key`);
-      button.innerHTML = `<span class="key-label">${key}</span>`;
+      button.setAttribute('aria-label',key ? `${note} note, ${key === ',' ? 'comma' : key} key` : `${note} piano key`);
+      button.innerHTML = key ? `<span class="key-label">${key}</span>` : '';
       button.addEventListener('click',() => playNote(midi));
       target.append(button);
     }
     target.children[whiteList.length-1].style.borderTopRightRadius = '8px';
-    const blackWidth = target.classList.contains('is-wide') ? 6.5 : whiteList.length <= 7 ? 9 : 7;
+    const blackWidth = target.classList.contains('full-88') ? 1.25 : target.classList.contains('is-wide') ? 6.5 : whiteList.length <= 7 ? 9 : 7;
     for (const [midi,note,key] of blackList) {
       const button = document.createElement('button');
       button.type = 'button';
@@ -67,8 +67,8 @@
       const precedingWhites = whiteList.filter(([whiteMidi]) => whiteMidi < midi).length;
       button.style.left = `${precedingWhites / whiteList.length * 100 - blackWidth / 2}%`;
       button.style.width = `${blackWidth}%`;
-      button.setAttribute('aria-label',`${note} note, ${key} key`);
-      button.innerHTML = `<span class="key-label">${key}</span>`;
+      button.setAttribute('aria-label',key ? `${note} note, ${key} key` : `${note} piano key`);
+      button.innerHTML = key ? `<span class="key-label">${key}</span>` : '';
       button.addEventListener('click',() => playNote(midi));
       target.append(button);
     }
@@ -76,6 +76,16 @@
 
   function noteName(midi) {
     return `${['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi%12]}${Math.floor(midi/12)-1}`;
+  }
+
+  function buildFullKeyboard() {
+    const whitePitches = new Set([0,2,4,5,7,9,11]);
+    const whites = [], blacks = [];
+    for (let midi=21; midi<=108; midi++) {
+      const key = [midi,noteName(midi),''];
+      (whitePitches.has(midi%12) ? whites : blacks).push(key);
+    }
+    appendKeyboard(byId('midi-full-piano'),whites,blacks);
   }
 
   function keyboardOverview(leftRange,rightRange,expanded=false) {
@@ -134,7 +144,10 @@
     keyboardMap = new Map((leftOnly ? [...leftWhiteKeys,...leftBlackKeys] : both ? [...rightWhites,...rightBlacks,...leftWhiteKeys,...leftBlackKeys] : [...whiteKeys,...blackKeys]).map(([midi,,key]) => [key.toLowerCase(),midi]));
   }
 
-  function keyFor(midi) { return keyboardRoot.querySelector(`[data-midi="${midi}"]`); }
+  function keyFor(midi) {
+    const root = document.body.classList.contains('midi-connected') ? byId('midi-full-piano') : keyboardRoot;
+    return root.querySelector(`[data-midi="${midi}"]`);
+  }
 
   function sampleKeys() {
     if (level === 1) return ['moon','mary','brother'];
@@ -598,6 +611,7 @@
     }
   });
 
+  buildFullKeyboard();
   resetPassage();
   applyRoute();
 })();

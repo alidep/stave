@@ -354,3 +354,20 @@ body.song-page:not(.practice-only-page) .pick-song-link:hover{border-color:#c968
   .midi-method svg{width:28px;height:28px}.midi-method strong{font-size:18px}.midi-method small{font-size:14px}
   .midi-divider{margin:22px 0;font-size:11px}.midi-microphone{min-height:82px}
 }
+
+/* A connected physical piano replaces the hand-specific on-screen keys. */
+.midi-full-piano-wrap{display:none;width:100%;margin:30px auto 0}
+body.midi-connected .practice-keyboard-wrap{display:none!important}
+body.midi-connected .keyboard-map-trigger{display:none!important}
+@media(min-width:960px){
+  body.midi-connected .midi-full-piano-wrap{display:block}
+  .midi-full-piano-wrap>.practice-keyboard-label{margin:0 0 11px}
+  .practice-piano.full-88{width:100%;height:158px}
+  .practice-piano.full-88 .practice-white{min-width:0;padding:0}
+  .practice-piano.full-88 .practice-black{height:98px;padding:0}
+  .practice-piano.full-88 .key-label{display:none}
+}
+@media(max-width:959px){
+  body.midi-connected .midi-full-piano-wrap{display:none}
+  body.midi-connected .practice-connect-strip{margin-top:18px}
+}
