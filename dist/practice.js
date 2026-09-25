@@ -407,8 +407,7 @@
     const ids = Object.keys(songLocations).filter(id => id !== songId);
     ids.sort((a,b) => Number(songs[b].composer === current.composer)-Number(songs[a].composer === current.composer));
     const related = ids.slice(0,4);
-    const sameArtistCount = related.filter(id => songs[id].composer === current.composer).length;
-    byId('related-songs-title').textContent = sameArtistCount ? `More by ${current.composer}` : 'More songs';
+    byId('related-songs-title').textContent = 'Play another song';
     byId('related-song-grid').innerHTML = related.map((id,index) => `<button class="related-song-tile" type="button" data-song="${id}"><span class="song-disc has-art" style="--spin-offset:-${index*9+4}s"><img src="assets/songs/${id}.webp" alt=""></span><strong>${songs[id].title}</strong><small>${songs[id].composer}</small></button>`).join('');
     byId('related-songs').hidden = false;
   }
