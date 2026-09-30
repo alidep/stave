@@ -689,6 +689,51 @@
     [...container.querySelectorAll('.abcjs-note')].forEach((note,index) => note.classList.add('benefit-result',`result-${index+1}`));
   }
 
+  let benefitPlaybackTimers = [];
+  const benefitMelody = [76,75,76,75,76,71];
+  const benefitResults = ['clean','wrong','clean','paused','clean','clean'];
+
+  function stopBenefitPlayback(reset=false) {
+    benefitPlaybackTimers.forEach(clearTimeout);
+    benefitPlaybackTimers = [];
+    const button = byId('benefit-score-play');
+    const progress = byId('benefit-score-progress');
+    button?.classList.remove('is-playing');
+    button?.setAttribute('aria-label','Play Für Elise example');
+    if (progress) {
+      progress.style.transition = 'none';
+      if (reset) progress.style.width = '0%';
+    }
+  }
+
+  function playBenefitFeedback() {
+    const container = byId('benefit-feedback-score');
+    const button = byId('benefit-score-play');
+    const progress = byId('benefit-score-progress');
+    if (!container || !button || !progress) return;
+    if (button.classList.contains('is-playing')) { stopBenefitPlayback(true); return; }
+    stopBenefitPlayback(true);
+    const notes = [...container.querySelectorAll('.abcjs-note')];
+    notes.forEach(note => note.classList.remove('is-clean','is-wrong','is-paused','is-current'));
+    button.classList.add('is-playing');
+    button.setAttribute('aria-label','Stop Für Elise example');
+    const interval = 520;
+    const total = benefitMelody.length * interval;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      progress.style.transition = `width ${total}ms linear`;
+      progress.style.width = '100%';
+    }));
+    benefitMelody.forEach((midi,index) => benefitPlaybackTimers.push(setTimeout(() => {
+      notes.forEach(note => note.classList.remove('is-current'));
+      notes[index]?.classList.add('is-current',`is-${benefitResults[index]}`);
+      window.playStaveNote?.(midi,.42);
+    },index*interval)));
+    benefitPlaybackTimers.push(setTimeout(() => {
+      notes.forEach(note => note.classList.remove('is-current'));
+      stopBenefitPlayback(false);
+    },total));
+  }
+
   function renderLevelDemo() {
     const select = byId('benefit-level-select');
     const container = byId('benefit-level-score');
@@ -702,6 +747,7 @@
   }
 
   const benefitLevelSelect = byId('benefit-level-select');
+  byId('benefit-score-play')?.addEventListener('click',playBenefitFeedback);
   benefitLevelSelect?.addEventListener('change',renderLevelDemo);
   if (benefitLevelSelect && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const animatedLevels = ['1','4','7','10'];
