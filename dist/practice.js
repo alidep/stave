@@ -674,7 +674,7 @@
   });
 
   const benefitLevelScores = {
-    1: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 D2 E2|D2 E2 B2|d2 c2 A2|`,
+    1: `X:1\nM:3/4\nL:1/16\nK:Am\nE2 ^D2 E2 D2 E2 B2|d4 c4 A4|A2 B2 c2 d2 e2 A2|`,
     2: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2|D2 E2 B2|d2 c2 A2|`,
     3: `X:1\nM:3/4\nL:1/16\nK:Am\nE4 ^D4 E4|D4 E4 B4|d4 c4 A4|`,
     4: `X:1\nM:3/4\nL:1/16\nK:Am\nE2 ^D2 E2 D2 E2 B2|d4 c4 A4|A2 B2 c2 d2 e2 A2|`,
@@ -754,7 +754,8 @@
     window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel],{
       add_classes:true,staffwidth:demoLevel >= 5 ? 370 : 400,scale:demoLevel >= 5 ? 1.02 : 1.35,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:18
     });
-    container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 7 ? ' with two hands' : ''}`);
+    byId('benefit-level-label').textContent = `LEVEL ${requested}`;
+    container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 5 ? ' with two hands' : ''}`);
   }
 
   const benefitLevelSelect = byId('benefit-level-select');
@@ -770,13 +771,13 @@
   }
   benefitLevelSelect?.addEventListener('change',renderLevelDemo);
   if (benefitLevelSelect && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const animatedLevels = ['1','2','3','4','5','6','7','8','9','10'];
+    const animatedLevels = ['1','5','10'];
     let animatedLevelIndex = 0;
     window.setInterval(() => {
       animatedLevelIndex = (animatedLevelIndex + 1) % animatedLevels.length;
       benefitLevelSelect.value = animatedLevels[animatedLevelIndex];
       renderLevelDemo();
-    }, 1800);
+    }, 2800);
   }
 
   buildFullKeyboard();
