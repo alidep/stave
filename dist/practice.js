@@ -407,8 +407,6 @@
     updateHint();
   });
   byId('practice-play').addEventListener('click',playPreview);
-  byId('completion-listen').addEventListener('click',playPreview);
-  byId('completion-review').addEventListener('click',() => byId('practice-score-viewport').scrollIntoView({behavior:'smooth',block:'center'}));
   byId('completion-retake').addEventListener('click',resetPassage);
   byId('completion-next').addEventListener('click',() => {
     if (fullSongId) { showSongLibrary(); return; }
