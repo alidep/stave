@@ -461,7 +461,7 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 .animated-score .abcjs-note.is-clean path{fill:var(--green)!important;stroke:var(--green)!important}
 .animated-score .abcjs-note.is-wrong path{fill:#e45b52!important;stroke:#e45b52!important}
 .animated-score .abcjs-note.is-paused path{fill:#d5a14a!important;stroke:#d5a14a!important}
-.animated-score .abcjs-note.is-current path{filter:drop-shadow(0 2px 2px rgba(28,28,28,.12))}
+.animated-score .abcjs-note.is-current path{filter:none}
 @media(max-width:959px){.benefit-score-play{width:28px;height:28px}.benefit-score-actions{gap:8px}}
 
 .level-demo .benefit-abc svg{width:100%!important;max-width:none!important}
