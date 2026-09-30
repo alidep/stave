@@ -11,7 +11,7 @@
     @font-face{font-family:Visuelt;src:url("assets/visuelt-regular.ttf") format("truetype");font-weight:400;font-display:swap}
     @font-face{font-family:Visuelt;src:url("assets/visuelt-bold.ttf") format("truetype");font-weight:700 900;font-display:swap}
     @font-face{font-family:JetBrains;src:url("assets/jetbrains-mono.woff2") format("woff2");font-weight:400 700;font-display:swap}
-    :root{--paper:#fcf9ee;--ink:#1c1c1c;--accent:#84A770;--green:#14b5a2;--red:#c96b57}
+    :root{--paper:#fcf9ee;--ink:#1c1c1c;--accent:#84A770;--green:#84A770;--red:#c96b57}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;}body{background:linear-gradient(180deg,#f7f5ee,#ede9dc);color:var(--ink);font-family:Visuelt,-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased}
     button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:2px solid #577dbb;outline-offset:3px}button:disabled{cursor:default}
     .stage{min-height:100svh;display:grid;place-items:center;padding:8px;overflow:auto}
@@ -42,7 +42,7 @@
     @keyframes key-darken{0%,100%{opacity:0}50%{opacity:1}}
     .home-feedback{font-family:Visuelt,sans-serif;font-size:12px;font-weight:700;line-height:1.2;margin:0 0 0 auto;text-align:right;color:var(--ink)}.home-feedback.good{color:var(--green)}.home-feedback.try{color:var(--accent)}
     .instrument-caption{text-align:center;font-family:Visuelt,sans-serif;color:#777168;font-size:13px;line-height:1.35;margin:22px 0 0}.text-link{border:0;padding:0;background:none;color:var(--accent);font:inherit;font-weight:700}.text-link:hover{text-decoration:underline}
-    .actions{display:flex;gap:9px;margin-top:16px}.pill{flex:1;min-height:44px;border-radius:25px;border:1px solid #d9d4c9;background:transparent;color:var(--ink);font-size:13px;font-weight:700}.pill.dark{border-color:var(--ink);background:var(--ink);color:#fff}.pill:hover:not(:disabled){transform:translateY(-1px)}.pill:disabled{opacity:1}
+    .actions{display:flex;gap:9px;margin-top:16px}.pill{flex:1;min-height:44px;border-radius:25px;border:1px solid #d9d4c9;background:transparent;color:var(--ink);font-size:13px;font-weight:700}.pill.dark{border-color:var(--accent);background:var(--accent);color:#fff}.pill:hover:not(:disabled){transform:translateY(-1px)}.pill.dark:hover:not(:disabled){border-color:#6f8f5f;background:#6f8f5f}.pill:disabled{opacity:1}
     .home-indicator{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:139px;height:5px;border-radius:99px;background:rgba(0,0,0,.25);pointer-events:none}
     dialog{max-width:min(360px,calc(100vw - 32px));width:100%;border:0;border-radius:20px;padding:26px;background:var(--paper);box-shadow:0 16px 50px rgba(0,0,0,.2);color:var(--ink);font-family:Visuelt,sans-serif}dialog::backdrop{background:rgba(28,28,28,.42)}dialog h2{font-size:24px;letter-spacing:-.03em;margin:0 0 12px}dialog p,dialog li{font-size:15px;line-height:1.45}dialog ol{padding-left:22px}dialog .close{position:absolute;top:13px;right:17px;border:0;background:none;font-size:26px}dialog .pill{width:100%;margin-top:8px}dialog .audio-credit{font-size:11px;color:#777168}dialog .audio-credit a{color:inherit}
     @media(min-width:960px){
@@ -61,7 +61,7 @@
     @media(max-width:430px){.stage{padding:0}.device{border-radius:0;box-shadow:none}.device-slot{overflow:hidden}}
     @media(prefers-reduced-motion:reduce){.white-key,.black-key,.track span,.lesson-card{transition:none}.hint::after{animation-duration:2.2s!important}}
   </style>
-  <link rel="stylesheet" href="practice.css?v=20260930-5">
+  <link rel="stylesheet" href="practice.css?v=20260930-6">
 </head>
 <body>
   <div class="stage">
