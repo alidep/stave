@@ -252,6 +252,8 @@ $('watch').onclick = () => {
   scrollToPractice('smooth');
   watchPreviewTimer = setTimeout(() => window.playPracticePreview?.(), 1200);
 };
+$('closing-start').onclick = $('start').onclick;
+$('closing-watch').onclick = $('watch').onclick;
 $('account').onclick = () => {
   let count = 0;
   try { count = Number(localStorage.getItem('sight-reader-completed')) || 0; } catch (_) {}
