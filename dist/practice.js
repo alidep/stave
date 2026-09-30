@@ -745,7 +745,7 @@
     const requested = Number(select.value);
     const demoLevel = Math.max(1,Math.min(10,requested));
     window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel],{
-      add_classes:true,staffwidth:demoLevel >= 5 ? 370 : 400,scale:demoLevel >= 5 ? 1.02 : 1.35,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:18
+      add_classes:true,staffwidth:400,scale:1.08,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:18
     });
     byId('benefit-level-label').textContent = `LEVEL ${requested}`;
     container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 5 ? ' with two hands' : ''}`);
