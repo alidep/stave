@@ -392,3 +392,5 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 @keyframes feedback-red{0%,10%,35%,100%{fill:#1c1c1c;stroke:#1c1c1c}14%,30%{fill:#e45b52;stroke:#e45b52}}
 .level-demo{background:#fffdf7}.level-demo select{border-color:#ded8ca;border-radius:12px;background:#fffdf7}.level-demo svg{border:1px solid #e8e1d4;background:#fcf9ee}
 @media(max-width:959px){.benefit-visual{min-height:245px}.musician-stack span{width:31%}.musician-stack span:nth-child(1){left:1%!important}.musician-stack span:nth-child(2){left:18%!important}.musician-stack span:nth-child(3){left:35%!important}.musician-stack span:nth-child(4){left:52%!important}.musician-stack span:nth-child(5){left:69%!important}}
+
+.benefit-copy h2 a{color:inherit;text-decoration-thickness:2px;text-underline-offset:.12em}
