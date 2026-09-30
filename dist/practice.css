@@ -469,3 +469,11 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 .level-feature .benefit-score-card{min-height:410px}
 .level-demo .benefit-abc{min-height:285px;overflow:hidden}
 @media(max-width:959px){.level-feature .benefit-score-card{min-height:340px}.level-demo .benefit-abc{min-height:235px}}
+
+/* Simplified demo headers and the larger reference-style play control. */
+.benefit-score-play{width:56px;height:56px;box-shadow:0 8px 20px rgba(69,94,56,.2)}
+.benefit-score-play svg{width:22px;height:25px;margin-left:4px}
+.benefit-score-play.is-playing::before{width:14px;height:14px}
+.feedback-feature .benefit-score-meta{min-height:58px;padding-bottom:10px}
+.level-feature .benefit-score-meta{min-height:42px}
+@media(max-width:959px){.benefit-score-play{width:46px;height:46px}.benefit-score-play svg{width:18px;height:21px}.feedback-feature .benefit-score-meta{min-height:49px}}

@@ -734,7 +734,7 @@
         notes[index]?.classList.add('is-current',`is-${benefitResults[index]}`);
         progress.style.transition = 'width 180ms ease-out';
         progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
-        const heardMidi = benefitResults[index] === 'wrong' ? midi + 2 : midi;
+        const heardMidi = benefitResults[index] === 'wrong' ? midi - 9 : midi;
         window.playStaveNote?.(heardMidi,.42);
       },playAt));
       elapsed += interval;
@@ -759,6 +759,15 @@
 
   const benefitLevelSelect = byId('benefit-level-select');
   byId('benefit-score-play')?.addEventListener('click',playBenefitFeedback);
+  const benefitFeedbackFeature = document.querySelector('.feedback-feature');
+  if (benefitFeedbackFeature && 'IntersectionObserver' in window) {
+    const benefitAutoplayObserver = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .45)) return;
+      benefitAutoplayObserver.disconnect();
+      window.setTimeout(playBenefitFeedback,350);
+    },{threshold:[.45]});
+    benefitAutoplayObserver.observe(benefitFeedbackFeature);
+  }
   benefitLevelSelect?.addEventListener('change',renderLevelDemo);
   if (benefitLevelSelect && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const animatedLevels = ['1','2','3','4','5','6','7','8','9','10'];
