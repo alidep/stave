@@ -463,3 +463,9 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 .animated-score .abcjs-note.is-paused path{fill:#d5a14a!important;stroke:#d5a14a!important}
 .animated-score .abcjs-note.is-current path{filter:drop-shadow(0 2px 2px rgba(28,28,28,.12))}
 @media(max-width:959px){.benefit-score-play{width:28px;height:28px}.benefit-score-actions{gap:8px}}
+
+.level-demo .benefit-abc svg{width:100%!important;max-width:none!important}
+
+.level-feature .benefit-score-card{min-height:410px}
+.level-demo .benefit-abc{min-height:285px;overflow:hidden}
+@media(max-width:959px){.level-feature .benefit-score-card{min-height:340px}.level-demo .benefit-abc{min-height:235px}}

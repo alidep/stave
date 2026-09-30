@@ -674,10 +674,16 @@
   });
 
   const benefitLevelScores = {
-    1: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2|`,
-    4: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2 D2 E2 B2|`,
-    7: `X:1\n%%score {R|L}\nM:3/8\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] E ^D E ^D E B|d c A2 z2|\n[V:L] A,,2 E,2 A,2|C2 E2 A2|`,
-    10: `X:1\n%%score {R|L}\nM:3/8\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] {^DE}E ^D {^DE}E ^D E B|[Bd]2 [Ac]2 [EA]2|\n[V:L] [A,,E,A,]2 E,2 A,2|[C,E,A]2 E2 [A,CE]2|`
+    1: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 D2 E2|D2 E2 B2|d2 c2 A2|`,
+    2: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2|D2 E2 B2|d2 c2 A2|`,
+    3: `X:1\nM:3/4\nL:1/16\nK:Am\nE4 ^D4 E4|D4 E4 B4|d4 c4 A4|`,
+    4: `X:1\nM:3/4\nL:1/16\nK:Am\nE2 ^D2 E2 D2 E2 B2|d4 c4 A4|A2 B2 c2 d2 e2 A2|`,
+    5: `X:1\n%%score {R|L}\nM:3/4\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] E2 ^D2 E2 D2 E2 B2|d4 c4 A4|A2 B2 c2 d2 e2 A2|\n[V:L] A,,12|E,12|A,,12|`,
+    6: `X:1\n%%score {R|L}\nM:3/4\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] E2 ^D2 E2 D2 E2 B2|d4 c4 A4|A2 B2 c2 d2 e2 A2|\n[V:L] A,,4 E,4 A,4|E,4 B,4 E4|A,,4 E,4 A,4|`,
+    7: `X:1\n%%score {R|L}\nM:3/4\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] [AE]2 ^D2 [AE]2 D2 [AE]2 B2|[Bd]4 [Ac]4 [EA]4|[EA]2 [GB]2 [Ac]2 [Bd]2 [ce]2 [EA]2|\n[V:L] A,,4 E,4 A,4|E,4 B,4 E4|A,,4 E,4 A,4|`,
+    8: `X:1\n%%score {R|L}\nM:3/4\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] {^DE}E2 ^D2 {^DE}E2 D2 E2 B2|[Bd]4 [Ac]4 [EA]4|[EA]2 [GB]2 [Ac]2 [Bd]2 [ce]2 [EA]2|\n[V:L] [A,,E,A,]4 E,4 A,4|[E,B,E]4 B,4 E4|[A,,E,A,]4 E,4 A,4|`,
+    9: `X:1\n%%score {R|L}\nM:3/4\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] {^DE}E2 ^D2 {^DE}E2 D2 [EG]2 [BD]2|[Bd]4 [Ac]4 [EA]4|[EA]2 [GB]2 [Ac]2 [Bd]2 [ce]2 [EA]2|\n[V:L] A,,2 E,2 A,2 C2 E2 A2|E,2 B,2 E2 G2 B2 e2|A,,2 E,2 A,2 C2 E2 A2|`,
+    10: `X:1\n%%score {R|L}\nM:3/4\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] {^DE}E2 (^D2{^DE}E2) D2 [EG]2 [BD]2|[GBd]4 [EAc]4 [CEA]4|[CEA]2 [DGB]2 [EAc]2 [GBd]2 [Ace]2 [CEA]2|\n[V:L] [A,,E,]2 E,2 A,2 C2 E2 A2|[E,B,]2 B,2 E2 G2 B2 e2|[A,,E,]2 E,2 A,2 C2 E2 A2|`
   };
 
   function renderBenefitFeedback() {
@@ -739,9 +745,9 @@
     const container = byId('benefit-level-score');
     if (!select || !container || !window.ABCJS) return;
     const requested = Number(select.value);
-    const demoLevel = requested >= 9 ? 10 : requested >= 6 ? 7 : requested >= 3 ? 4 : 1;
+    const demoLevel = Math.max(1,Math.min(10,requested));
     window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel],{
-      add_classes:true,staffwidth:420,scale:1.38,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
+      add_classes:true,staffwidth:demoLevel >= 5 ? 370 : 400,scale:demoLevel >= 5 ? 1.02 : 1.35,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:18
     });
     container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 7 ? ' with two hands' : ''}`);
   }
@@ -750,7 +756,7 @@
   byId('benefit-score-play')?.addEventListener('click',playBenefitFeedback);
   benefitLevelSelect?.addEventListener('change',renderLevelDemo);
   if (benefitLevelSelect && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const animatedLevels = ['1','4','7','10'];
+    const animatedLevels = ['1','2','3','4','5','6','7','8','9','10'];
     let animatedLevelIndex = 0;
     window.setInterval(() => {
       animatedLevelIndex = (animatedLevelIndex + 1) % animatedLevels.length;
