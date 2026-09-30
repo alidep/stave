@@ -471,7 +471,7 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 @media(max-width:959px){.level-feature .benefit-score-card{min-height:340px}.level-demo .benefit-abc{min-height:235px}}
 
 /* Simplified demo headers and the larger reference-style play control. */
-.benefit-score-play{width:40px;min-width:40px;height:40px;flex:0 0 40px;overflow:hidden;position:relative;box-shadow:0 5px 14px rgba(69,94,56,.18)}
+.benefit-score-play{width:40px;min-width:40px;height:40px;flex:0 0 40px;overflow:hidden;position:relative;box-shadow:none}
 .benefit-score-play img{display:block;width:14px;height:auto;margin-left:2px}
 .benefit-score-play.is-playing img{display:none}
 .benefit-score-play.is-playing::before{width:11px;height:11px}
