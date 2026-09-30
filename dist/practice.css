@@ -191,7 +191,7 @@
 .song-picker-dialog[hidden]{display:none}
 .song-library-shell{width:min(1120px,calc(100% - 64px));margin:0 auto;padding:28px 0 56px}
 .song-page-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:54px}
-.song-page-topbar .brand img{height:29px}
+.song-page-topbar .brand-mark{width:31px;height:31px}
 .song-picker-close{position:static;width:42px;height:42px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:rgba(28,28,28,.05);font-size:27px}
 .song-picker-dialog h2{margin:0 0 27px;font-size:48px}
 .song-picker-dialog .song-search{max-width:720px}
