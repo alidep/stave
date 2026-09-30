@@ -379,3 +379,16 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 }
 
 @media(prefers-reduced-motion:reduce){.demo-note,.demo-playhead,.musician-stack img{animation:none!important}.demo-note:nth-of-type(3n){fill:var(--accent);stroke:var(--accent)}}
+
+/* Feature story uses the same quiet cards and notation language as the player. */
+.benefit-visual{min-height:300px;border-color:#e8e1d4;border-radius:24px;background:#fffdf7;box-shadow:0 16px 48px rgba(44,38,27,.055)}
+.musician-stack span{top:50%!important;width:29%;border-width:5px;transform:translateY(-50%)!important;transition:transform .2s ease,box-shadow .2s ease}
+.musician-stack span:nth-child(1){left:3%!important}.musician-stack span:nth-child(2){left:20%!important}.musician-stack span:nth-child(3){left:37%!important}.musician-stack span:nth-child(4){left:54%!important}.musician-stack span:nth-child(5){left:71%!important}
+.musician-stack span:hover{z-index:2;transform:translateY(-54%)!important;box-shadow:0 22px 42px rgba(42,35,25,.2)}
+.musician-stack img{animation:none}
+.animated-score{min-height:260px}.animated-score svg{width:88%}.demo-staff path{stroke:#1c1c1c;stroke-width:1.25}.demo-note{animation-duration:5.4s;animation-timing-function:ease;animation-iteration-count:infinite}.demo-note.n2{animation-delay:.75s}.demo-note.n3{animation-delay:1.5s}.demo-note.n4{animation-delay:2.25s}.demo-note.n5{animation-delay:3s}.demo-note.n6{animation-delay:3.75s}
+@keyframes feedback-note{0%,10%,35%,100%{fill:#1c1c1c;stroke:#1c1c1c}14%,30%{fill:var(--accent);stroke:var(--accent)}}
+@keyframes feedback-amber{0%,10%,35%,100%{fill:#1c1c1c;stroke:#1c1c1c}14%,30%{fill:#d5a14a;stroke:#d5a14a}}
+@keyframes feedback-red{0%,10%,35%,100%{fill:#1c1c1c;stroke:#1c1c1c}14%,30%{fill:#e45b52;stroke:#e45b52}}
+.level-demo{background:#fffdf7}.level-demo select{border-color:#ded8ca;border-radius:12px;background:#fffdf7}.level-demo svg{border:1px solid #e8e1d4;background:#fcf9ee}
+@media(max-width:959px){.benefit-visual{min-height:245px}.musician-stack span{width:31%}.musician-stack span:nth-child(1){left:1%!important}.musician-stack span:nth-child(2){left:18%!important}.musician-stack span:nth-child(3){left:35%!important}.musician-stack span:nth-child(4){left:52%!important}.musician-stack span:nth-child(5){left:69%!important}}
