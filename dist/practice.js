@@ -40,7 +40,7 @@
   const mapDialog = byId('keyboard-map-dialog');
   let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
-  let completedNotes = new Set(), noteResults = new Map(), missedNotes = new Set();
+  let completedNotes = new Set(), noteResults = new Map(), missedNotes = new Set(), takeNotes = [], takeStartedAt = performance.now(), takeTimers = [];
   const previewTimers = [];
   let microphoneStream, microphoneContext, microphoneSource, microphoneAnalyser, microphoneFrame;
   let lastDetectedNote = -1, stableFrames = 0, lastMicrophonePlay = 0;
@@ -329,8 +329,24 @@
     keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
   }
 
+  function stopTakePlayback() {
+    takeTimers.forEach(clearTimeout);
+    takeTimers = [];
+    const button = byId('completion-listen-take');
+    if (button) button.querySelector('span').textContent = 'Listen to my take';
+  }
+
+  function playTake() {
+    stopTakePlayback();
+    if (!takeNotes.length) return;
+    byId('completion-listen-take').querySelector('span').textContent = 'Playing my take…';
+    takeNotes.forEach(note => takeTimers.push(setTimeout(() => window.playStaveNote?.(note.midi,.33),note.at)));
+    takeTimers.push(setTimeout(stopTakePlayback,takeNotes.at(-1).at+650));
+  }
+
   function resetPassage() {
     stopPreview();
+    stopTakePlayback();
     clearTimeout(wrongTimer);
     currentStep = 0;
     mistakeCount = 0;
@@ -339,6 +355,8 @@
     completedNotes = new Set();
     noteResults = new Map();
     missedNotes = new Set();
+    takeNotes = [];
+    takeStartedAt = performance.now();
     passage = makePassage();
     buildKeyboard();
     render();
@@ -381,6 +399,9 @@
     if (previewPlaying) stopPreview();
     if (currentStep === passage.steps.length) return;
     if (!fromMicrophone) window.playStaveNote?.(midi);
+    const playedAt = performance.now();
+    if (!takeNotes.length) takeStartedAt = playedAt;
+    takeNotes.push({midi,at:Math.min(playedAt-takeStartedAt,120000)});
     const key = keyFor(midi);
     key?.classList.add('is-pressed');
     setTimeout(() => key?.classList.remove('is-pressed'),160);
@@ -419,6 +440,7 @@
   });
   byId('practice-play').addEventListener('click',playPreview);
   byId('completion-retake').addEventListener('click',resetPassage);
+  byId('completion-listen-take').addEventListener('click',playTake);
   byId('completion-next').addEventListener('click',() => {
     if (fullSongId) { showSongLibrary(); return; }
     if (sampleIndex < sampleKeys().length-1) sampleIndex++;
