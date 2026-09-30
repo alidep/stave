@@ -673,31 +673,32 @@
     }
   });
 
+  const benefitLevelScores = {
+    1: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2|`,
+    4: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2 D2 E2 B2|`,
+    7: `X:1\n%%score {R|L}\nM:3/8\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] E ^D E ^D E B|d c A2 z2|\n[V:L] A,,2 E,2 A,2|C2 E2 A2|`,
+    10: `X:1\n%%score {R|L}\nM:3/8\nL:1/16\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] {^DE}E ^D {^DE}E ^D E B|[Bd]2 [Ac]2 [EA]2|\n[V:L] [A,,E,A,]2 E,2 A,2|[C,E,A]2 E2 [A,CE]2|`
+  };
+
+  function renderBenefitFeedback() {
+    const container = byId('benefit-feedback-score');
+    if (!container || !window.ABCJS) return;
+    window.ABCJS.renderAbc(container,`X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2 D2 E2 B2|`,{
+      add_classes:true,staffwidth:440,scale:1.5,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
+    });
+    [...container.querySelectorAll('.abcjs-note')].forEach((note,index) => note.classList.add('benefit-result',`result-${index+1}`));
+  }
+
   function renderLevelDemo() {
     const select = byId('benefit-level-select');
-    const svg = byId('benefit-level-score');
-    if (!select || !svg) return;
-    const demoLevel = Number(select.value);
-    const twoHands = demoLevel >= 5;
-    const staffTops = twoHands ? [28,122] : [66];
-    const staff = staffTops.flatMap(top => [0,1,2,3,4].map(line => `<line class="staff-line" x1="22" y1="${top+line*13}" x2="498" y2="${top+line*13}"/>`)).join('');
-    const count = 3 + demoLevel;
-    const width = 420/(count-1);
-    const melodyPattern = [4,3,2,3,1,2,0,2,1,3];
-    const notes = Array.from({length:count},(_,index) => {
-      const x = 52 + index*width;
-      const y = staffTops[0] + melodyPattern[index%melodyPattern.length]*13;
-      const sharp = demoLevel >= 6 && index%4 === 2 ? `<text x="${x-19}" y="${y+6}" font-size="22">♯</text>` : '';
-      return `${sharp}<g class="level-note ${index===count-1 ? 'level-accent' : ''}"><ellipse cx="${x}" cy="${y}" rx="8.5" ry="6"/><line x1="${x+7.5}" y1="${y-1}" x2="${x+7.5}" y2="${y-36-demoLevel*1.4}"/></g>`;
-    }).join('');
-    const bassNotes = twoHands ? Array.from({length:Math.min(5,demoLevel-1)},(_,index) => {
-      const x = 70 + index*(360/Math.max(1,Math.min(5,demoLevel-1)-1));
-      const y = staffTops[1] + [3,2,4,1,3][index]*13;
-      return `<g class="level-note"><ellipse cx="${x}" cy="${y}" rx="8.5" ry="6"/><line x1="${x-7.5}" y1="${y+1}" x2="${x-7.5}" y2="${y+34}"/></g>`;
-    }).join('') : '';
-    const beams = demoLevel >= 3 ? `<path d="M${52+7.5} ${staffTops[0]+melodyPattern[0]*13-37-demoLevel*1.4} L${52+width+7.5} ${staffTops[0]+melodyPattern[1]*13-37-demoLevel*1.4}" stroke="#1c1c1c" stroke-width="6"/>` : '';
-    svg.innerHTML = `${staff}<line class="bar-line" x1="22" y1="${staffTops[0]}" x2="22" y2="${staffTops[0]+52}"/><line class="bar-line" x1="498" y1="${staffTops[0]}" x2="498" y2="${staffTops[0]+52}"/>${notes}${bassNotes}${beams}`;
-    svg.setAttribute('aria-label',`Level ${demoLevel} music example${twoHands ? ' with two hands' : ''}`);
+    const container = byId('benefit-level-score');
+    if (!select || !container || !window.ABCJS) return;
+    const requested = Number(select.value);
+    const demoLevel = requested >= 9 ? 10 : requested >= 6 ? 7 : requested >= 3 ? 4 : 1;
+    window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel],{
+      add_classes:true,staffwidth:470,scale:1.45,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
+    });
+    container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 7 ? ' with two hands' : ''}`);
   }
 
   const benefitLevelSelect = byId('benefit-level-select');
@@ -713,6 +714,7 @@
   }
 
   buildFullKeyboard();
+  renderBenefitFeedback();
   resetPassage();
   applyRoute();
   renderLevelDemo();

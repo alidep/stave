@@ -418,3 +418,27 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
  .feedback-feature,.level-feature{grid-template-columns:1fr;gap:26px}.feedback-feature .benefit-visual,.level-feature .benefit-visual{min-height:230px;padding:15px}
  .feedback-feature .benefit-copy{order:-1}.benefit-copy h2{font-size:38px}.benefit-copy>span{font-size:18px}
 }
+
+/* Use the player's ABCJS notation for the feature examples too. */
+.benefit-score-card{display:flex;align-items:center;justify-content:center;min-height:340px;padding:32px 36px!important;overflow:hidden}
+.benefit-abc{width:100%;min-width:0}
+.benefit-abc svg{display:block;width:100%;height:auto;margin:0!important}
+.animated-score .abcjs-note path{animation:benefit-result-color 6s linear infinite}
+.animated-score .abcjs-note.result-2 path{animation-name:benefit-result-red;animation-delay:1.1s}
+.animated-score .abcjs-note.result-3 path{animation-name:benefit-result-amber;animation-delay:2.2s}
+.animated-score .abcjs-note.result-4 path{animation-delay:3.3s}
+@keyframes benefit-result-color{0%,12%,44%,100%{fill:#1c1c1c;stroke:#1c1c1c}16%,40%{fill:var(--green);stroke:var(--green)}}
+@keyframes benefit-result-red{0%,12%,44%,100%{fill:#1c1c1c;stroke:#1c1c1c}16%,40%{fill:#e45b52;stroke:#e45b52}}
+@keyframes benefit-result-amber{0%,12%,44%,100%{fill:#1c1c1c;stroke:#1c1c1c}16%,40%{fill:#d5a14a;stroke:#d5a14a}}
+.level-demo .benefit-abc{display:flex;align-items:center;min-height:230px}
+@media(max-width:959px){.benefit-score-card{min-height:270px;padding:20px 16px!important}.level-demo .benefit-abc{min-height:190px}}
+@media(prefers-reduced-motion:reduce){.animated-score .abcjs-note path{animation:none}.animated-score .abcjs-note.result-1 path,.animated-score .abcjs-note.result-4 path{fill:var(--green);stroke:var(--green)}.animated-score .abcjs-note.result-2 path{fill:#e45b52;stroke:#e45b52}.animated-score .abcjs-note.result-3 path{fill:#d5a14a;stroke:#d5a14a}}
+
+.benefit-score-card{flex-direction:column;align-items:stretch;justify-content:flex-start}
+.benefit-score-meta{width:100%;display:flex;align-items:center;justify-content:space-between;gap:22px;padding-bottom:14px;border-bottom:4px solid #ebe6da;color:#777168;font:600 11px/1 JetBrains,monospace;letter-spacing:.14em}
+.benefit-score-meta strong{color:var(--ink);font-weight:700;white-space:nowrap}
+.benefit-score-card .benefit-abc{flex:1;display:flex;align-items:center;justify-content:center;padding-top:18px}
+@media(max-width:959px){.benefit-score-meta{font-size:9px;gap:12px;border-bottom-width:3px}.benefit-score-card .benefit-abc{padding-top:12px}}
+.stave-benefits{max-width:1140px}
+.feedback-feature,.level-feature{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:959px){.feedback-feature,.level-feature{grid-template-columns:1fr}}
