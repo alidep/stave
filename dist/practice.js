@@ -696,7 +696,7 @@
     const requested = Number(select.value);
     const demoLevel = requested >= 9 ? 10 : requested >= 6 ? 7 : requested >= 3 ? 4 : 1;
     window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel],{
-      add_classes:true,staffwidth:470,scale:1.45,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
+      add_classes:true,staffwidth:420,scale:1.38,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
     });
     container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 7 ? ' with two hands' : ''}`);
   }
