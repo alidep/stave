@@ -718,6 +718,7 @@
     button.setAttribute('aria-label','Stop Für Elise example');
     const interval = 520;
     const hesitation = 950;
+    const correctionPause = 760;
     let elapsed = 0;
     benefitMelody.forEach((midi,index) => {
       if (benefitResults[index] === 'paused') elapsed += hesitation;
@@ -725,11 +726,24 @@
       benefitPlaybackTimers.push(setTimeout(() => {
         notes.forEach(note => note.classList.remove('is-current'));
         notes[index]?.classList.add('is-current',`is-${benefitResults[index]}`);
-        progress.style.transition = 'width 180ms ease-out';
-        progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
-        const heardMidi = benefitResults[index] === 'wrong' ? midi - 9 : midi;
+        if (benefitResults[index] !== 'wrong') {
+          progress.style.transition = 'width 180ms ease-out';
+          progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
+        }
+        const heardMidi = benefitResults[index] === 'wrong' ? midi - 14 : midi;
         window.playStaveNote?.(heardMidi,.42);
       },playAt));
+      if (benefitResults[index] === 'wrong') {
+        elapsed += correctionPause;
+        const correctAt = elapsed;
+        benefitPlaybackTimers.push(setTimeout(() => {
+          notes[index]?.classList.remove('is-wrong');
+          notes[index]?.classList.add('is-clean','is-current');
+          progress.style.transition = 'width 180ms ease-out';
+          progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
+          window.playStaveNote?.(midi,.42);
+        },correctAt));
+      }
       elapsed += interval;
     });
     benefitPlaybackTimers.push(setTimeout(() => {
