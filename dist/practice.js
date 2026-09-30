@@ -725,7 +725,8 @@
       const playAt = elapsed;
       benefitPlaybackTimers.push(setTimeout(() => {
         notes.forEach(note => note.classList.remove('is-current'));
-        notes[index]?.classList.add('is-current',`is-${benefitResults[index]}`);
+        const playbackResult = benefitResults[index] === 'wrong' ? 'wrong' : 'clean';
+        notes[index]?.classList.add('is-current',`is-${playbackResult}`);
         if (benefitResults[index] !== 'wrong') {
           progress.style.transition = 'width 180ms ease-out';
           progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
@@ -747,7 +748,10 @@
       elapsed += interval;
     });
     benefitPlaybackTimers.push(setTimeout(() => {
-      notes.forEach(note => note.classList.remove('is-current'));
+      notes.forEach((note,index) => {
+        note.classList.remove('is-current','is-clean','is-wrong','is-paused');
+        note.classList.add(`is-${benefitResults[index]}`);
+      });
       stopBenefitPlayback(false);
     },elapsed));
   }
