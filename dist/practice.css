@@ -455,7 +455,7 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 .benefit-score-actions{display:flex;align-items:center;gap:12px}
 .benefit-score-play{width:31px;height:31px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:var(--accent);color:#fff;box-shadow:0 3px 9px rgba(69,94,56,.2)}
 .benefit-score-play:hover{background:#6f8f5f}.benefit-score-play svg{width:10px;height:12px;margin-left:2px}.benefit-score-play.is-playing svg{display:none}.benefit-score-play.is-playing::before{content:"";width:9px;height:9px;border-radius:2px;background:#fff}
-.benefit-score-progress{width:100%;height:4px;border-radius:99px;background:#e9e4d9;overflow:hidden}
+.benefit-score-progress{width:100%;height:2px;border-radius:99px;background:#e9e4d9;overflow:hidden}
 .benefit-score-progress span{display:block;width:0;height:100%;border-radius:inherit;background:var(--accent)}
 .animated-score .abcjs-note path{animation:none!important;transition:fill .16s ease,stroke .16s ease}
 .animated-score .abcjs-note.is-clean path{fill:var(--green)!important;stroke:var(--green)!important}
@@ -466,9 +466,9 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 
 .level-demo .benefit-abc svg{width:100%!important;max-width:none!important}
 
-.level-feature .benefit-score-card{min-height:340px}
-.level-demo .benefit-abc{min-height:215px;overflow:hidden}
-@media(max-width:959px){.level-feature .benefit-score-card{min-height:270px}.level-demo .benefit-abc{min-height:190px}}
+.level-feature .benefit-score-card{height:340px;min-height:340px}
+.level-demo .benefit-abc{height:215px;min-height:215px;flex:0 0 215px;overflow:hidden}
+@media(max-width:959px){.level-feature .benefit-score-card{height:270px;min-height:270px}.level-demo .benefit-abc{height:190px;min-height:190px;flex-basis:190px}}
 
 /* Simplified demo headers and the larger reference-style play control. */
 .benefit-score-play{width:40px;min-width:40px;height:40px;flex:0 0 40px;overflow:hidden;position:relative;box-shadow:none}
