@@ -38,7 +38,7 @@
   const keyboardRoot = byId('practice-keyboard-wrap');
   const card = byId('practice-card');
   const mapDialog = byId('keyboard-map-dialog');
-  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null;
+  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0;
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
   let completedNotes = new Set();
   const previewTimers = [];
@@ -132,16 +132,33 @@
     piano.classList.toggle('is-right',!both);
     piano.classList.toggle('is-wide',both);
     leftPiano.classList.add('is-seven');
-    const highestNote = Math.max(...passage.bars.flat().filter(note => !note.rest).map(note => note.midi));
-    const rightWhites = (both ? duetWhiteKeys : whiteKeys).filter(([midi]) => midi <= Math.max(71,highestNote));
-    const rightBlacks = (both ? duetBlackKeys : blackKeys).filter(([midi]) => midi < rightWhites.at(-1)[0]);
-    piano.classList.toggle('is-seven',rightWhites.length <= 7);
+    const nextMidi = hand => passage.steps.slice(currentStep).flatMap(step => step.notes).find(note => note.hand === hand)?.midi
+      ?? passage.events.find(note => note.hand === hand)?.midi;
+    const octaveKeys = (octave,keys,sharpKeys) => {
+      const base = (octave+1)*12;
+      const labels = ['C','D','E','F','G','A','B'];
+      const offsets = [0,2,4,5,7,9,11];
+      const blackOffsets = [[1,'C♯'],[3,'D♯'],[6,'F♯'],[8,'G♯'],[10,'A♯']];
+      return {
+        whites:offsets.map((offset,index) => [base+offset,labels[index],keys[index]]),
+        blacks:blackOffsets.map(([offset,name],index) => [base+offset,name,sharpKeys[index]])
+      };
+    };
+    const rightOctave = Math.floor((nextMidi('right') ?? 60)/12)-1;
+    const leftOctave = Math.floor((nextMidi('left') ?? 48)/12)-1;
+    const rightSet = octaveKeys(rightOctave,both ? ['Q','W','E','R','T','Y','U'] : ['Z','X','C','V','B','N','M'],both ? ['2','3','5','6','7'] : ['S','D','G','H','J']);
+    const leftSet = octaveKeys(leftOctave,['Z','X','C','V','B','N','M'],['S','D','G','H','J']);
+    const rightWhites = rightSet.whites, rightBlacks = rightSet.blacks;
+    const leftWhites = leftSet.whites, leftBlacks = leftSet.blacks;
+    piano.classList.add('is-seven');
     if (!leftOnly) appendKeyboard(piano,rightWhites,rightBlacks);
     else piano.replaceChildren();
-    if (leftOnly || both) appendKeyboard(leftPiano,leftWhiteKeys,leftBlackKeys);
+    if (leftOnly || both) appendKeyboard(leftPiano,leftWhites,leftBlacks);
     else leftPiano.replaceChildren();
-    setKeyboardReference(leftOnly || both ? leftWhiteKeys : null,leftOnly ? null : rightWhites);
-    keyboardMap = new Map((leftOnly ? [...leftWhiteKeys,...leftBlackKeys] : both ? [...rightWhites,...rightBlacks,...leftWhiteKeys,...leftBlackKeys] : [...whiteKeys,...blackKeys]).map(([midi,,key]) => [key.toLowerCase(),midi]));
+    byId('practice-left-hand').querySelector('.practice-keyboard-label').textContent = `LEFT HAND · C${leftOctave}–B${leftOctave}`;
+    byId('practice-right-hand').querySelector('.practice-keyboard-label').textContent = `RIGHT HAND · C${rightOctave}–B${rightOctave}`;
+    setKeyboardReference(leftOnly || both ? leftWhites : null,leftOnly ? null : rightWhites);
+    keyboardMap = new Map((leftOnly ? [...leftWhites,...leftBlacks] : both ? [...rightWhites,...rightBlacks,...leftWhites,...leftBlacks] : [...rightWhites,...rightBlacks]).map(([midi,,key]) => [key.toLowerCase(),midi]));
   }
 
   function keyFor(midi) {
@@ -284,7 +301,10 @@
     const playLabel = fullSongId ? 'Play full song' : 'Play passage';
     byId('practice-play').setAttribute('aria-label',playLabel);
     byId('practice-play').title = playLabel;
-    byId('practice-complete').querySelector('strong').textContent = fullSongId ? 'Nicely played — song complete.' : 'Nicely played — passage complete.';
+    const accuracy = Math.round(passage.events.length/(passage.events.length+mistakeCount)*100);
+    byId('completion-score').textContent = `${accuracy}% — ${accuracy === 100 ? 'beautifully read.' : accuracy >= 90 ? 'strong reading.' : accuracy >= 75 ? 'good progress.' : 'keep building.'}`;
+    byId('completion-summary').textContent = mistakeCount === 0 ? 'Every note landed. Ready for another?' : `${mistakeCount} ${mistakeCount === 1 ? 'note needs' : 'notes need'} another look.`;
+    document.querySelector('.completion-kicker').textContent = fullSongId ? 'SONG COMPLETE' : 'PASSAGE COMPLETE';
     byId('practice-level-value').textContent = `Level ${level}`;
     byId('practice-level-prev').disabled = level === 1;
     byId('practice-level-next').disabled = level === 10;
@@ -307,6 +327,7 @@
     stopPreview();
     clearTimeout(wrongTimer);
     currentStep = 0;
+    mistakeCount = 0;
     wrongNote = null;
     completedNotes = new Set();
     passage = makePassage();
@@ -359,6 +380,7 @@
     const step = passage.steps[currentStep];
     const matched = step.notes.find(note => note.midi === midi && !completedNotes.has(note.id));
     if (!matched) {
+      mistakeCount++;
       wrongNote = step.notes.find(note => !completedNotes.has(note.id))?.id || null;
       key?.classList.add('is-wrong');
       render();
@@ -368,7 +390,7 @@
     wrongNote = null;
     key?.classList.add('is-correct');
     completedNotes.add(matched.id);
-    if (step.notes.every(note => completedNotes.has(note.id))) currentStep++;
+    if (step.notes.every(note => completedNotes.has(note.id))) { currentStep++; buildKeyboard(); }
     render();
     keepNoteVisible(currentStep);
     setTimeout(() => key?.classList.remove('is-correct'),200);
@@ -385,6 +407,16 @@
     updateHint();
   });
   byId('practice-play').addEventListener('click',playPreview);
+  byId('completion-listen').addEventListener('click',playPreview);
+  byId('completion-review').addEventListener('click',() => byId('practice-score-viewport').scrollIntoView({behavior:'smooth',block:'center'}));
+  byId('completion-retake').addEventListener('click',resetPassage);
+  byId('completion-next').addEventListener('click',() => {
+    if (fullSongId) { showSongLibrary(); return; }
+    if (sampleIndex < sampleKeys().length-1) sampleIndex++;
+    else if (level < 10) { level++; sampleIndex = 0; }
+    else sampleIndex = 0;
+    resetPassage();
+  });
   window.playPracticePreview = playPreview;
   byId('practice-expand').addEventListener('click',async () => {
     try { if (document.fullscreenElement === card) await document.exitFullscreen(); else await card.requestFullscreen(); }
