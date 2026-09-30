@@ -792,6 +792,8 @@
   }
 
   buildFullKeyboard();
+  appendKeyboard(byId('feature-left-piano'),leftWhiteKeys,leftBlackKeys);
+  appendKeyboard(byId('feature-right-piano'),duetWhiteKeys.slice(0,7),duetBlackKeys.filter(([midi]) => midi < 72));
   renderBenefitFeedback();
   resetPassage();
   applyRoute();

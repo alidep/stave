@@ -268,6 +268,7 @@ document.addEventListener('keydown', event => {
 });
 
 $('connect-midi').onclick = () => { if (!updateMidiConnectionState()) $('midi-dialog').showModal(); };
+$('feature-midi-connect').onclick = $('connect-midi').onclick;
 function updateMidiConnectionState() {
   const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
   document.body.classList.toggle('midi-connected',!!connected);
