@@ -73,6 +73,7 @@
 .practice-keyboard-wrap{display:flex;flex-direction:column;align-items:center}
 .practice-complete{max-width:760px;margin:22px auto 4px;padding:25px 28px;border:1px solid #e4ddcf;border-radius:20px;background:#f4efe5;color:var(--ink);text-align:center}
 .practice-complete[hidden]{display:none}
+.practice-card.is-complete .practice-keyboard-wrap,.practice-card.is-complete .midi-full-piano-wrap,.practice-card.is-complete .practice-connect-strip{display:none!important}
 .completion-kicker{margin:0 0 9px;color:var(--accent);font:700 11px/1 JetBrains,monospace;letter-spacing:.14em}.practice-complete h3{margin:0;font:800 27px/1.15 Visuelt,sans-serif}.practice-complete>p:not(.completion-kicker){margin:9px 0 19px;color:#716b63;font-size:15px}.completion-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}.completion-actions button{min-height:40px;padding:0 15px;border:1px solid #d9d2c5;border-radius:999px;background:#fff;color:var(--ink);font:700 13px/1 Visuelt,sans-serif;cursor:pointer}.completion-actions button:hover{border-color:var(--accent);color:var(--accent)}.completion-actions .completion-primary{border-color:var(--accent);background:var(--accent);color:#fff}.completion-actions .completion-primary:hover{background:#c96849;color:#fff}
 .practice-hand{width:min(740px,100%)}
 .practice-hand[hidden]{display:none}

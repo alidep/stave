@@ -313,8 +313,10 @@
     byId('practice-level-next').disabled = level === 10;
     byId('practice-sample-prev').disabled = !!fullSongId || sampleIndex === 0;
     byId('practice-sample-next').disabled = !!fullSongId || sampleIndex === sampleKeys().length-1;
-    byId('practice-complete').hidden = previewPlaying || currentStep < passage.steps.length;
-    byId('performance-legend').hidden = previewPlaying || currentStep < passage.steps.length;
+    const isComplete = !previewPlaying && currentStep >= passage.steps.length;
+    card.classList.toggle('is-complete',isComplete);
+    byId('practice-complete').hidden = !isComplete;
+    byId('performance-legend').hidden = !isComplete;
     drawStaff();
     updateHint();
   }
