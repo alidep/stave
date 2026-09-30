@@ -700,7 +700,17 @@
     svg.setAttribute('aria-label',`Level ${demoLevel} music example${twoHands ? ' with two hands' : ''}`);
   }
 
-  byId('benefit-level-select')?.addEventListener('change',renderLevelDemo);
+  const benefitLevelSelect = byId('benefit-level-select');
+  benefitLevelSelect?.addEventListener('change',renderLevelDemo);
+  if (benefitLevelSelect && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const animatedLevels = ['1','4','7','10'];
+    let animatedLevelIndex = 0;
+    window.setInterval(() => {
+      animatedLevelIndex = (animatedLevelIndex + 1) % animatedLevels.length;
+      benefitLevelSelect.value = animatedLevels[animatedLevelIndex];
+      renderLevelDemo();
+    }, 1800);
+  }
 
   buildFullKeyboard();
   resetPassage();

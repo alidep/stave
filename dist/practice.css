@@ -394,3 +394,27 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 @media(max-width:959px){.benefit-visual{min-height:245px}.musician-stack span{width:31%}.musician-stack span:nth-child(1){left:1%!important}.musician-stack span:nth-child(2){left:18%!important}.musician-stack span:nth-child(3){left:35%!important}.musician-stack span:nth-child(4){left:52%!important}.musician-stack span:nth-child(5){left:69%!important}}
 
 .benefit-copy h2 a{color:inherit;text-decoration-thickness:2px;text-underline-offset:.12em}
+
+/* Editorial homepage feature sequence. */
+.stave-benefits{gap:clamp(88px,10vw,140px);max-width:1080px;margin-inline:auto}
+.repertoire-feature{display:flex;flex-direction:column;gap:42px;text-align:center}
+.repertoire-feature .benefit-copy{max-width:690px}
+.repertoire-feature .benefit-visual{order:initial;width:100%;min-height:142px;border:0;background:transparent;box-shadow:none;overflow:visible}
+.musician-stack{display:flex;align-items:center;justify-content:center;padding-inline:4%}
+.musician-stack span,.musician-stack span:nth-child(n){position:relative;top:auto!important;left:auto!important;width:15%;flex:0 0 15%;margin-left:-2.5%;border:4px solid var(--paper);transform:none!important;box-shadow:none}
+.musician-stack span:first-child{margin-left:0}
+.musician-stack span:hover{z-index:auto;transform:none!important;box-shadow:none}
+.feedback-feature,.level-feature{grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr);gap:clamp(55px,8vw,110px)}
+.feedback-feature .benefit-visual,.level-feature .benefit-visual{min-height:280px;padding:26px;border-radius:20px;background:#fffdf7;box-shadow:none}
+.feedback-feature .animated-score svg{position:relative;inset:auto;width:100%;height:100%;transform:none}
+.level-demo{display:flex;flex-direction:column;justify-content:center}
+.level-demo label,.level-demo select{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.level-demo svg{margin:0;border:0;background:transparent}
+.benefit-copy h2{font-size:clamp(40px,4.5vw,62px)}
+.benefit-copy>span{font-size:clamp(19px,1.7vw,23px);line-height:1.38}
+@media(max-width:959px){
+ .stave-benefits{gap:76px}.repertoire-feature{gap:28px}.repertoire-feature .benefit-visual{min-height:100px}
+ .musician-stack{padding:0}.musician-stack span,.musician-stack span:nth-child(n){width:17%;flex-basis:17%;margin-left:-4%}
+ .feedback-feature,.level-feature{grid-template-columns:1fr;gap:26px}.feedback-feature .benefit-visual,.level-feature .benefit-visual{min-height:230px;padding:15px}
+ .feedback-feature .benefit-copy{order:-1}.benefit-copy h2{font-size:38px}.benefit-copy>span{font-size:18px}
+}
