@@ -724,20 +724,25 @@
     button.classList.add('is-playing');
     button.setAttribute('aria-label','Stop Für Elise example');
     const interval = 520;
-    const total = benefitMelody.length * interval;
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      progress.style.transition = `width ${total}ms linear`;
-      progress.style.width = '100%';
-    }));
-    benefitMelody.forEach((midi,index) => benefitPlaybackTimers.push(setTimeout(() => {
-      notes.forEach(note => note.classList.remove('is-current'));
-      notes[index]?.classList.add('is-current',`is-${benefitResults[index]}`);
-      window.playStaveNote?.(midi,.42);
-    },index*interval)));
+    const hesitation = 950;
+    let elapsed = 0;
+    benefitMelody.forEach((midi,index) => {
+      if (benefitResults[index] === 'paused') elapsed += hesitation;
+      const playAt = elapsed;
+      benefitPlaybackTimers.push(setTimeout(() => {
+        notes.forEach(note => note.classList.remove('is-current'));
+        notes[index]?.classList.add('is-current',`is-${benefitResults[index]}`);
+        progress.style.transition = 'width 180ms ease-out';
+        progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
+        const heardMidi = benefitResults[index] === 'wrong' ? midi + 2 : midi;
+        window.playStaveNote?.(heardMidi,.42);
+      },playAt));
+      elapsed += interval;
+    });
     benefitPlaybackTimers.push(setTimeout(() => {
       notes.forEach(note => note.classList.remove('is-current'));
       stopBenefitPlayback(false);
-    },total));
+    },elapsed));
   }
 
   function renderLevelDemo() {
