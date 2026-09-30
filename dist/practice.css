@@ -42,7 +42,10 @@
 .practice-score-viewport #practice-staff{width:1900px;min-width:1900px;margin:0}
 .practice-score-viewport #practice-staff svg{display:block;width:100%;height:auto;margin:auto}
 .practice-score-viewport .abcjs-note.is-done path{fill:var(--green)!important;stroke:var(--green)!important}
+.practice-score-viewport .abcjs-note.is-paused path{fill:#d5a14a!important;stroke:#d5a14a!important}
+.practice-score-viewport .abcjs-note.is-missed path{fill:#e45b52!important;stroke:#e45b52!important}
 .practice-score-viewport .abcjs-note.is-wrong path{fill:var(--red)!important;stroke:var(--red)!important}
+.performance-legend{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:13px 24px;margin:13px 0 0;color:#777168;font-size:12px}.performance-legend[hidden]{display:none}.performance-legend span{display:flex;align-items:center;gap:7px}.performance-legend i{width:10px;height:10px;display:block;border-radius:50%}.legend-clean{background:var(--green)}.legend-paused{background:#d5a14a}.legend-missed{background:#e45b52}
 .practice-staff-lines{stroke:var(--ink);stroke-width:1.4}
 .practice-clef,.practice-accidental,.practice-meter{font-family:Georgia,serif;fill:var(--ink)}
 .practice-meter{font-size:35px;font-weight:700}

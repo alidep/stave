@@ -38,9 +38,9 @@
   const keyboardRoot = byId('practice-keyboard-wrap');
   const card = byId('practice-card');
   const mapDialog = byId('keyboard-map-dialog');
-  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0;
+  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
-  let completedNotes = new Set();
+  let completedNotes = new Set(), noteResults = new Map(), missedNotes = new Set();
   const previewTimers = [];
   let microphoneStream, microphoneContext, microphoneSource, microphoneAnalyser, microphoneFrame;
   let lastDetectedNote = -1, stableFrames = 0, lastMicrophonePlay = 0;
@@ -289,7 +289,10 @@
     const previewNotes = new Set(previewPlaying ? passage.steps.slice(0,previewIndex+1).flatMap(step => step.notes.map(note => note.id)) : []);
     scoreNotes.forEach((note,id) => {
       if (!note) return;
-      note.classList.toggle('is-done',previewPlaying ? previewNotes.has(id) : completedNotes.has(id));
+      const result = noteResults.get(id);
+      note.classList.toggle('is-done',previewPlaying ? previewNotes.has(id) : result === 'clean');
+      note.classList.toggle('is-paused',!previewPlaying && result === 'paused');
+      note.classList.toggle('is-missed',!previewPlaying && result === 'missed');
       note.classList.toggle('is-wrong',!previewPlaying && id === wrongNote);
     });
     container.setAttribute('aria-label',previewPlaying ? `Playing ${passage.title}, step ${previewIndex+1} of ${passage.steps.length}` : `${passage.title}, step ${Math.min(currentStep+1,passage.steps.length)} of ${passage.steps.length}`);
@@ -311,6 +314,7 @@
     byId('practice-sample-prev').disabled = !!fullSongId || sampleIndex === 0;
     byId('practice-sample-next').disabled = !!fullSongId || sampleIndex === sampleKeys().length-1;
     byId('practice-complete').hidden = previewPlaying || currentStep < passage.steps.length;
+    byId('performance-legend').hidden = previewPlaying || currentStep < passage.steps.length;
     drawStaff();
     updateHint();
   }
@@ -328,8 +332,11 @@
     clearTimeout(wrongTimer);
     currentStep = 0;
     mistakeCount = 0;
+    stepStartedAt = performance.now();
     wrongNote = null;
     completedNotes = new Set();
+    noteResults = new Map();
+    missedNotes = new Set();
     passage = makePassage();
     buildKeyboard();
     render();
@@ -381,6 +388,7 @@
     const matched = step.notes.find(note => note.midi === midi && !completedNotes.has(note.id));
     if (!matched) {
       mistakeCount++;
+      step.notes.filter(note => !completedNotes.has(note.id)).forEach(note => missedNotes.add(note.id));
       wrongNote = step.notes.find(note => !completedNotes.has(note.id))?.id || null;
       key?.classList.add('is-wrong');
       render();
@@ -390,7 +398,8 @@
     wrongNote = null;
     key?.classList.add('is-correct');
     completedNotes.add(matched.id);
-    if (step.notes.every(note => completedNotes.has(note.id))) { currentStep++; buildKeyboard(); }
+    noteResults.set(matched.id,missedNotes.has(matched.id) ? 'missed' : performance.now()-stepStartedAt > 3500 ? 'paused' : 'clean');
+    if (step.notes.every(note => completedNotes.has(note.id))) { currentStep++; stepStartedAt = performance.now(); buildKeyboard(); }
     render();
     keepNoteVisible(currentStep);
     setTimeout(() => key?.classList.remove('is-correct'),200);
