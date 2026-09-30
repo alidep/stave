@@ -34,7 +34,7 @@
 #practice-hints[aria-checked="false"] .practice-hints-track{background:#d0cdc6}
 #practice-hints[aria-checked="false"] .practice-hints-thumb{left:2px}
 #practice-play{width:36px;height:36px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--accent)}
-#practice-play:hover{background:#c96849}
+#practice-play:hover{background:#6f8f5f}
 #practice-play img{display:block;width:14px;height:16px;margin-left:3px}
 #practice-expand{width:36px;height:36px;padding:0;border:1px solid #ded8ca;border-radius:10px;background:#fff;color:#514d47;font-size:18px}
 #practice-expand:hover{background:#f3efe5}
@@ -74,7 +74,7 @@
 .practice-complete{max-width:760px;margin:22px auto 4px;padding:25px 28px;border:1px solid #e4ddcf;border-radius:20px;background:#f4efe5;color:var(--ink);text-align:center}
 .practice-complete[hidden]{display:none}
 .practice-card.is-complete .practice-keyboard-wrap,.practice-card.is-complete .midi-full-piano-wrap,.practice-card.is-complete .practice-connect-strip{display:none!important}
-.completion-kicker{margin:0 0 9px;color:var(--accent);font:700 11px/1 JetBrains,monospace;letter-spacing:.14em}.practice-complete h3{margin:0;font:800 27px/1.15 Visuelt,sans-serif}.practice-complete>p:not(.completion-kicker){margin:9px 0 19px;color:#716b63;font-size:15px}.completion-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}.completion-actions button{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 15px;border:1px solid #d9d2c5;border-radius:999px;background:#fff;color:var(--ink);font:700 13px/1 Visuelt,sans-serif;cursor:pointer}.completion-actions button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.completion-actions button:hover{border-color:var(--accent);color:var(--accent)}.completion-actions .completion-primary{border-color:var(--accent);background:var(--accent);color:#fff}.completion-actions .completion-primary:hover{background:#c96849;color:#fff}
+.completion-kicker{margin:0 0 9px;color:var(--accent);font:700 11px/1 JetBrains,monospace;letter-spacing:.14em}.practice-complete h3{margin:0;font:800 27px/1.15 Visuelt,sans-serif}.practice-complete>p:not(.completion-kicker){margin:9px 0 19px;color:#716b63;font-size:15px}.completion-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}.completion-actions button{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 15px;border:1px solid #d9d2c5;border-radius:999px;background:#fff;color:var(--ink);font:700 13px/1 Visuelt,sans-serif;cursor:pointer}.completion-actions button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.completion-actions button:hover{border-color:var(--accent);color:var(--accent)}.completion-actions .completion-primary{border-color:var(--accent);background:var(--accent);color:#fff}.completion-actions .completion-primary:hover{background:#6f8f5f;color:#fff}
 .practice-hand{width:min(740px,100%)}
 .practice-hand[hidden]{display:none}
 .practice-keyboard-wrap.is-both{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:clamp(24px,4vw,64px);width:100%;max-width:1060px;margin-inline:auto}
@@ -86,11 +86,11 @@
 .keyboard-map-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .keyboard-map-trigger svg{display:block;flex:1;min-width:0;height:100%}
 .keyboard-map-legend{display:flex;gap:5px;font:700 10px/1 JetBrains,monospace}
-.keyboard-map-legend .map-left{color:#c46b4f}
+.keyboard-map-legend .map-left{color:#6f8f5f}
 .keyboard-map-legend .map-right{color:#148f82}
 .keyboard-map-dialog{max-width:min(860px,calc(100vw - 32px));padding:31px 34px 27px}
 .keyboard-map-dialog h2{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 22px;margin:4px 36px 22px 0;font:700 20px/1.3 Visuelt,sans-serif;letter-spacing:-.025em}
-.keyboard-map-dialog h2 .map-left{color:#c46b4f}
+.keyboard-map-dialog h2 .map-left{color:#6f8f5f}
 .keyboard-map-dialog h2 .map-right{margin-left:auto;color:#148f82;text-align:right}
 .keyboard-map-close{position:absolute;top:16px;right:20px;padding:0 5px;border:0;background:transparent;color:#777168;font:400 27px/1 Visuelt,sans-serif;cursor:pointer}
 .keyboard-map-close:hover{color:var(--ink)}
@@ -175,7 +175,7 @@
 @media(min-width:960px){.practice-section{margin-top:65px;padding-bottom:45px}.practice-card{padding:34px 40px 23px}}
 @media(max-width:959px){.practice-section{margin-top:70px}.practice-card{padding:17px;border-radius:18px}.practice-topline{display:block}.practice-title-block h3{font-size:21px}.practice-title-block p{margin-top:6px;font-size:11px}.practice-toolbar{flex-wrap:wrap;justify-content:flex-end;gap:12px;margin-top:15px}.practice-controls{gap:10px}.practice-level-stepper{height:35px}.practice-level-stepper button{width:24px}#practice-level-value{min-width:53px;font-size:11px}#practice-hints{height:35px;font-size:10px;gap:7px}#practice-play,#practice-expand{width:35px;height:35px}.practice-score-viewport{margin-top:12px;padding:12px}.practice-piano{height:148px}.practice-black{height:92px}.practice-piano .key-label{width:18px;height:20px;font-size:9px}.practice-black .key-label{width:17px;height:19px;font-size:9px}.practice-keyboard-label{font-size:9px;letter-spacing:.08em}.practice-connect-strip{margin-top:27px;padding-top:15px;flex-wrap:wrap}.practice-connect-main{width:100%;gap:9px;flex-wrap:nowrap}.practice-connect-instruction{min-width:0;font-size:8px;line-height:1.35;white-space:normal}.practice-connect-strip summary{font-size:10px}}
 @media(max-width:959px){.stave-benefits{grid-template-columns:1fr;margin-top:42px}.stave-benefits article{padding:14px}.benefit-record{width:67px;height:67px}.stave-benefits h2{font-size:16px}}
-@media(max-width:959px){.topbar-actions{gap:8px}.pick-song-link{font-size:12px}.song-picker-dialog{width:100%;max-width:none;max-height:82svh;margin:auto 0 0;padding:24px 22px 35px;border-radius:32px 32px 0 0}.song-picker-handle{display:block;width:74px;height:5px;margin:0 auto 30px;border-radius:99px;background:#e7a189}.song-picker-close{top:25px;right:23px}.song-picker-dialog h2{font-size:33px;margin-bottom:24px}.song-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 12px}.song-disc{width:min(118px,100%)}.sheet-actions{grid-template-columns:1fr}.sheet-actions>button{min-height:52px}.song-tile strong{font-size:12px}.song-tile small{font-size:10px}}
+@media(max-width:959px){.topbar-actions{gap:8px}.pick-song-link{font-size:12px}.song-picker-dialog{width:100%;max-width:none;max-height:82svh;margin:auto 0 0;padding:24px 22px 35px;border-radius:32px 32px 0 0}.song-picker-handle{display:block;width:74px;height:5px;margin:0 auto 30px;border-radius:99px;background:#c5d4bd}.song-picker-close{top:25px;right:23px}.song-picker-dialog h2{font-size:33px;margin-bottom:24px}.song-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 12px}.song-disc{width:min(118px,100%)}.sheet-actions{grid-template-columns:1fr}.sheet-actions>button{min-height:52px}.song-tile strong{font-size:12px}.song-tile small{font-size:10px}}
 @media(max-width:430px){.pick-song-link{font-size:11px}.topbar-actions{gap:5px}.song-picker-dialog{max-height:86svh}.song-grid{gap-inline:9px}.song-disc{width:min(104px,100%)}}
 @media(max-width:959px){.practice-toolbar{gap:18px;margin-top:18px}.practice-toolbar-top,.practice-toolbar-bottom{gap:8px}.practice-score-nav{height:35px}.practice-score-nav button{width:35px}.practice-score-nav svg{width:17px;height:17px}.practice-level-stepper button{width:32px;font-size:18px}#practice-level-value{min-width:58px}#practice-hints{padding-inline:10px}}
 @media(max-width:959px){#practice-hints{height:30px;padding-inline:4px}#practice-play,#practice-expand{width:30px;height:30px}#practice-play img{width:12px;height:14px}#practice-expand{font-size:16px}}
@@ -218,7 +218,7 @@ body.song-page .screen{padding-bottom:36px}
 }
 @media(max-width:430px){.song-library-shell{padding-inline:20px}.song-picker-dialog .song-grid{gap-inline:10px}.song-picker-dialog .song-disc{width:min(106px,100%)}}
 
-/* The library is a normal page below the persistent Stave navigation. */
+/* The library is a normal page below the persistent product navigation. */
 .song-picker-dialog{position:static;inset:auto;width:100%;max-width:none;max-height:none;margin:42px 0 0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
 .song-library-shell{width:100%;margin:0;padding:0 0 34px}
 .song-page-topbar,.song-picker-close{display:none}
@@ -234,7 +234,7 @@ body.library-page .song-picker-dialog{margin-top:58px}
 .song-search-actions{align-items:start}
 .song-search-actions .sheet-upload-note{margin:8px 4px 0;text-align:left}
 #upload-sheet{background:var(--accent);border-color:var(--accent);color:#fff}
-#upload-sheet:hover{background:#c96849;filter:none}
+#upload-sheet:hover{background:#6f8f5f;filter:none}
 .song-search-actions{grid-template-columns:minmax(0,2fr) minmax(220px,280px)}
 .practice-nav-link{padding:8px 2px;border:0;background:transparent;color:var(--ink);font:700 14px/1 Visuelt,sans-serif;cursor:pointer;text-decoration:none;transform:translateY(-7px)}
 .practice-nav-link:hover{color:var(--accent)}.practice-nav-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
@@ -256,8 +256,8 @@ body.practice-only-page .practice-section{margin-top:34px}
 .artist-grid .artist-tile:nth-child(2) img{animation-delay:-11s}.artist-grid .artist-tile:nth-child(3) img{animation-delay:-23s}
 @media(max-width:959px){.library-tabs{margin-top:34px;gap:22px}.library-tabs button{font-size:17px}.artist-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 14px}.artist-grid .song-disc{width:min(122px,100%)}.artist-tile strong{font-size:14px}}
 .practice-nav-link,.pick-song-link{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0 17px;border-radius:999px;font-size:13px;transform:translateY(-7px)}
-.practice-nav-link{border:1px solid var(--accent);background:var(--accent);color:#fff}.practice-nav-link:hover{border-color:#c96849;background:#c96849;color:#fff}
-.pick-song-link{border:1px solid #d9d4c9;background:transparent}.pick-song-link:hover{border-color:var(--accent);background:rgba(217,119,87,.05);color:var(--accent)}
+.practice-nav-link{border:1px solid var(--accent);background:var(--accent);color:#fff}.practice-nav-link:hover{border-color:#6f8f5f;background:#6f8f5f;color:#fff}
+.pick-song-link{border:1px solid #d9d4c9;background:transparent}.pick-song-link:hover{border-color:var(--accent);background:rgba(132,167,112,.08);color:var(--accent)}
 @media(max-width:959px){.practice-nav-link,.pick-song-link{min-height:34px;padding:0 12px;font-size:11px}}
 
 /* Readability pass */
@@ -306,19 +306,19 @@ body.practice-only-page .practice-section{margin-top:34px}
 .related-practice-cta{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:54px;padding:28px;border-radius:22px;background:#f2eee5}
 .related-practice-cta p{margin:0;font:600 16px/1.2 Visuelt,sans-serif}
 .related-practice-cta a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 19px;border-radius:999px;background:var(--accent);color:#fff;font:700 14px/1 Visuelt,sans-serif;text-decoration:none}
-.related-practice-cta a:hover{background:#c96849}
+.related-practice-cta a:hover{background:#6f8f5f}
 @media(max-width:959px){.related-songs{margin-top:42px;padding-top:34px}.related-song-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px}.related-song-tile .song-disc{width:min(138px,100%)}.related-practice-cta{margin-top:38px}}
 @media(max-width:520px){.related-songs-heading h2{font-size:25px}.related-songs-heading>a{font-size:12px}.related-practice-cta{align-items:flex-start;flex-direction:column;gap:14px}.related-practice-cta a{width:100%}}
 
 /* The selected top-level section is the only filled navigation button. */
 .practice-nav-link,.pick-song-link{border:1px solid #d9d4c9;background:transparent;color:var(--ink)}
-.practice-nav-link:hover,.pick-song-link:hover{border-color:var(--accent);background:rgba(217,119,87,.05);color:var(--accent)}
+.practice-nav-link:hover,.pick-song-link:hover{border-color:var(--accent);background:rgba(132,167,112,.08);color:var(--accent)}
 body.practice-only-page .practice-nav-link,
 body.library-page .pick-song-link,
 body.song-page:not(.practice-only-page) .pick-song-link{border-color:var(--accent);background:var(--accent);color:#fff}
 body.practice-only-page .practice-nav-link:hover,
 body.library-page .pick-song-link:hover,
-body.song-page:not(.practice-only-page) .pick-song-link:hover{border-color:#c96849;background:#c96849;color:#fff}
+body.song-page:not(.practice-only-page) .pick-song-link:hover{border-color:#6f8f5f;background:#6f8f5f;color:#fff}
 
 /* Let the playing surface use the full screen width. */
 @media(min-width:960px){

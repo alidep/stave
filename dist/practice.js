@@ -97,8 +97,8 @@
       else blacks.push({midi,x:whiteIndex*10-3});
     }
     const inRange = (midi,range) => range && midi>=range[0] && midi<=range[1];
-    const whiteColor = midi => midi===60 ? '#3B94D9' : inRange(midi,leftRange) ? '#e6a78d' : inRange(midi,rightRange) ? '#74cfc3' : '#fff';
-    const blackColor = midi => inRange(midi,leftRange) ? '#a95439' : inRange(midi,rightRange) ? '#148f82' : '#252525';
+    const whiteColor = midi => midi===60 ? '#3B94D9' : inRange(midi,leftRange) ? '#bfd0b5' : inRange(midi,rightRange) ? '#74cfc3' : '#fff';
+    const blackColor = midi => inRange(midi,leftRange) ? '#6f8f5f' : inRange(midi,rightRange) ? '#148f82' : '#252525';
     const whiteShapes = whites.map(key => `<rect x="${key.x+.25}" y="1" width="9.5" height="64" rx="1.4" fill="${whiteColor(key.midi)}" stroke="#d7d2c9" stroke-width=".7"/>`).join('');
     const blackShapes = blacks.map(key => `<rect x="${key.x}" y="1" width="6" height="41" rx="1" fill="${blackColor(key.midi)}"/>`).join('');
     const labels = expanded ? `<text x="5" y="85" text-anchor="middle">A0</text>${whites.filter(key => key.midi%12===0).map(key => `<text x="${key.x+5}" y="85" text-anchor="middle"${key.midi===60 ? ' fill="#3B94D9" font-weight="700"' : ''}>C${Math.floor(key.midi/12)-1}</text>`).join('')}` : '';
