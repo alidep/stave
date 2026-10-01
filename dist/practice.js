@@ -818,19 +818,27 @@
   buildFullKeyboard();
   appendKeyboard(byId('feature-left-piano'),leftWhiteKeys,leftBlackKeys);
   appendKeyboard(byId('feature-right-piano'),duetWhiteKeys.slice(0,7),duetBlackKeys.filter(([midi]) => midi < 72));
-  // The most complex arrangement of the same Für Elise phrase: two hands and chord tones throughout.
+  // A recognizable Für Elise opening: the original melody shape, broken-chord harmony,
+  // and a few combined voicings so the demo can show both hands and chords clearly.
   const featureOctavePhrase = [
-    {left:2,right:5,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:69},{hand:'right',midi:72},{hand:'right',midi:76}]},
-    {left:2,right:5,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:68},{hand:'right',midi:71},{hand:'right',midi:75}]},
-    {left:3,right:5,notes:[{hand:'left',midi:48},{hand:'left',midi:52},{hand:'left',midi:57},{hand:'right',midi:69},{hand:'right',midi:72},{hand:'right',midi:76}]},
-    {left:3,right:5,notes:[{hand:'left',midi:47},{hand:'left',midi:52},{hand:'left',midi:56},{hand:'right',midi:68},{hand:'right',midi:71},{hand:'right',midi:75}]},
-    {left:2,right:5,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:69},{hand:'right',midi:72},{hand:'right',midi:76}]},
-    {left:2,right:4,notes:[{hand:'left',midi:35},{hand:'left',midi:40},{hand:'left',midi:44},{hand:'right',midi:64},{hand:'right',midi:68},{hand:'right',midi:71}]},
-    {left:3,right:5,notes:[{hand:'left',midi:50},{hand:'left',midi:53},{hand:'left',midi:57},{hand:'right',midi:69},{hand:'right',midi:74},{hand:'right',midi:77}]},
-    {left:3,right:5,notes:[{hand:'left',midi:48},{hand:'left',midi:52},{hand:'left',midi:55},{hand:'right',midi:67},{hand:'right',midi:72},{hand:'right',midi:76}]},
-    {left:2,right:4,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:60},{hand:'right',midi:64},{hand:'right',midi:69}]},
-    {left:3,right:4,notes:[{hand:'left',midi:52},{hand:'left',midi:56},{hand:'left',midi:59},{hand:'right',midi:64},{hand:'right',midi:68},{hand:'right',midi:71}]},
-    {left:3,right:5,notes:[{hand:'left',midi:48},{hand:'left',midi:52},{hand:'left',midi:57},{hand:'right',midi:67},{hand:'right',midi:72},{hand:'right',midi:76}]}
+    {left:3,right:5,notes:[{hand:'right',midi:76}]},
+    {left:3,right:5,notes:[{hand:'right',midi:75}]},
+    {left:3,right:5,notes:[{hand:'right',midi:76}]},
+    {left:3,right:5,notes:[{hand:'right',midi:75}]},
+    {left:3,right:5,notes:[{hand:'right',midi:76}]},
+    {left:3,right:4,notes:[{hand:'right',midi:71}]},
+    {left:3,right:5,notes:[{hand:'right',midi:74}]},
+    {left:3,right:5,notes:[{hand:'right',midi:72}]},
+    {left:2,right:4,notes:[{hand:'left',midi:45},{hand:'right',midi:69}]},
+    {left:3,right:4,notes:[{hand:'left',midi:52},{hand:'right',midi:60}]},
+    {left:3,right:4,notes:[{hand:'left',midi:57},{hand:'right',midi:64}]},
+    {left:2,right:4,notes:[{hand:'left',midi:40},{hand:'right',midi:71}]},
+    {left:3,right:4,notes:[{hand:'left',midi:52},{hand:'right',midi:64}]},
+    {left:3,right:4,notes:[{hand:'left',midi:56},{hand:'right',midi:68}]},
+    {left:2,right:5,notes:[{hand:'left',midi:45},{hand:'right',midi:72}]},
+    {left:3,right:5,notes:[{hand:'left',midi:52},{hand:'right',midi:76}]},
+    {left:3,right:5,notes:[{hand:'left',midi:57},{hand:'right',midi:75}]},
+    {left:2,right:4,notes:[{hand:'left',midi:45},{hand:'left',midi:52},{hand:'left',midi:57},{hand:'right',midi:60},{hand:'right',midi:64},{hand:'right',midi:69}]}
   ];
   let featureOctaveStep = 0, featureOctaveTimer;
   const featurePlayButton = byId('feature-play-toggle');
@@ -871,7 +879,7 @@
     if (featureOctaveStep >= featureOctavePhrase.length) featureOctaveStep = 0;
     setFeaturePlaying(true);
     showFeatureOctaveStep();
-    if (featureOctaveStep < featureOctavePhrase.length) featureOctaveTimer = window.setInterval(showFeatureOctaveStep,420);
+    if (featureOctaveStep < featureOctavePhrase.length) featureOctaveTimer = window.setInterval(showFeatureOctaveStep,360);
   };
   setOctaveCue(byId('feature-left-hand'),3,'LEFT HAND',3);
   setOctaveCue(byId('feature-right-hand'),4,'RIGHT HAND',4);
