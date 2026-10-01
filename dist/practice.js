@@ -834,6 +834,13 @@
     {hand:'right',left:3,right:5,midi:72}
   ];
   let featureOctaveStep = 0, featureOctaveTimer;
+  const featurePlayButton = byId('feature-play-toggle');
+  const featureInputDemo = document.querySelector('.input-demo');
+  const setFeaturePlaying = playing => {
+    featurePlayButton?.setAttribute('data-playing',String(playing));
+    featurePlayButton?.setAttribute('aria-label',`${playing ? 'Pause' : featureOctaveStep >= featureOctavePhrase.length ? 'Replay' : 'Play'} Für Elise keyboard example`);
+    featureInputDemo?.classList.toggle('is-feature-paused',!playing);
+  };
   const showFeatureOctaveStep = () => {
     const step = featureOctavePhrase[featureOctaveStep];
     setOctaveCue(byId('feature-left-hand'),step.left,'LEFT HAND',3);
@@ -849,19 +856,45 @@
     if (featureOctaveStep >= featureOctavePhrase.length && featureOctaveTimer) {
       clearInterval(featureOctaveTimer);
       featureOctaveTimer = null;
+      setFeaturePlaying(false);
       window.setTimeout(() => document.querySelectorAll('.feature-piano .is-preview-correct').forEach(key => key.classList.remove('is-preview-correct')),420);
     }
+  };
+  const pauseFeaturePhrase = () => {
+    if (featureOctaveTimer) clearInterval(featureOctaveTimer);
+    featureOctaveTimer = null;
+    setFeaturePlaying(false);
+  };
+  const playFeaturePhrase = () => {
+    if (featureOctaveTimer) return;
+    if (featureOctaveStep >= featureOctavePhrase.length) featureOctaveStep = 0;
+    setFeaturePlaying(true);
+    showFeatureOctaveStep();
+    if (featureOctaveStep < featureOctavePhrase.length) featureOctaveTimer = window.setInterval(showFeatureOctaveStep,420);
   };
   setOctaveCue(byId('feature-left-hand'),3,'LEFT HAND',3);
   setOctaveCue(byId('feature-right-hand'),4,'RIGHT HAND',4);
   byId('feature-keyboard-map').innerHTML = featureKeyboardOverview(3,4);
+  setFeaturePlaying(false);
+  featurePlayButton?.addEventListener('click',() => featureOctaveTimer ? pauseFeaturePhrase() : playFeaturePhrase());
+  document.querySelectorAll('.feature-piano [data-midi]').forEach(key => key.addEventListener('click',event => {
+    if (!featureInputDemo?.classList.contains('is-feature-paused')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const hand = key.closest('.feature-hand');
+    const octave = Number(hand?.dataset.octave);
+    const midi = (octave+1)*12 + Number(key.dataset.midi)%12;
+    document.querySelectorAll('.feature-piano .is-preview-correct').forEach(item => item.classList.remove('is-preview-correct'));
+    key.classList.add('is-preview-correct');
+    window.playStaveNote?.(midi,.34);
+    window.setTimeout(() => key.classList.remove('is-preview-correct'),340);
+  },true));
   const inputFeature = document.querySelector('.input-feature');
   if (inputFeature && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
     const featureAutoplayObserver = new IntersectionObserver(entries => {
       if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .35)) return;
       featureAutoplayObserver.disconnect();
-      showFeatureOctaveStep();
-      featureOctaveTimer = window.setInterval(showFeatureOctaveStep,420);
+      playFeaturePhrase();
     },{threshold:[.35]});
     featureAutoplayObserver.observe(inputFeature);
   }
