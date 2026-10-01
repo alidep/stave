@@ -495,8 +495,8 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 
 /* Editorial record accents connect the feature sequence without adding more cards. */
 .stave-benefits{position:relative;isolation:isolate}.stave-benefits>.benefit-feature{position:relative;z-index:1}.feedback-feature::before,.level-feature::after{content:"";position:absolute;z-index:-1;width:250px;aspect-ratio:1;border-radius:50%;background-image:radial-gradient(circle at center,var(--paper) 0 9%,transparent 9.5%),url("assets/songs/elise.webp");background-position:center;background-size:100% 100%,cover;background-repeat:no-repeat;filter:saturate(.82) contrast(.96);pointer-events:none}
-.feedback-feature::before{left:-330px;top:50%;width:440px;animation:feedback-record-turn 140s linear infinite}.feedback-feature .benefit-copy{padding-left:clamp(118px,11vw,158px)}
-.level-feature::after{right:-350px;bottom:-190px;width:460px;animation:level-record-turn 155s linear infinite}
+.feedback-feature::before{right:-330px;top:50%;width:440px;animation:feedback-record-turn 140s linear infinite}
+.level-feature::after{left:-350px;bottom:-190px;width:460px;animation:level-record-turn 155s linear infinite}
 .input-feature{margin-top:34px;padding-top:88px}
 @keyframes feedback-record-turn{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}
 @keyframes level-record-turn{to{transform:rotate(-360deg)}}
