@@ -78,6 +78,15 @@
     return `${['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi%12]}${Math.floor(midi/12)-1}`;
   }
 
+  const octaveColors = {1:'#ba775f',2:'#d49b45',3:'#d97857',4:'#3B94D9',5:'#22a89a',6:'#8378bd',7:'#a46a9c'};
+  function setOctaveCue(hand,octave,label) {
+    if (!hand) return;
+    hand.dataset.octave = octave;
+    hand.style.setProperty('--octave-color',octaveColors[octave] || '#84A770');
+    const title = hand.querySelector('.practice-keyboard-label');
+    if (title) title.textContent = `${label} · C${octave}–B${octave}`;
+  }
+
   function buildFullKeyboard() {
     const whitePitches = new Set([0,2,4,5,7,9,11]);
     const whites = [], blacks = [];
@@ -155,8 +164,8 @@
     else piano.replaceChildren();
     if (leftOnly || both) appendKeyboard(leftPiano,leftWhites,leftBlacks);
     else leftPiano.replaceChildren();
-    byId('practice-left-hand').querySelector('.practice-keyboard-label').textContent = `LEFT HAND · C${leftOctave}–B${leftOctave}`;
-    byId('practice-right-hand').querySelector('.practice-keyboard-label').textContent = `RIGHT HAND · C${rightOctave}–B${rightOctave}`;
+    setOctaveCue(byId('practice-left-hand'),leftOctave,'LEFT HAND');
+    setOctaveCue(byId('practice-right-hand'),rightOctave,'RIGHT HAND');
     setKeyboardReference(leftOnly || both ? leftWhites : null,leftOnly ? null : rightWhites);
     keyboardMap = new Map((leftOnly ? [...leftWhites,...leftBlacks] : both ? [...rightWhites,...rightBlacks,...leftWhites,...leftBlacks] : [...rightWhites,...rightBlacks]).map(([midi,,key]) => [key.toLowerCase(),midi]));
   }
@@ -794,6 +803,20 @@
   buildFullKeyboard();
   appendKeyboard(byId('feature-left-piano'),leftWhiteKeys,leftBlackKeys);
   appendKeyboard(byId('feature-right-piano'),duetWhiteKeys.slice(0,7),duetBlackKeys.filter(([midi]) => midi < 72));
+  const featureOctaves = [[3,4],[2,4],[3,5],[2,5]];
+  let featureOctaveIndex = 0;
+  const showFeatureOctaves = () => {
+    const [leftOctave,rightOctave] = featureOctaves[featureOctaveIndex];
+    setOctaveCue(byId('feature-left-hand'),leftOctave,'LEFT HAND');
+    setOctaveCue(byId('feature-right-hand'),rightOctave,'RIGHT HAND');
+  };
+  showFeatureOctaves();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.setInterval(() => {
+      featureOctaveIndex = (featureOctaveIndex + 1) % featureOctaves.length;
+      showFeatureOctaves();
+    },2400);
+  }
   renderBenefitFeedback();
   resetPassage();
   applyRoute();
