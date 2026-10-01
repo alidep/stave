@@ -812,7 +812,7 @@
       animatedLevelIndex = (animatedLevelIndex + 1) % animatedLevels.length;
       benefitLevelSelect.value = animatedLevels[animatedLevelIndex];
       renderLevelDemo();
-    }, 2800);
+    }, 1800);
   }
 
   buildFullKeyboard();
