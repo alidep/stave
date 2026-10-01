@@ -818,20 +818,19 @@
   buildFullKeyboard();
   appendKeyboard(byId('feature-left-piano'),leftWhiteKeys,leftBlackKeys);
   appendKeyboard(byId('feature-right-piano'),duetWhiteKeys.slice(0,7),duetBlackKeys.filter(([midi]) => midi < 72));
-  // Authentic opening of Für Elise: RH E5–A4, LH A2–A3, then the answering phrase.
+  // The most complex arrangement of the same Für Elise phrase: two hands and chord tones throughout.
   const featureOctavePhrase = [
-    {hand:'right',left:3,right:5,midi:76},{hand:'right',left:3,right:5,midi:75},
-    {hand:'right',left:3,right:5,midi:76},{hand:'right',left:3,right:5,midi:75},
-    {hand:'right',left:3,right:5,midi:76},{hand:'right',left:3,right:4,midi:71},
-    {hand:'right',left:3,right:5,midi:74},{hand:'right',left:3,right:5,midi:72},
-    {hand:'right',left:3,right:4,midi:69},{hand:'left',left:2,right:4,midi:45},
-    {hand:'left',left:3,right:4,midi:52},{hand:'left',left:3,right:4,midi:57},
-    {hand:'right',left:3,right:4,midi:60},{hand:'right',left:3,right:4,midi:64},
-    {hand:'right',left:3,right:4,midi:69},{hand:'right',left:3,right:4,midi:71},
-    {hand:'left',left:2,right:4,midi:40},{hand:'left',left:3,right:4,midi:52},
-    {hand:'left',left:3,right:4,midi:56},{hand:'right',left:3,right:4,midi:64},
-    {hand:'right',left:3,right:4,midi:68},{hand:'right',left:3,right:4,midi:71},
-    {hand:'right',left:3,right:5,midi:72}
+    {left:2,right:5,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:69},{hand:'right',midi:72},{hand:'right',midi:76}]},
+    {left:2,right:5,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:68},{hand:'right',midi:71},{hand:'right',midi:75}]},
+    {left:3,right:5,notes:[{hand:'left',midi:48},{hand:'left',midi:52},{hand:'left',midi:57},{hand:'right',midi:69},{hand:'right',midi:72},{hand:'right',midi:76}]},
+    {left:3,right:5,notes:[{hand:'left',midi:47},{hand:'left',midi:52},{hand:'left',midi:56},{hand:'right',midi:68},{hand:'right',midi:71},{hand:'right',midi:75}]},
+    {left:2,right:5,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:69},{hand:'right',midi:72},{hand:'right',midi:76}]},
+    {left:2,right:4,notes:[{hand:'left',midi:35},{hand:'left',midi:40},{hand:'left',midi:44},{hand:'right',midi:64},{hand:'right',midi:68},{hand:'right',midi:71}]},
+    {left:3,right:5,notes:[{hand:'left',midi:50},{hand:'left',midi:53},{hand:'left',midi:57},{hand:'right',midi:69},{hand:'right',midi:74},{hand:'right',midi:77}]},
+    {left:3,right:5,notes:[{hand:'left',midi:48},{hand:'left',midi:52},{hand:'left',midi:55},{hand:'right',midi:67},{hand:'right',midi:72},{hand:'right',midi:76}]},
+    {left:2,right:4,notes:[{hand:'left',midi:36},{hand:'left',midi:40},{hand:'left',midi:45},{hand:'right',midi:60},{hand:'right',midi:64},{hand:'right',midi:69}]},
+    {left:3,right:4,notes:[{hand:'left',midi:52},{hand:'left',midi:56},{hand:'left',midi:59},{hand:'right',midi:64},{hand:'right',midi:68},{hand:'right',midi:71}]},
+    {left:3,right:5,notes:[{hand:'left',midi:48},{hand:'left',midi:52},{hand:'left',midi:57},{hand:'right',midi:67},{hand:'right',midi:72},{hand:'right',midi:76}]}
   ];
   let featureOctaveStep = 0, featureOctaveTimer;
   const featurePlayButton = byId('feature-play-toggle');
@@ -849,9 +848,11 @@
     map.innerHTML = featureKeyboardOverview(step.left,step.right);
     map.setAttribute('aria-label',`Full keyboard showing left hand in octave ${step.left} and right hand in octave ${step.right}`);
     document.querySelectorAll('.feature-piano .is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
-    const piano = byId(step.hand === 'left' ? 'feature-left-piano' : 'feature-right-piano');
-    [...piano.querySelectorAll('[data-midi]')].find(key => Number(key.dataset.midi)%12 === step.midi%12)?.classList.add('is-preview-correct');
-    window.playStaveNote?.(step.midi,.28);
+    step.notes.forEach(note => {
+      const piano = byId(note.hand === 'left' ? 'feature-left-piano' : 'feature-right-piano');
+      [...piano.querySelectorAll('[data-midi]')].find(key => Number(key.dataset.midi)%12 === note.midi%12)?.classList.add('is-preview-correct');
+      window.playStaveNote?.(note.midi,.34);
+    });
     featureOctaveStep += 1;
     if (featureOctaveStep >= featureOctavePhrase.length && featureOctaveTimer) {
       clearInterval(featureOctaveTimer);
