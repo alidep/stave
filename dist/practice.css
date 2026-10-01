@@ -502,3 +502,8 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 
 .topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:46px;padding-inline:22px;font-size:15px}
 @media(max-width:959px){.topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:38px;padding-inline:14px;font-size:12px}}
+
+/* Keep the repertoire portrait row curated and quiet. */
+.repertoire-feature .musician-stack{gap:18px;padding-inline:8%}
+.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:19%;flex:0 0 19%;margin-left:0;border:0;box-shadow:none!important}
+@media(max-width:959px){.repertoire-feature .musician-stack{gap:8px;padding-inline:0}.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:23%;flex-basis:23%;margin-left:0}}
