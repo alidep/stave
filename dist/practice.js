@@ -876,7 +876,11 @@
   setOctaveCue(byId('feature-right-hand'),4,'RIGHT HAND',4);
   byId('feature-keyboard-map').innerHTML = featureKeyboardOverview(3,4);
   setFeaturePlaying(false);
-  featurePlayButton?.addEventListener('click',() => featureOctaveTimer ? pauseFeaturePhrase() : playFeaturePhrase());
+  let featurePausedByViewport = false;
+  featurePlayButton?.addEventListener('click',() => {
+    featurePausedByViewport = false;
+    featureOctaveTimer ? pauseFeaturePhrase() : playFeaturePhrase();
+  });
   document.querySelectorAll('.feature-piano [data-midi]').forEach(key => key.addEventListener('click',event => {
     if (!featureInputDemo?.classList.contains('is-feature-paused')) return;
     event.preventDefault();
@@ -891,10 +895,17 @@
   },true));
   const inputFeature = document.querySelector('.input-feature');
   if (inputFeature && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    let featureHasEntered = false;
     const featureAutoplayObserver = new IntersectionObserver(entries => {
-      if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .35)) return;
-      featureAutoplayObserver.disconnect();
-      playFeaturePhrase();
+      const visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .35);
+      if (visible && (!featureHasEntered || featurePausedByViewport)) {
+        featureHasEntered = true;
+        featurePausedByViewport = false;
+        playFeaturePhrase();
+      } else if (!visible && featureOctaveTimer) {
+        featurePausedByViewport = true;
+        pauseFeaturePhrase();
+      }
     },{threshold:[.35]});
     featureAutoplayObserver.observe(inputFeature);
   }
