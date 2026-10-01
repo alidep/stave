@@ -121,10 +121,10 @@
   function featureKeyboardOverview(leftOctave,rightOctave) {
     const leftDistance = Math.min(3,Math.abs(leftOctave-3));
     const rightDistance = Math.min(3,Math.abs(rightOctave-4));
-    const leftWhite = ['#dceaf5','#bdd6e9','#8fb7d5','#628eB5'][leftDistance];
-    const leftBlack = ['#7fa6ca','#5f8fb8','#47769f','#2f5278'][leftDistance];
-    const rightWhite = ['#f6e2d2','#efc5a5','#e5a078','#d77d55'][rightDistance];
-    const rightBlack = ['#dfa071','#cf8355','#b9613f','#9f4b32'][rightDistance];
+    const leftWhite = ['#f0f2f2','#bdd6e9','#8fb7d5','#628eB5'][leftDistance];
+    const leftBlack = ['#aeb4b7','#5f8fb8','#47769f','#2f5278'][leftDistance];
+    const rightWhite = ['#f3f1ee','#efc5a5','#e5a078','#d77d55'][rightDistance];
+    const rightBlack = ['#b7b0aa','#cf8355','#b9613f','#9f4b32'][rightDistance];
     const leftBase = (leftOctave+1)*12, rightBase = (rightOctave+1)*12;
     return keyboardOverview([leftBase,leftBase+11],[rightBase,rightBase+11],false,{leftWhite,leftBlack,rightWhite,rightBlack});
   }
