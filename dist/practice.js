@@ -118,15 +118,19 @@
     return `<svg viewBox="0 0 520 ${expanded ? 92 : 66}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${whiteShapes}${blackShapes}${expanded ? `<g fill="#777168" font-family="JetBrains Mono,monospace" font-size="9">${labels}</g>` : ''}</svg>`;
   }
 
-  function featureKeyboardOverview(leftOctave,rightOctave) {
+  function keyboardMapPalette(leftOctave=3,rightOctave=4) {
     const leftDistance = Math.min(3,Math.abs(leftOctave-3));
     const rightDistance = Math.min(3,Math.abs(rightOctave-4));
     const leftWhite = ['#f0f2f2','#bdd6e9','#8fb7d5','#628eB5'][leftDistance];
     const leftBlack = ['#aeb4b7','#5f8fb8','#47769f','#2f5278'][leftDistance];
     const rightWhite = ['#f3f1ee','#efc5a5','#e5a078','#d77d55'][rightDistance];
     const rightBlack = ['#b7b0aa','#cf8355','#b9613f','#9f4b32'][rightDistance];
+    return {leftWhite,leftBlack,rightWhite,rightBlack};
+  }
+
+  function featureKeyboardOverview(leftOctave,rightOctave) {
     const leftBase = (leftOctave+1)*12, rightBase = (rightOctave+1)*12;
-    return keyboardOverview([leftBase,leftBase+11],[rightBase,rightBase+11],false,{leftWhite,leftBlack,rightWhite,rightBlack});
+    return keyboardOverview([leftBase,leftBase+11],[rightBase,rightBase+11],false,keyboardMapPalette(leftOctave,rightOctave));
   }
 
   function setKeyboardReference(leftWhiteList=null,rightWhiteList=null) {
@@ -134,15 +138,18 @@
     const leftRange = range(leftWhiteList), rightRange = range(rightWhiteList);
     const both = leftRange && rightRange;
     const activeRange = leftRange || rightRange;
+    const leftOctave = leftRange ? Math.floor(leftRange[0]/12)-1 : 3;
+    const rightOctave = rightRange ? Math.floor(rightRange[0]/12)-1 : 4;
+    const palette = keyboardMapPalette(leftOctave,rightOctave);
     const button = byId('practice-keyboard-map');
-    button.innerHTML = keyboardOverview(leftRange,rightRange) + (both ? '<span class="keyboard-map-legend" aria-hidden="true"><span class="map-left">L</span><span class="map-right">R</span></span>' : '');
+    button.innerHTML = keyboardOverview(leftRange,rightRange,false,palette) + (both ? '<span class="keyboard-map-legend" aria-hidden="true"><span class="map-left">L</span><span class="map-right">R</span></span>' : '');
     button.setAttribute('aria-label',both ? `Show keyboard position: left hand ${noteName(leftRange[0])} to ${noteName(leftRange[1])}, right hand ${noteName(rightRange[0])} to ${noteName(rightRange[1])}, middle C in blue` : `Show ${leftRange ? 'left' : 'right'}-hand position, ${noteName(activeRange[0])} to ${noteName(activeRange[1])}, on the full keyboard; middle C is blue`);
     button.onclick = () => {
       const title = byId('keyboard-map-title');
       title.innerHTML = `${leftRange ? `<span class="map-left">Left hand · ${noteName(leftRange[0])}–${noteName(leftRange[1])}</span>` : ''}${rightRange ? `<span class="map-right">Right hand · ${noteName(rightRange[0])}–${noteName(rightRange[1])}</span>` : ''}`;
       title.setAttribute('aria-label',`${leftRange ? `Left hand ${noteName(leftRange[0])} to ${noteName(leftRange[1])}` : ''}${both ? '; ' : ''}${rightRange ? `Right hand ${noteName(rightRange[0])} to ${noteName(rightRange[1])}` : ''}`);
-      byId('keyboard-map-large').innerHTML = keyboardOverview(leftRange,rightRange,true);
-      byId('keyboard-map-large').setAttribute('aria-label',`Full piano keyboard from A0 to C8, with ${leftRange ? `left hand ${noteName(leftRange[0])} through ${noteName(leftRange[1])} in orange` : ''}${both ? ', ' : ''}${rightRange ? `right hand ${noteName(rightRange[0])} through ${noteName(rightRange[1])} in teal` : ''}, and middle C in blue`);
+      byId('keyboard-map-large').innerHTML = keyboardOverview(leftRange,rightRange,true,palette);
+      byId('keyboard-map-large').setAttribute('aria-label',`Full piano keyboard from A0 to C8, with ${leftRange ? `left hand ${noteName(leftRange[0])} through ${noteName(leftRange[1])} in blue` : ''}${both ? ', ' : ''}${rightRange ? `right hand ${noteName(rightRange[0])} through ${noteName(rightRange[1])} in orange` : ''}, and middle C in blue`);
       mapDialog.showModal();
     };
   }

@@ -86,12 +86,12 @@
 .keyboard-map-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .keyboard-map-trigger svg{display:block;flex:1;min-width:0;height:100%}
 .keyboard-map-legend{display:flex;gap:5px;font:700 10px/1 JetBrains,monospace}
-.keyboard-map-legend .map-left{color:#6f8f5f}
-.keyboard-map-legend .map-right{color:#148f82}
+.keyboard-map-legend .map-left{color:#4f79a5}
+.keyboard-map-legend .map-right{color:#c96f49}
 .keyboard-map-dialog{max-width:min(860px,calc(100vw - 32px));padding:31px 34px 27px}
 .keyboard-map-dialog h2{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 22px;margin:4px 36px 22px 0;font:700 20px/1.3 Visuelt,sans-serif;letter-spacing:-.025em}
-.keyboard-map-dialog h2 .map-left{color:#6f8f5f}
-.keyboard-map-dialog h2 .map-right{margin-left:auto;color:#148f82;text-align:right}
+.keyboard-map-dialog h2 .map-left{color:#4f79a5}
+.keyboard-map-dialog h2 .map-right{margin-left:auto;color:#c96f49;text-align:right}
 .keyboard-map-close{position:absolute;top:16px;right:20px;padding:0 5px;border:0;background:transparent;color:#777168;font:400 27px/1 Visuelt,sans-serif;cursor:pointer}
 .keyboard-map-close:hover{color:var(--ink)}
 #keyboard-map-large svg{display:block;width:100%;height:auto}
