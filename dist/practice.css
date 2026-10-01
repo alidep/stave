@@ -493,5 +493,10 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 .practice-hand[data-octave] .practice-keyboard-label,.feature-hand[data-octave] .practice-keyboard-label{display:flex;align-items:center;gap:8px;color:var(--octave-color);transition:color .3s ease}.practice-hand[data-octave] .practice-keyboard-label::before,.feature-hand[data-octave] .practice-keyboard-label::before{content:"";width:9px;height:9px;flex:none;border-radius:50%;background:var(--octave-color);transition:opacity .3s ease,background .3s ease}.practice-hand[data-octave] .practice-piano,.feature-hand[data-octave] .practice-piano{box-shadow:inset 0 4px var(--octave-color);transition:box-shadow .3s ease}.practice-hand[data-octave-shift="normal"] .practice-keyboard-label::before,.feature-hand[data-octave-shift="normal"] .practice-keyboard-label::before{opacity:0}.practice-hand[data-octave-shift="normal"] .practice-piano,.feature-hand[data-octave-shift="normal"] .practice-piano{box-shadow:none}
 @media(max-width:959px){.input-feature{gap:24px}.input-feature .benefit-copy{text-align:left}.input-demo{padding:18px 14px}.feature-hand-row{grid-template-columns:1fr;gap:26px}.feature-piano{height:124px}.feature-piano.practice-piano.is-seven .practice-black{height:78px}.feature-input-footer{align-items:flex-end;gap:14px;margin-top:24px}.feature-keyboard-map{width:150px;height:25px}.feature-midi-connect{min-width:0;min-height:54px;padding:0 14px;font-size:10px;letter-spacing:.05em}}
 
+/* Give each homepage feature its own scroll-length scene. */
+.stave-benefits{gap:0}.stave-benefits>.benefit-feature{min-height:100svh;padding-block:clamp(72px,10vh,124px);scroll-snap-align:start;scroll-snap-stop:always}
+@media(min-width:960px){html{scroll-snap-type:y proximity}}
+@media(max-width:959px){.screen{scroll-snap-type:y proximity}.stave-benefits>.benefit-feature{min-height:calc(100svh - 32px);padding-block:64px}}
+
 .topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:46px;padding-inline:22px;font-size:15px}
 @media(max-width:959px){.topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:38px;padding-inline:14px;font-size:12px}}
