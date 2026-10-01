@@ -78,11 +78,15 @@
     return `${['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi%12]}${Math.floor(midi/12)-1}`;
   }
 
-  const octaveColors = {1:'#ba775f',2:'#d49b45',3:'#d97857',4:'#3B94D9',5:'#22a89a',6:'#8378bd',7:'#a46a9c'};
-  function setOctaveCue(hand,octave,label) {
+  const lowerOctaveColors = {1:'#7fa6ca',2:'#4f79a5',3:'#2f5278'};
+  const upperOctaveColors = {1:'#dfa071',2:'#c96f49',3:'#9f4b32'};
+  function setOctaveCue(hand,octave,label,normalOctave) {
     if (!hand) return;
+    const shift = octave - normalOctave;
+    const distance = Math.min(3,Math.abs(shift));
     hand.dataset.octave = octave;
-    hand.style.setProperty('--octave-color',octaveColors[octave] || '#84A770');
+    hand.dataset.octaveShift = shift === 0 ? 'normal' : shift < 0 ? 'lower' : 'higher';
+    hand.style.setProperty('--octave-color',shift < 0 ? lowerOctaveColors[distance] : shift > 0 ? upperOctaveColors[distance] : '#777168');
     const title = hand.querySelector('.practice-keyboard-label');
     if (title) title.textContent = `${label} · C${octave}–B${octave}`;
   }
@@ -164,8 +168,8 @@
     else piano.replaceChildren();
     if (leftOnly || both) appendKeyboard(leftPiano,leftWhites,leftBlacks);
     else leftPiano.replaceChildren();
-    setOctaveCue(byId('practice-left-hand'),leftOctave,'LEFT HAND');
-    setOctaveCue(byId('practice-right-hand'),rightOctave,'RIGHT HAND');
+    setOctaveCue(byId('practice-left-hand'),leftOctave,'LEFT HAND',3);
+    setOctaveCue(byId('practice-right-hand'),rightOctave,'RIGHT HAND',4);
     setKeyboardReference(leftOnly || both ? leftWhites : null,leftOnly ? null : rightWhites);
     keyboardMap = new Map((leftOnly ? [...leftWhites,...leftBlacks] : both ? [...rightWhites,...rightBlacks,...leftWhites,...leftBlacks] : [...rightWhites,...rightBlacks]).map(([midi,,key]) => [key.toLowerCase(),midi]));
   }
@@ -803,19 +807,41 @@
   buildFullKeyboard();
   appendKeyboard(byId('feature-left-piano'),leftWhiteKeys,leftBlackKeys);
   appendKeyboard(byId('feature-right-piano'),duetWhiteKeys.slice(0,7),duetBlackKeys.filter(([midi]) => midi < 72));
-  const featureOctaves = [[3,4],[2,4],[3,5],[2,5]];
-  let featureOctaveIndex = 0;
-  const showFeatureOctaves = () => {
-    const [leftOctave,rightOctave] = featureOctaves[featureOctaveIndex];
-    setOctaveCue(byId('feature-left-hand'),leftOctave,'LEFT HAND');
-    setOctaveCue(byId('feature-right-hand'),rightOctave,'RIGHT HAND');
+  const featureOctavePhrase = [
+    {hand:'left',left:3,right:4,midi:48},{hand:'right',left:3,right:4,midi:64},
+    {hand:'left',left:3,right:4,midi:52},{hand:'right',left:3,right:4,midi:67},
+    {hand:'left',left:2,right:4,midi:36},{hand:'left',left:2,right:4,midi:40},
+    {hand:'left',left:1,right:4,midi:24},{hand:'left',left:1,right:4,midi:31},
+    {hand:'right',left:3,right:4,midi:64},{hand:'left',left:3,right:4,midi:48},
+    {hand:'right',left:3,right:5,midi:76},{hand:'right',left:3,right:5,midi:79},
+    {hand:'right',left:3,right:6,midi:84},{hand:'right',left:3,right:6,midi:91},
+    {hand:'left',left:3,right:4,midi:52},{hand:'right',left:3,right:4,midi:72}
+  ];
+  let featureOctaveStep = 0, featureOctaveTimer;
+  const showFeatureOctaveStep = () => {
+    const step = featureOctavePhrase[featureOctaveStep];
+    setOctaveCue(byId('feature-left-hand'),step.left,'LEFT HAND',3);
+    setOctaveCue(byId('feature-right-hand'),step.right,'RIGHT HAND',4);
+    const leftBase = (step.left+1)*12, rightBase = (step.right+1)*12;
+    const map = byId('feature-keyboard-map');
+    map.innerHTML = keyboardOverview([leftBase,leftBase+11],[rightBase,rightBase+11]);
+    map.setAttribute('aria-label',`Full keyboard showing left hand in octave ${step.left} and right hand in octave ${step.right}`);
+    document.querySelectorAll('.feature-piano .is-pressed').forEach(key => key.classList.remove('is-pressed'));
+    const piano = byId(step.hand === 'left' ? 'feature-left-piano' : 'feature-right-piano');
+    [...piano.querySelectorAll('[data-midi]')].find(key => Number(key.dataset.midi)%12 === step.midi%12)?.classList.add('is-pressed');
+    window.playStaveNote?.(step.midi,.28);
+    featureOctaveStep = (featureOctaveStep + 1) % featureOctavePhrase.length;
   };
-  showFeatureOctaves();
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.setInterval(() => {
-      featureOctaveIndex = (featureOctaveIndex + 1) % featureOctaves.length;
-      showFeatureOctaves();
-    },2400);
+  setOctaveCue(byId('feature-left-hand'),3,'LEFT HAND',3);
+  setOctaveCue(byId('feature-right-hand'),4,'RIGHT HAND',4);
+  byId('feature-keyboard-map').innerHTML = keyboardOverview([48,59],[60,71]);
+  const inputFeature = document.querySelector('.input-feature');
+  if (inputFeature && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      const visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .35);
+      if (visible && !featureOctaveTimer) { showFeatureOctaveStep(); featureOctaveTimer = window.setInterval(showFeatureOctaveStep,520); }
+      if (!visible && featureOctaveTimer) { clearInterval(featureOctaveTimer); featureOctaveTimer = null; }
+    },{threshold:[.35]}).observe(inputFeature);
   }
   renderBenefitFeedback();
   resetPassage();
