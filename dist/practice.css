@@ -495,7 +495,7 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 
 /* Give each homepage feature its own scroll-length scene. */
 .stave-benefits{gap:0}.stave-benefits>.benefit-feature{min-height:100svh;padding-block:clamp(72px,10vh,124px);align-content:center;justify-content:center;scroll-snap-align:start;scroll-snap-stop:always}
-@media(min-width:960px){html{scroll-snap-type:y mandatory}.closing-actions{scroll-snap-align:start}}
+@media(min-width:960px){html{scroll-snap-type:none}body{overflow:hidden}.stage{height:100svh;overflow-y:auto;scroll-snap-type:y mandatory}.desktop-layout,.practice-section,.stave-benefits>.benefit-feature,.closing-actions{scroll-snap-align:start;scroll-snap-stop:always}}
 @media(max-width:959px){.screen{scroll-snap-type:y mandatory}.stave-benefits>.benefit-feature{min-height:calc(100svh - 32px);padding-block:64px}.closing-actions{scroll-snap-align:start}body.library-page .screen,body.song-page .screen{scroll-snap-type:none}}
 
 .topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:46px;padding-inline:22px;font-size:15px}
