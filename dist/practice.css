@@ -222,7 +222,7 @@ body.song-page .screen{padding-bottom:36px}
 .song-picker-dialog{position:static;inset:auto;width:100%;max-width:none;max-height:none;margin:42px 0 0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
 .song-library-shell{width:100%;margin:0;padding:0 0 34px}
 .song-page-topbar,.song-picker-close{display:none}
-body.library-page .desktop-layout,body.library-page .practice-section{display:none}
+body.library-page .desktop-layout,body.library-page .practice-section,body.library-page .closing-actions,body.library-page .site-footer{display:none}
 body.library-page .stave-benefits,body.song-page .stave-benefits{display:none}
 body.library-page .screen{min-height:100svh}
 @media(max-width:959px){.song-picker-dialog{margin-top:34px}.song-library-shell{width:100%;padding:0 0 38px}}
