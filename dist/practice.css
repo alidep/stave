@@ -504,7 +504,8 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 @media(max-width:959px){.topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:38px;padding-inline:14px;font-size:12px}}
 
 /* A broad, unadorned composer row: circular portraits without record holes or shadows. */
-.repertoire-feature .musician-stack{gap:10px;padding-inline:4%}
-.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:11%;flex:0 0 11%;margin-left:0;border:0;box-shadow:none!important}
+.repertoire-feature .musician-stack{gap:0;padding-inline:4%}
+.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:13%;flex:0 0 13%;margin-left:-1.5%;border:3px solid var(--paper);box-shadow:none!important}
+.repertoire-feature .musician-stack span:first-child{margin-left:0}
 .repertoire-feature .musician-stack span::after{display:none}
-@media(max-width:959px){.repertoire-feature .musician-stack{gap:6px;padding-inline:0;flex-wrap:wrap;align-content:center}.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:21%;flex-basis:21%;margin-left:0}}
+@media(max-width:959px){.repertoire-feature .musician-stack{padding-inline:0;flex-wrap:wrap;align-content:center}.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:23%;flex-basis:23%;margin-left:-2.5%;border-width:2px}.repertoire-feature .musician-stack span:nth-child(4n+1){margin-left:0}}
