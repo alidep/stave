@@ -222,7 +222,7 @@ body.song-page .screen{padding-bottom:36px}
 .song-picker-dialog{position:static;inset:auto;width:100%;max-width:none;max-height:none;margin:42px 0 0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
 .song-library-shell{width:100%;margin:0;padding:0 0 34px}
 .song-page-topbar,.song-picker-close{display:none}
-body.library-page .desktop-layout,body.library-page .practice-section,body.library-page .closing-actions,body.library-page .site-footer{display:none}
+body.library-page .desktop-layout,body.library-page .practice-section,body.library-page .closing-actions{display:none}
 body.library-page .stave-benefits,body.song-page .stave-benefits{display:none}
 body.library-page .screen{min-height:100svh}
 @media(max-width:959px){.song-picker-dialog{margin-top:34px}.song-library-shell{width:100%;padding:0 0 38px}}
@@ -482,6 +482,11 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 /* Final practice prompt and site footer. */
 .closing-actions{display:flex;justify-content:center;gap:22px;max-width:740px;margin:clamp(92px,11vw,150px) auto 0}
 .closing-actions .pill{flex:1;min-height:68px;border-radius:999px;font-size:20px}
+.closing-actions .pill svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.practice-only-page .closing-actions{max-width:370px}
+body.practice-only-page #closing-watch{display:flex;align-items:center;justify-content:center;gap:10px;border-color:var(--accent);background:var(--accent);color:#fff}
+body.practice-only-page #closing-watch:hover{background:#6f8f5f}
+body.song-page:not(.practice-only-page) .closing-actions{display:none}
 .site-footer{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:clamp(80px,10vw,130px);padding:30px 0 4px;border-top:1px solid #e2dccf;color:#777168;font-size:14px}
 .site-footer nav{display:flex;align-items:center;flex-wrap:wrap;gap:24px}.site-footer a,.site-footer strong{color:var(--ink);font-weight:700;text-decoration:none}.site-footer a:hover{text-decoration:underline;text-underline-offset:4px}.site-footer p{margin:0;white-space:nowrap}
 @media(max-width:959px){.closing-actions{gap:10px;margin-top:78px}.closing-actions .pill{min-width:0;min-height:56px;font-size:16px}.site-footer{align-items:flex-start;flex-direction:column;margin-top:74px;padding-bottom:22px}.site-footer nav{gap:18px}}

@@ -487,7 +487,24 @@
   byId('keyboard-map-close').addEventListener('click',() => mapDialog.close());
   mapDialog.addEventListener('click',event => { if (event.target === mapDialog) mapDialog.close(); });
   const songPicker = byId('song-picker-dialog');
-  document.querySelector('.screen').append(songPicker);
+  const siteFooter = document.querySelector('.site-footer');
+  document.querySelector('.screen').append(songPicker,siteFooter);
+  const setPassageClosingAction = enabled => {
+    const startButton = byId('closing-start');
+    const actionButton = byId('closing-watch');
+    startButton.hidden = enabled;
+    document.querySelector('.closing-actions').setAttribute('aria-label',enabled ? 'Continue practicing' : 'Start practicing');
+    if (enabled) {
+      actionButton.innerHTML = '<span>Next passage</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4"/></svg>';
+      actionButton.onclick = () => {
+        byId('completion-next').click();
+        byId('practice').scrollIntoView({behavior:'smooth',block:'start'});
+      };
+    } else {
+      actionButton.textContent = 'Watch first';
+      actionButton.onclick = byId('watch').onclick;
+    }
+  };
   const songLocations = {moon:[1,0],mary:[1,1],brother:[1,2],elise:[2,0],joy:[2,1],twinkle:[2,2],hallelujah:[2,3],jingle:[3,5],bridge:[3,6],saints:[3,7]};
   function renderRelatedSongs(songId) {
     const current = songs[songId];
@@ -499,6 +516,7 @@
     byId('related-songs').hidden = false;
   }
   function showSongLibrary(push=true) {
+    setPassageClosingAction(false);
     songPicker.hidden = false;
     byId('related-songs').hidden = true;
     document.body.classList.add('library-page');
@@ -507,6 +525,7 @@
     byId('song-search').focus({preventScroll:true});
   }
   function showSong(songId,push=true) {
+    setPassageClosingAction(false);
     const location = songLocations[songId];
     if (!location) return;
     [level,sampleIndex] = location;
@@ -520,6 +539,7 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   function showPracticePage(push=true) {
+    setPassageClosingAction(true);
     fullSongId = null;
     resetPassage();
     songPicker.hidden = true;
@@ -550,6 +570,7 @@
     else if (params.get('view') === 'songs') showSongLibrary(false);
     else if (params.get('view') === 'practice') showPracticePage(false);
     else {
+      setPassageClosingAction(false);
       songPicker.hidden = true;
       byId('related-songs').hidden = true;
       document.body.classList.remove('library-page','song-page','practice-only-page');
