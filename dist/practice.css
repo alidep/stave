@@ -480,11 +480,11 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 @media(max-width:959px){.benefit-score-play{width:36px;min-width:36px;height:36px;flex-basis:36px}.benefit-score-play img{width:12px}.feedback-feature .benefit-score-meta{min-height:45px}}
 
 /* Final practice prompt and site footer. */
-.closing-actions{display:flex;justify-content:center;gap:28px;max-width:780px;margin:clamp(92px,11vw,150px) auto 0}
-.closing-actions .pill{flex:1;min-height:74px;border-radius:999px;font-size:22px}
+.closing-actions{display:flex;justify-content:center;gap:20px;max-width:680px;margin:clamp(92px,11vw,150px) auto 0}
+.closing-actions .pill{flex:1;min-height:62px;border-radius:999px;font-size:18px}
 .site-footer{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:clamp(80px,10vw,130px);padding:30px 0 4px;border-top:1px solid #e2dccf;color:#777168;font-size:14px}
 .site-footer nav{display:flex;align-items:center;flex-wrap:wrap;gap:24px}.site-footer a,.site-footer strong{color:var(--ink);font-weight:700;text-decoration:none}.site-footer a:hover{text-decoration:underline;text-underline-offset:4px}.site-footer p{margin:0;white-space:nowrap}
-@media(max-width:959px){.closing-actions{gap:12px;margin-top:78px}.closing-actions .pill{min-width:0;min-height:58px;font-size:16px}.site-footer{align-items:flex-start;flex-direction:column;margin-top:74px;padding-bottom:22px}.site-footer nav{gap:18px}}
+@media(max-width:959px){.closing-actions{gap:10px;margin-top:78px}.closing-actions .pill{min-width:0;min-height:52px;font-size:15px}.site-footer{align-items:flex-start;flex-direction:column;margin-top:74px;padding-bottom:22px}.site-footer nav{gap:18px}}
 
 /* Input choices use the same playable keyboard language as the lesson. */
 .input-feature{display:flex;flex-direction:column;gap:34px}.input-feature .benefit-copy{max-width:720px;margin-inline:auto;text-align:center}.input-feature .benefit-visual{width:100%;min-height:0}.input-demo{padding:30px;border-radius:24px;background:#fffdf7;box-shadow:0 18px 48px rgba(44,38,27,.09),0 3px 10px rgba(44,38,27,.035);overflow:hidden}
