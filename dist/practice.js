@@ -198,13 +198,8 @@
     return root.querySelector(`[data-midi="${midi}"]`);
   }
 
-  function sampleKeys() {
-    if (level === 1) return ['moon','mary','brother'];
-    if (level === 2) return ['elise','joy','twinkle'];
-    const keys = ['joy','twinkle','brother','mary','elise','jingle','bridge','saints'];
-    const offset = (level-3)%keys.length;
-    return keys.slice(offset).concat(keys.slice(0,offset));
-  }
+  const practiceSongKeys = ['elise','joy','twinkle','brother','mary','jingle','bridge','saints','moon'];
+  function sampleKeys() { return practiceSongKeys; }
 
   function bassBar(root,duration) {
     if (root === null) return [{rest:true,duration:2}];
@@ -219,7 +214,7 @@
   function makePassage() {
     const key = fullSongId || sampleKeys()[sampleIndex];
     const song = songs[key];
-    const soloHand = level >= 3 ? 'both' : level === 1 && sampleIndex !== 1 ? 'left' : 'right';
+    const soloHand = level >= 3 ? 'both' : level === 1 ? 'left' : 'right';
     const repeats = fullSongId ? fullSongRepeats[key] || 1 : 1;
     const songBars = Array.from({length:repeats},() => song.bars).flat();
     const songBass = Array.from({length:repeats},() => song.bass).flat();
@@ -485,8 +480,8 @@
     setTimeout(() => key?.classList.remove('is-correct'),200);
   }
 
-  byId('practice-level-prev').addEventListener('click',() => { if (level > 1) { level--; sampleIndex = 0; resetPassage(); } });
-  byId('practice-level-next').addEventListener('click',() => { if (level < 10) { level++; sampleIndex = 0; resetPassage(); } });
+  byId('practice-level-prev').addEventListener('click',() => { if (level > 1) { level--; resetPassage(); } });
+  byId('practice-level-next').addEventListener('click',() => { if (level < 10) { level++; resetPassage(); } });
   byId('practice-sample-prev').addEventListener('click',() => { if (sampleIndex > 0) { sampleIndex--; resetPassage(); } });
   byId('practice-sample-next').addEventListener('click',() => { if (sampleIndex < sampleKeys().length-1) { sampleIndex++; resetPassage(); } });
   byId('practice-hints').addEventListener('click',() => {
@@ -500,9 +495,7 @@
   byId('completion-listen-take').addEventListener('click',playTake);
   byId('completion-next').addEventListener('click',() => {
     if (fullSongId) { showSongLibrary(); return; }
-    if (sampleIndex < sampleKeys().length-1) sampleIndex++;
-    else if (level < 10) { level++; sampleIndex = 0; }
-    else sampleIndex = 0;
+    sampleIndex = (sampleIndex+1)%sampleKeys().length;
     resetPassage();
   });
   window.playPracticePreview = playPreview;
@@ -561,7 +554,7 @@
     setPassageClosingAction(false);
     const location = songLocations[songId];
     if (!location) return;
-    [level,sampleIndex] = location;
+    level = location[0];
     fullSongId = songId;
     resetPassage();
     songPicker.hidden = true;
