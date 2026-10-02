@@ -38,7 +38,7 @@
   const keyboardRoot = byId('practice-keyboard-wrap');
   const card = byId('practice-card');
   const mapDialog = byId('keyboard-map-dialog');
-  let level = 1, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
+  let level = 2, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
   let completedNotes = new Set(), noteResults = new Map(), missedNotes = new Set(), takeNotes = [], takeStartedAt = performance.now(), takeTimers = [];
   const previewTimers = [];
