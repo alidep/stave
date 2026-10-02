@@ -41,6 +41,7 @@
   let level = 2, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
   let completedNotes = new Set(), noteResults = new Map(), missedNotes = new Set(), takeNotes = [], takeStartedAt = performance.now(), takeTimers = [];
+  let takePlaying = false, takePlaybackOffset = 0, takePlaybackStartedAt = 0;
   const previewTimers = [];
   let microphoneStream, microphoneContext, microphoneSource, microphoneAnalyser, microphoneFrame;
   let lastDetectedNote = -1, stableFrames = 0, lastMicrophonePlay = 0;
@@ -360,19 +361,44 @@
     keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
   }
 
-  function stopTakePlayback() {
+  function updateTakePlaybackButton() {
+    const button = byId('completion-listen-take');
+    if (!button) return;
+    button.dataset.state = takePlaying ? 'playing' : takePlaybackOffset > 0 ? 'paused' : 'idle';
+    const label = takePlaying ? 'Pause my take' : takePlaybackOffset > 0 ? 'Resume my take' : 'Listen to my take';
+    button.querySelector('span').textContent = label;
+    button.setAttribute('aria-label',label);
+  }
+
+  function clearTakeTimers() {
     takeTimers.forEach(clearTimeout);
     takeTimers = [];
-    const button = byId('completion-listen-take');
-    if (button) button.querySelector('span').textContent = 'Listen to my take';
+  }
+
+  function stopTakePlayback() {
+    clearTakeTimers();
+    takePlaying = false;
+    takePlaybackOffset = 0;
+    updateTakePlaybackButton();
+  }
+
+  function pauseTakePlayback() {
+    if (!takePlaying) return;
+    takePlaybackOffset += performance.now()-takePlaybackStartedAt;
+    clearTakeTimers();
+    takePlaying = false;
+    updateTakePlaybackButton();
   }
 
   function playTake() {
-    stopTakePlayback();
+    if (takePlaying) { pauseTakePlayback(); return; }
     if (!takeNotes.length) return;
-    byId('completion-listen-take').querySelector('span').textContent = 'Playing my take…';
-    takeNotes.forEach(note => takeTimers.push(setTimeout(() => window.playStaveNote?.(note.midi,.33),note.at)));
-    takeTimers.push(setTimeout(stopTakePlayback,takeNotes.at(-1).at+650));
+    if (takePlaybackOffset >= takeNotes.at(-1).at+650) takePlaybackOffset = 0;
+    takePlaying = true;
+    takePlaybackStartedAt = performance.now();
+    updateTakePlaybackButton();
+    takeNotes.filter(note => note.at >= takePlaybackOffset).forEach(note => takeTimers.push(setTimeout(() => window.playStaveNote?.(note.midi,.33),Math.max(0,note.at-takePlaybackOffset))));
+    takeTimers.push(setTimeout(stopTakePlayback,Math.max(0,takeNotes.at(-1).at+650-takePlaybackOffset)));
   }
 
   function resetPassage() {
