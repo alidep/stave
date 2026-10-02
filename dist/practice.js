@@ -79,7 +79,7 @@
     return `${['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][midi%12]}${Math.floor(midi/12)-1}`;
   }
 
-  const lowerOctaveColors = {1:'#7fa6ca',2:'#4f79a5',3:'#2f5278'};
+  const lowerOctaveColors = {1:'#3B94D9',2:'#2f75b5',3:'#235782'};
   const upperOctaveColors = {1:'#d97757',2:'#bd6145',3:'#984633'};
   function setOctaveCue(hand,octave,label,normalOctave) {
     if (!hand) return;
@@ -123,7 +123,7 @@
     const leftDistance = Math.min(3,Math.abs(leftOctave-3));
     const rightDistance = Math.min(3,Math.abs(rightOctave-4));
     const leftWhite = ['#f0f2f2','#bdd6e9','#8fb7d5','#628eB5'][leftDistance];
-    const leftBlack = ['#aeb4b7','#5f8fb8','#47769f','#2f5278'][leftDistance];
+    const leftBlack = ['#aeb4b7','#3B94D9','#2f75b5','#235782'][leftDistance];
     const rightWhite = ['#f3f1ee','#efc5a5','#e5a078','#d77d55'][rightDistance];
     const rightBlack = ['#b7b0aa','#d97757','#b9613f','#984633'][rightDistance];
     return {leftWhite,leftBlack,rightWhite,rightBlack};
