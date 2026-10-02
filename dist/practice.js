@@ -122,10 +122,10 @@
   function keyboardMapPalette(leftOctave=3,rightOctave=4) {
     const leftDistance = Math.min(3,Math.abs(leftOctave-3));
     const rightDistance = Math.min(3,Math.abs(rightOctave-4));
-    const leftWhite = ['#f0f2f2','#bdd6e9','#8fb7d5','#628eB5'][leftDistance];
-    const leftBlack = ['#aeb4b7','#3B94D9','#2f75b5','#235782'][leftDistance];
-    const rightWhite = ['#f3f1ee','#efc5a5','#e5a078','#d77d55'][rightDistance];
-    const rightBlack = ['#b7b0aa','#d97757','#b9613f','#984633'][rightDistance];
+    const leftWhite = ['rgba(59,148,217,.08)','#bdd6e9','#8fb7d5','#628eB5'][leftDistance];
+    const leftBlack = ['rgba(59,148,217,.2)','#3B94D9','#2f75b5','#235782'][leftDistance];
+    const rightWhite = ['rgba(217,119,87,.08)','#efc5a5','#e5a078','#d77d55'][rightDistance];
+    const rightBlack = ['rgba(217,119,87,.2)','#d97757','#b9613f','#984633'][rightDistance];
     return {leftWhite,leftBlack,rightWhite,rightBlack};
   }
 
