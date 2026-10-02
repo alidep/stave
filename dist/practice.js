@@ -131,7 +131,7 @@
 
   function featureKeyboardOverview(leftOctave,rightOctave) {
     const leftBase = (leftOctave+1)*12, rightBase = (rightOctave+1)*12;
-    return keyboardOverview([leftBase,leftBase+11],[rightBase,rightBase+11],false,keyboardMapPalette(leftOctave,rightOctave));
+    return keyboardOverview([leftBase,leftBase+11],[rightBase,rightBase+11],false,keyboardMapPalette(leftOctave,rightOctave)) + '<span class="keyboard-map-legend" aria-hidden="true"><span class="map-left">L</span><span class="map-right">R</span></span>';
   }
 
   function setKeyboardReference(leftWhiteList=null,rightWhiteList=null) {
