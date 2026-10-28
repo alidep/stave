@@ -164,7 +164,8 @@
     piano.classList.toggle('is-right',!both);
     piano.classList.toggle('is-wide',both);
     leftPiano.classList.add('is-seven');
-    const nextMidi = hand => passage.steps.slice(currentStep).flatMap(step => step.notes).find(note => note.hand === hand)?.midi
+    const keyboardStep = previewPlaying && previewIndex >= 0 ? previewIndex : currentStep;
+    const nextMidi = hand => passage.steps.slice(keyboardStep).flatMap(step => step.notes).find(note => note.hand === hand)?.midi
       ?? passage.events.find(note => note.hand === hand)?.midi;
     const octaveKeys = (octave,keys,sharpKeys) => {
       const base = (octave+1)*12;
@@ -349,11 +350,13 @@
   }
 
   function stopPreview() {
+    const restoreKeyboard = previewPlaying && passage;
     previewTimers.forEach(clearTimeout);
     previewTimers.length = 0;
     previewPlaying = false;
     previewIndex = -1;
     keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
+    if (restoreKeyboard) buildKeyboard();
   }
 
   function updateTakePlaybackButton() {
@@ -426,6 +429,7 @@
 
   function showPreviewNote(index) {
     previewIndex = index;
+    buildKeyboard();
     keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
     passage.steps[index].notes.forEach(note => {
       keyFor(note.midi)?.classList.add('is-preview-correct');
