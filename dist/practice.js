@@ -337,6 +337,11 @@
     byId('completion-summary').textContent = mistakeCount === 0 ? 'Every note landed. Ready for another?' : `${mistakeCount} ${mistakeCount === 1 ? 'note needs' : 'notes need'} another look.`;
     document.querySelector('.completion-kicker').textContent = fullSongId ? 'SONG COMPLETE' : 'PASSAGE COMPLETE';
     byId('practice-level-value').textContent = `Level ${level}`;
+    document.querySelectorAll('[data-home-level]').forEach(button => {
+      const preset = Number(button.dataset.homeLevel);
+      const active = preset === 1 ? level < 3 : preset === 3 ? level >= 3 && level < 6 : level >= 6;
+      button.setAttribute('aria-pressed',String(active));
+    });
     byId('practice-level-prev').disabled = level === 1;
     byId('practice-level-next').disabled = level === 10;
     byId('practice-sample-prev').disabled = !!fullSongId || sampleIndex === 0;
@@ -486,6 +491,10 @@
 
   byId('practice-level-prev').addEventListener('click',() => { if (level > 1) { level--; resetPassage(); } });
   byId('practice-level-next').addEventListener('click',() => { if (level < 10) { level++; resetPassage(); } });
+  document.querySelectorAll('[data-home-level]').forEach(button => button.addEventListener('click',() => {
+    level = Number(button.dataset.homeLevel);
+    resetPassage();
+  }));
   byId('practice-sample-prev').addEventListener('click',() => { if (sampleIndex > 0) { sampleIndex--; resetPassage(); } });
   byId('practice-sample-next').addEventListener('click',() => { if (sampleIndex < sampleKeys().length-1) { sampleIndex++; resetPassage(); } });
   byId('practice-hints').addEventListener('click',() => {
