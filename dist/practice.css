@@ -625,3 +625,11 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawe
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]:hover{background:#6d8f5e}
 @media(min-width:960px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{padding-bottom:40px}}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle,body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]{min-height:52px;margin:0 0 32px calc(50% - 50vw)}}
+/* Use one attached tab: panel-to-tab when open, header-to-tab when closed. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:0!important;margin-bottom:0;padding-top:22px;padding-bottom:28px;border-top:1px solid #e7e0d4}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle,
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]{width:230px;min-height:52px;justify-content:center;gap:10px;margin:0 auto 42px;padding:12px 20px;border:0;border-radius:0 0 18px 18px;background:#88aa76;color:#fff;font:800 12px/1 Visuelt,sans-serif;letter-spacing:.045em;box-shadow:none;text-transform:uppercase}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle:hover,
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]:hover{transform:none;background:#789b68}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]{margin-top:0;background:#789b68}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{padding-top:16px;padding-bottom:24px}body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle,body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]{width:210px;min-height:48px;margin:0 auto 32px}}
