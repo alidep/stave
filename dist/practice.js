@@ -969,6 +969,27 @@
     },{threshold:[.35]});
     featureAutoplayObserver.observe(inputFeature);
   }
+  const practiceToolbar = byId('practice-toolbar');
+  const practiceAdjustments = byId('practice-adjustments');
+  if (practiceToolbar && practiceAdjustments) {
+    const setAdjustmentsOpen = open => {
+      practiceToolbar.classList.toggle('is-adjustments-open',open);
+      practiceAdjustments.setAttribute('aria-expanded',String(open));
+      practiceAdjustments.setAttribute('aria-label',open ? 'Close practice adjustments' : 'Open practice adjustments');
+    };
+    practiceAdjustments.addEventListener('click',event => {
+      event.stopPropagation();
+      setAdjustmentsOpen(!practiceToolbar.classList.contains('is-adjustments-open'));
+    });
+    document.addEventListener('click',event => { if (!practiceToolbar.contains(event.target)) setAdjustmentsOpen(false); });
+    document.addEventListener('keydown',event => { if (event.key === 'Escape') setAdjustmentsOpen(false); });
+  }
+  const playMenu = byId('play-menu');
+  if (playMenu) {
+    playMenu.querySelectorAll('a').forEach(link => link.addEventListener('click',() => playMenu.removeAttribute('open')));
+    document.addEventListener('click',event => { if (!playMenu.contains(event.target)) playMenu.removeAttribute('open'); });
+    document.addEventListener('keydown',event => { if (event.key === 'Escape') playMenu.removeAttribute('open'); });
+  }
   const homepagePractice = byId('practice');
   const practiceLearnTab = byId('practice-learn-tab');
   const homepageHero = byId('homepage-hero');
