@@ -580,3 +580,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 /* Keep the platform heading subordinate to the product choices. */
 .play-on-heading h2{font-size:clamp(42px,4.2vw,60px)}
 @media(max-width:959px){.play-on-heading h2{font-size:44px}}
+/* Restore the original playful device hover without changing layout bounds. */
+.play-on-card{transition:transform .28s ease}
+.play-on-card:hover{transform:translateY(-8px)}
+.play-on-phone:hover .play-on-art img{transform:translateY(-6px) rotate(-2deg)}
+.play-on-computer:hover .play-on-art img{transform:translateY(-6px) rotate(0) scale(.96)}
+.play-on-midi:hover .play-on-art img{transform:translateY(-6px) rotate(0) scale(.96)}
+@media(prefers-reduced-motion:reduce){.play-on-card,.play-on-art img{transition:none}.play-on-card:hover{transform:none}}
