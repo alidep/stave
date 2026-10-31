@@ -684,7 +684,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:142px;min-height:38px;border-radius:0 0 15px 15px}}
 /* Give the closed drawer rail breathing room and a graduated tab shadow. */
 .topbar{transition:padding-bottom .35s ease}
-body.practice-retracted .topbar{padding-bottom:18px}
+body.practice-retracted .topbar{padding-bottom:8px}
+body.practice-retracted:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{margin-top:clamp(30px,4vw,52px)}
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{box-shadow:0 2px 3px rgba(46,67,38,.16),0 6px 10px rgba(46,67,38,.11),0 14px 24px rgba(46,67,38,.065),0 25px 42px rgba(46,67,38,.03)}
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab:hover{box-shadow:0 2px 4px rgba(46,67,38,.18),0 7px 12px rgba(46,67,38,.13),0 16px 28px rgba(46,67,38,.075),0 28px 46px rgba(46,67,38,.035)}
 @media(prefers-reduced-motion:reduce){.topbar{transition:none}}
