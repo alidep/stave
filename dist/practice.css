@@ -593,3 +593,12 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 /* Treat Play on your as a compact label for the device row. */
 .play-on-heading h2{font-size:clamp(32px,3.1vw,46px);line-height:1}
 @media(max-width:959px){.play-on-heading h2{font-size:36px}}
+/* Give the product imagery priority over the device-row label. */
+@media(min-width:960px){
+  .play-on{grid-template-columns:minmax(135px,.42fr) minmax(0,3fr);gap:clamp(18px,2.4vw,38px)}
+  .play-on-heading h2{max-width:180px;font-size:clamp(27px,2.5vw,36px);line-height:1.02}
+  .play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{height:clamp(255px,21vw,315px)}
+  .play-on-phone .play-on-art img,.play-on-phone:hover .play-on-art img{height:92%;max-height:288px}
+  .play-on-computer .play-on-art img{transform:rotate(1deg) scale(1)}
+  .play-on-midi .play-on-art img{transform:rotate(-2deg) scale(1)}
+}
