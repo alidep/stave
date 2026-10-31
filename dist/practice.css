@@ -577,3 +577,6 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
   .play-on-computer .play-on-art img,.play-on-computer:hover .play-on-art img{transform:rotate(1deg) scale(.94)}
   .play-on-midi .play-on-art img,.play-on-midi:hover .play-on-art img{transform:rotate(-2deg) scale(.94)}
 }
+/* Keep the platform heading subordinate to the product choices. */
+.play-on-heading h2{font-size:clamp(42px,4.2vw,60px)}
+@media(max-width:959px){.play-on-heading h2{font-size:44px}}
