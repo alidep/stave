@@ -494,6 +494,10 @@
   document.querySelectorAll('[data-home-level]').forEach(button => button.addEventListener('click',() => {
     level = Number(button.dataset.homeLevel);
     resetPassage();
+    const practiceSection = byId('practice');
+    const wasRetracted = practiceSection?.classList.contains('is-retracted');
+    if (wasRetracted) byId('practice-learn-tab')?.click();
+    window.setTimeout(() => byId('practice-card')?.scrollIntoView({behavior:'smooth',block:'center'}),wasRetracted ? 720 : 80);
   }));
   byId('practice-sample-prev').addEventListener('click',() => { if (sampleIndex > 0) { sampleIndex--; resetPassage(); } });
   byId('practice-sample-next').addEventListener('click',() => { if (sampleIndex < sampleKeys().length-1) { sampleIndex++; resetPassage(); } });
