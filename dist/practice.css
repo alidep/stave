@@ -602,3 +602,9 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
   .play-on-computer .play-on-art img{transform:rotate(1deg) scale(1)}
   .play-on-midi .play-on-art img{transform:rotate(-2deg) scale(1)}
 }
+/* Extend the device-row lift to composer portraits and music examples. */
+.musician-stack span{transition:transform .28s ease}
+.musician-stack span:hover{z-index:5;transform:translateY(-8px) rotate(calc(var(--r)*1deg)) scale(1.035)}
+.feedback-feature .benefit-score-card,.level-feature .benefit-score-card{transition:transform .28s ease}
+.feedback-feature .benefit-score-card:hover,.level-feature .benefit-score-card:hover{transform:translateY(-8px)}
+@media(prefers-reduced-motion:reduce){.musician-stack span,.feedback-feature .benefit-score-card,.level-feature .benefit-score-card{transition:none}.musician-stack span:hover,.feedback-feature .benefit-score-card:hover,.level-feature .benefit-score-card:hover{transform:none}}
