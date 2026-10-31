@@ -611,3 +611,14 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 /* Pull the platform row closer to the preceding section. */
 .play-on{margin-top:clamp(28px,4vw,54px)}
 @media(max-width:959px){.play-on{margin-top:38px}}
+/* Homepage practice panel behaves as a drawer tucked beneath the header. */
+.practice-section{max-height:var(--practice-drawer-height,1400px);overflow:hidden;opacity:1;transform:translateY(0);transition:max-height .58s cubic-bezier(.4,0,.2,1),opacity .25s ease,transform .58s cubic-bezier(.4,0,.2,1),margin .58s cubic-bezier(.4,0,.2,1),padding .58s cubic-bezier(.4,0,.2,1)}
+.practice-section.is-drawer-collapsed{max-height:0;min-height:0;margin-top:0!important;margin-bottom:0;padding-bottom:0;opacity:0;transform:translateY(-28px);pointer-events:none}
+.practice-drawer-toggle{display:none}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle{position:relative;z-index:4;width:max-content;min-height:40px;display:flex;align-items:center;gap:9px;margin:-30px auto 42px;padding:9px 16px;border:1px solid #ded7ca;border-radius:999px;background:#fffdf7;color:#716b63;font:700 10px/1 JetBrains,monospace;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 8px 22px rgba(40,34,25,.07);transition:transform .22s ease,background .22s ease,margin .58s cubic-bezier(.4,0,.2,1)}
+.practice-drawer-toggle:hover{transform:translateY(-2px);background:#f7f3ea}
+.practice-drawer-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s ease}
+.practice-drawer-toggle[aria-expanded="false"]{margin:12px auto 34px}
+.practice-drawer-toggle[aria-expanded="false"] svg{transform:rotate(180deg)}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle{margin:-25px auto 34px}.practice-drawer-toggle[aria-expanded="false"]{margin:10px auto 28px}}
+@media(prefers-reduced-motion:reduce){.practice-section,.practice-drawer-toggle,.practice-drawer-toggle svg{transition:none}}

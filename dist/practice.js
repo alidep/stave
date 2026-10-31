@@ -969,6 +969,27 @@
     },{threshold:[.35]});
     featureAutoplayObserver.observe(inputFeature);
   }
+  const practiceDrawer = byId('practice');
+  const practiceDrawerToggle = byId('practice-drawer-toggle');
+  if (practiceDrawer && practiceDrawerToggle) {
+    const drawerLabel = practiceDrawerToggle.querySelector('span');
+    const setDrawerHeight = () => {
+      if (!practiceDrawer.classList.contains('is-drawer-collapsed')) {
+        practiceDrawer.style.setProperty('--practice-drawer-height', `${practiceDrawer.scrollHeight}px`);
+      }
+    };
+    const setDrawerState = collapsed => {
+      if (!collapsed) setDrawerHeight();
+      practiceDrawer.classList.toggle('is-drawer-collapsed',collapsed);
+      practiceDrawerToggle.setAttribute('aria-expanded',String(!collapsed));
+      practiceDrawerToggle.setAttribute('aria-label',collapsed ? 'Show practice area' : 'Hide practice area');
+      drawerLabel.textContent = collapsed ? 'Show practice' : 'Hide practice';
+    };
+    practiceDrawerToggle.addEventListener('click',() => setDrawerState(!practiceDrawer.classList.contains('is-drawer-collapsed')));
+    if ('ResizeObserver' in window) new ResizeObserver(setDrawerHeight).observe(practiceDrawer);
+    window.addEventListener('resize',setDrawerHeight);
+    setDrawerState(false);
+  }
   renderBenefitFeedback();
   resetPassage();
   applyRoute();
