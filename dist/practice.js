@@ -992,7 +992,7 @@
   }
   const homepagePractice = byId('practice');
   const practiceLearnTab = byId('practice-learn-tab');
-  const practiceBannerLearn = byId('practice-banner-learn');
+  const practiceBannerLearn = document.querySelectorAll('.practice-banner-learn');
   const homepageHero = byId('homepage-hero');
   if (homepagePractice && practiceLearnTab && homepageHero) {
     const tabLabel = practiceLearnTab.querySelector('span');
@@ -1011,7 +1011,7 @@
       },retracted ? 420 : 40);
     };
     practiceLearnTab.addEventListener('click',() => setPracticeRetracted(!homepagePractice.classList.contains('is-retracted')));
-    practiceBannerLearn?.addEventListener('click',() => setPracticeRetracted(true));
+    practiceBannerLearn.forEach(button => button.addEventListener('click',() => setPracticeRetracted(true)));
     if ('ResizeObserver' in window) new ResizeObserver(syncPracticeHeight).observe(homepagePractice);
     window.addEventListener('resize',syncPracticeHeight);
     syncPracticeHeight();
