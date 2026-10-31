@@ -605,3 +605,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 /* Pull the platform row closer to the preceding section. */
 .play-on{margin-top:clamp(28px,4vw,54px)}
 @media(max-width:959px){.play-on{margin-top:38px}}
+/* Homepage introduction for the primary practice area. */
+.practice-entry-title{margin:clamp(38px,5vw,68px) 0 0;font:900 clamp(44px,5.4vw,76px)/.95 Visuelt,sans-serif;letter-spacing:-.055em;text-align:center}
+body.song-page .practice-entry-title,body.library-page .practice-entry-title,body.practice-only-page .practice-entry-title{display:none}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-entry-title+.practice-section{margin-top:clamp(28px,3vw,42px)}
+@media(max-width:959px){.practice-entry-title{margin-top:34px;font-size:42px}.practice-entry-title+.practice-section{margin-top:24px!important}}
