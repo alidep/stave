@@ -608,3 +608,6 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 .feedback-feature .benefit-score-card,.level-feature .benefit-score-card{transition:transform .28s ease}
 .feedback-feature .benefit-score-card:hover,.level-feature .benefit-score-card:hover{transform:translateY(-8px)}
 @media(prefers-reduced-motion:reduce){.musician-stack span,.feedback-feature .benefit-score-card,.level-feature .benefit-score-card{transition:none}.musician-stack span:hover,.feedback-feature .benefit-score-card:hover,.level-feature .benefit-score-card:hover{transform:none}}
+/* Pull the platform row closer to the preceding section. */
+.play-on{margin-top:clamp(28px,4vw,54px)}
+@media(max-width:959px){.play-on{margin-top:38px}}
