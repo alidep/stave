@@ -587,3 +587,6 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 .play-on-computer:hover .play-on-art img{transform:translateY(-6px) rotate(0) scale(.96)}
 .play-on-midi:hover .play-on-art img{transform:translateY(-6px) rotate(0) scale(.96)}
 @media(prefers-reduced-motion:reduce){.play-on-card,.play-on-art img{transition:none}.play-on-card:hover{transform:none}}
+/* Center the complete One hand or two copy block. */
+.input-feature .benefit-copy>span{max-width:720px;margin:22px auto 0;text-align:center}
+@media(max-width:959px){.input-feature .benefit-copy,.input-feature .benefit-copy>span{text-align:center}}
