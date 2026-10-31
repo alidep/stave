@@ -1008,7 +1008,8 @@
       practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
       tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
       window.setTimeout(() => {
-        (retracted ? homepageHero : homepagePractice).scrollIntoView({behavior:'smooth',block:retracted ? 'center' : 'start'});
+        if (retracted) window.scrollTo({top:0,behavior:'smooth'});
+        else homepagePractice.scrollIntoView({behavior:'smooth',block:'start'});
       },retracted ? 680 : 40);
     };
     practiceLearnTab.addEventListener('click',() => setPracticeRetracted(!homepagePractice.classList.contains('is-retracted')));
