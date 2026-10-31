@@ -652,3 +652,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banne
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{position:relative;padding-right:150px}
 .practice-banner-learn{position:absolute;z-index:3;inset:0 0 0 auto;min-width:145px;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 18px;border:0;border-left:1px solid #bfd0b7;background:#88aa76;color:#fff;font:800 10px/1 Visuelt,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.practice-banner-learn:hover{background:#789b68}.practice-banner-learn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{padding-right:118px}.practice-banner-learn{min-width:114px;padding-inline:12px;font-size:9px}}
+/* Restore the overlapping record row and use a real noninteractive plus mark. */
+.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n),.repertoire-feature .musician-stack .musician-add{width:12.2%;flex:0 0 12.2%;margin-left:-2%}
+.repertoire-feature .musician-stack span:first-child{margin-left:0}
+.repertoire-feature .musician-stack .musician-add{position:relative;aspect-ratio:1;display:grid;place-items:center;padding:0;border:5px solid var(--paper);border-radius:50%;background:#88aa76;color:#fff;cursor:default}
+.repertoire-feature .musician-stack .musician-add:hover{background:#88aa76}
+.repertoire-feature .musician-stack .musician-add svg{display:block;width:34%;height:34%;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+@media(max-width:959px){.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n),.repertoire-feature .musician-stack .musician-add{width:23%;flex-basis:23%;margin-left:-4%}.repertoire-feature .musician-stack span:nth-child(4n+1){margin-left:0}.repertoire-feature .musician-stack .musician-add{border-width:3px}}

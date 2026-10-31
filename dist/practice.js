@@ -675,7 +675,6 @@
     preview.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
   byId('upload-sheet').addEventListener('click',() => byId('sheet-file-input').click());
-  byId('repertoire-add-own')?.addEventListener('click',() => byId('sheet-file-input').click());
   byId('sheet-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   document.addEventListener('keydown',event => {
     if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]') || !songPicker.hidden) return;
