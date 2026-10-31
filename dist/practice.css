@@ -641,3 +641,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banne
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{padding-block:11px}
 .practice-banner-track span{font-size:12px;letter-spacing:.24em}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{padding-block:10px}.practice-banner-track span{font-size:11px;letter-spacing:.21em}}
+/* Add-your-own action completes the repertoire portrait row. */
+.repertoire-feature .musician-stack{padding-inline:2%}
+.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n),.repertoire-feature .musician-stack .musician-add{width:11.2%;flex:0 0 11.2%;margin-left:-.5%}
+.repertoire-feature .musician-stack .musician-add{position:relative;aspect-ratio:1;display:grid;place-items:center;padding:0;border:5px solid var(--paper);border-radius:50%;background:#88aa76;color:#fff;cursor:pointer}
+.repertoire-feature .musician-stack .musician-add:hover{background:#789b68}
+.repertoire-feature .musician-stack .musician-add>span{position:static!important;width:auto!important;flex:none!important;margin:0!important;border:0!important;background:none!important;color:inherit;font:400 clamp(38px,5vw,66px)/1 Visuelt,sans-serif;transform:none!important}
+@media(max-width:959px){.repertoire-feature .musician-stack .musician-add{width:23%;flex-basis:23%;margin-left:-2.5%;border-width:3px}.repertoire-feature .musician-stack .musician-add>span{font-size:46px}}
