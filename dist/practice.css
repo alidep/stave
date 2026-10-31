@@ -675,3 +675,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab:hover{background:#789b68;box-shadow:0 15px 27px rgba(46,67,38,.24),0 4px 8px rgba(46,67,38,.14)}
 .practice-learn-tab svg{width:20px;height:20px}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:188px;min-height:50px;border-radius:0 0 24px 24px}}
+/* Compact pull tab and its closed-state attachment line. */
+.topbar{position:relative}
+body.practice-retracted .topbar::after{content:"";position:absolute;left:calc(50% - 50vw);bottom:-1px;width:100vw;height:1px;background:#e7e0d4}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:154px;min-height:40px;padding:8px 14px;border-radius:0 0 17px 17px;font-size:10px;box-shadow:0 8px 16px rgba(46,67,38,.18),0 2px 4px rgba(46,67,38,.1)}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab:hover{box-shadow:0 10px 19px rgba(46,67,38,.22),0 3px 5px rgba(46,67,38,.12)}
+.practice-learn-tab svg{width:16px;height:16px}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:142px;min-height:38px;border-radius:0 0 15px 15px}}

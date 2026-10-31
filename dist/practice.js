@@ -1004,6 +1004,7 @@
     const setPracticeRetracted = retracted => {
       if (!retracted) syncPracticeHeight();
       homepagePractice.classList.toggle('is-retracted',retracted);
+      document.body.classList.toggle('practice-retracted',retracted);
       practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
       tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
       window.setTimeout(() => {
