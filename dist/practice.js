@@ -339,7 +339,7 @@
     byId('practice-level-value').textContent = `Level ${level}`;
     document.querySelectorAll('[data-home-level]').forEach(button => {
       const preset = Number(button.dataset.homeLevel);
-      const active = preset === 1 ? level < 3 : preset === 3 ? level >= 3 && level < 6 : level >= 6;
+      const active = preset === 1 ? level < 5 : preset === 5 ? level >= 5 && level < 10 : level === 10;
       button.setAttribute('aria-pressed',String(active));
     });
     byId('practice-level-prev').disabled = level === 1;
