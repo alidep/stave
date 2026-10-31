@@ -1017,6 +1017,23 @@
     window.addEventListener('resize',syncPracticeHeight);
     syncPracticeHeight();
   }
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('motion-ready');
+  if (homepageHero) requestAnimationFrame(() => homepageHero.classList.add('motion-intro'));
+  const motionTargets = [...document.querySelectorAll('.play-on-heading,.play-on-card,.benefit-feature')];
+  motionTargets.forEach(target => target.classList.add('motion-reveal'));
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    motionTargets.forEach(target => target.classList.add('is-motion-visible'));
+  } else {
+    const motionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-motion-visible');
+        motionObserver.unobserve(entry.target);
+      });
+    },{threshold:.16,rootMargin:'0px 0px -7%'});
+    motionTargets.forEach(target => motionObserver.observe(target));
+  }
   renderBenefitFeedback();
   resetPassage();
   applyRoute();

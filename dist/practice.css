@@ -699,3 +699,25 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:162px;min-height:40px}body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab::before{height:12px}body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab::after{top:7px}}
 /* Compact desktop masthead with every control centered on one axis. */
 @media(min-width:960px){.screen{padding-top:12px}.topbar{min-height:54px}.topbar .brand,.topbar .topbar-actions{align-self:center;transform:translateY(7px)}.topbar .account,.topbar .play-menu{transform:none}body.practice-retracted .topbar{padding-bottom:0}}
+/* Layered entrance and scroll motion inspired by editorial studio sites. */
+@keyframes stave-rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes stave-header-rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(7px)}}
+@keyframes stave-scale-in{from{opacity:0;transform:translateY(24px) scale(.94) rotate(2deg)}to{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+@keyframes stave-soft-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+body.motion-ready .topbar .brand{animation:stave-header-rise .7s cubic-bezier(.2,.75,.25,1) both}
+body.motion-ready .topbar .topbar-actions{animation:stave-header-rise .7s .1s cubic-bezier(.2,.75,.25,1) both}
+body.motion-ready .practice-banner{animation:stave-rise .65s .16s cubic-bezier(.2,.75,.25,1) both}
+body.motion-ready .practice-card{animation:stave-rise .8s .24s cubic-bezier(.2,.75,.25,1) both}
+body.motion-ready .practice-learn-tab{animation:stave-rise .6s .42s cubic-bezier(.2,.75,.25,1) both}
+body.motion-ready .desktop-layout.motion-intro .intro h1{animation:stave-rise .85s cubic-bezier(.16,.8,.24,1) both}
+body.motion-ready .desktop-layout.motion-intro .intro p{animation:stave-rise .75s .12s cubic-bezier(.16,.8,.24,1) both}
+body.motion-ready .desktop-layout.motion-intro .actions{animation:stave-rise .7s .2s cubic-bezier(.16,.8,.24,1) both}
+body.motion-ready .desktop-layout.motion-intro .record-stage{animation:stave-scale-in 1s .08s cubic-bezier(.16,.8,.24,1) both}
+.motion-reveal{opacity:0;transform:translateY(48px);transition:opacity .85s ease,transform 1s cubic-bezier(.16,.8,.24,1)}
+.motion-reveal.is-motion-visible{opacity:1;transform:translateY(0)}
+.play-on-card.motion-reveal:nth-child(2){transition-delay:.09s}.play-on-card.motion-reveal:nth-child(3){transition-delay:.18s}
+.play-on-card.is-motion-visible .play-on-art{animation:stave-soft-float 7s 1.1s ease-in-out infinite}.play-on-card:nth-child(2).is-motion-visible .play-on-art{animation-delay:1.8s}.play-on-card:nth-child(3).is-motion-visible .play-on-art{animation-delay:2.5s}
+.repertoire-feature.motion-reveal .musician-stack>span{opacity:0;transform:translateY(22px) scale(.82);transition:opacity .55s ease,transform .7s cubic-bezier(.16,.8,.24,1)}
+.repertoire-feature.is-motion-visible .musician-stack>span{opacity:1;transform:translateY(0) scale(1)}
+.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(2){transition-delay:.05s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(3){transition-delay:.1s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(4){transition-delay:.15s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(5){transition-delay:.2s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(6){transition-delay:.25s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(7){transition-delay:.3s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(8){transition-delay:.35s}.repertoire-feature.is-motion-visible .musician-stack>span:nth-child(9){transition-delay:.4s}
+@media(prefers-reduced-motion:reduce){body.motion-ready .topbar .brand,body.motion-ready .topbar .topbar-actions,body.motion-ready .practice-banner,body.motion-ready .practice-card,body.motion-ready .practice-learn-tab,body.motion-ready .desktop-layout.motion-intro .intro h1,body.motion-ready .desktop-layout.motion-intro .intro p,body.motion-ready .desktop-layout.motion-intro .actions,body.motion-ready .desktop-layout.motion-intro .record-stage,.play-on-card.is-motion-visible .play-on-art{animation:none}.motion-reveal,.motion-reveal.is-motion-visible,.repertoire-feature.motion-reveal .musician-stack>span,.repertoire-feature.is-motion-visible .musician-stack>span{opacity:1;transform:none;transition:none}}
