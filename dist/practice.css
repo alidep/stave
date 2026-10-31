@@ -545,3 +545,12 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 .play-on-heading{margin-bottom:clamp(38px,5vw,66px)}.play-on-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,58px)}.play-on-card,.play-on-card:nth-child(n),.play-on-card.play-on-phone{display:flex;flex-direction:column;gap:0;min-height:0;padding:0;overflow:visible}.play-on-card:nth-child(even) .play-on-art,.play-on-card:nth-child(even) figcaption,.play-on-card .play-on-art,.play-on-card figcaption{order:initial}.play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{height:clamp(250px,24vw,340px);overflow:visible}.play-on-phone .play-on-art img{transform:rotate(-3deg) scale(.6)}.play-on-computer .play-on-art img{transform:rotate(2deg) scale(.96)}.play-on-midi .play-on-art img{transform:rotate(-2deg) scale(.98)}.play-on-card figcaption{margin-top:10px;text-align:center}.play-on-card figcaption strong{font-size:clamp(26px,2.5vw,38px)}.play-on-card figcaption span{max-width:330px;margin:12px auto 0;font-size:16px}
 @media(max-width:959px){.play-on-grid{grid-template-columns:1fr;gap:70px}.play-on-card,.play-on-card:nth-child(n){display:grid;grid-template-columns:minmax(140px,.9fr) minmax(0,1.1fr);align-items:center;gap:20px}.play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{height:230px}.play-on-card figcaption{margin:0;text-align:left}.play-on-card figcaption strong{font-size:30px}.play-on-card figcaption span{margin:11px 0 0}.play-on-phone .play-on-art img{transform:rotate(-2deg) scale(.8)}}
 @media(max-width:430px){.play-on-card,.play-on-card:nth-child(n){grid-template-columns:1fr;gap:12px}.play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{height:250px}.play-on-card figcaption{text-align:center}.play-on-card figcaption span{margin-inline:auto}}
+
+/* Final alignment and heading hierarchy. */
+.play-on-card:hover{transform:none}
+.play-on-phone:hover .play-on-art img{transform:rotate(-3deg) scale(.6)}
+.play-on-computer:hover .play-on-art img{transform:rotate(2deg) scale(.96)}
+.play-on-midi:hover .play-on-art img{transform:rotate(-2deg) scale(.98)}
+.benefit-copy{max-width:650px}
+.benefit-copy h2{font:900 clamp(48px,5.2vw,76px)/.96 Visuelt,sans-serif;letter-spacing:-.055em}
+@media(max-width:959px){.benefit-copy h2{font-size:clamp(42px,8vw,62px)}}
