@@ -554,3 +554,4 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 .benefit-copy{max-width:650px}
 .benefit-copy h2{font:900 clamp(48px,5.2vw,76px)/.96 Visuelt,sans-serif;letter-spacing:-.055em}
 @media(max-width:959px){.benefit-copy h2{font-size:clamp(42px,8vw,62px)}}
+.play-on-card figcaption em{display:block;margin-top:5px;font:700 18px/1.2 Visuelt,sans-serif;color:#716b63;font-style:normal}
