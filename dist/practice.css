@@ -517,3 +517,8 @@ body.song-page:not(.practice-only-page) .closing-actions{display:none}
 .repertoire-feature .musician-stack span:first-child{margin-left:0}
 .repertoire-feature .musician-stack span::after{display:none}
 @media(max-width:959px){.repertoire-feature .musician-stack{padding-inline:0;flex-wrap:wrap;align-content:center}.repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:23%;flex-basis:23%;margin-left:-2.5%;border-width:3px}.repertoire-feature .musician-stack span:nth-child(4n+1){margin-left:0}}
+
+/* On the homepage, practice is the lead experience and the editorial hero follows it. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:28px}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{margin-top:clamp(72px,8vw,118px)}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:24px}body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{margin-top:72px}}
