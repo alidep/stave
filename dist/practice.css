@@ -605,8 +605,14 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 /* Pull the platform row closer to the preceding section. */
 .play-on{margin-top:clamp(28px,4vw,54px)}
 @media(max-width:959px){.play-on{margin-top:38px}}
-/* Homepage introduction for the primary practice area. */
-.practice-entry-title{margin:clamp(38px,5vw,68px) 0 0;font:900 clamp(44px,5.4vw,76px)/.95 Visuelt,sans-serif;letter-spacing:-.055em;text-align:center}
-body.song-page .practice-entry-title,body.library-page .practice-entry-title,body.practice-only-page .practice-entry-title{display:none}
-body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-entry-title+.practice-section{margin-top:clamp(28px,3vw,42px)}
-@media(max-width:959px){.practice-entry-title{margin-top:34px;font-size:42px}.practice-entry-title+.practice-section{margin-top:24px!important}}
+/* Connected homepage practice banner, panel, and learn-more tab. */
+.practice-banner,.practice-learn-tab{display:none}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{max-height:var(--practice-open-height,1400px);overflow:hidden;margin-top:28px;margin-bottom:0;padding-bottom:0;opacity:1;transform:translateY(0);transition:max-height .6s cubic-bezier(.4,0,.2,1),opacity .28s ease,transform .6s cubic-bezier(.4,0,.2,1),margin .6s cubic-bezier(.4,0,.2,1)}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section.is-retracted{max-height:0;min-height:0;margin-top:0;opacity:0;transform:translateY(-30px);pointer-events:none}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:18px 28px;border:1px solid #cbd9c4;border-bottom:0;border-radius:24px 24px 0 0;background:#dfe9d9;color:#263023}
+.practice-banner p{margin:0;font:500 clamp(20px,2vw,27px)/1.1 Visuelt,sans-serif;letter-spacing:-.025em}.practice-banner p strong{font-weight:900}.practice-banner>span{font:700 10px/1 JetBrains,monospace;letter-spacing:.13em;color:#58704d}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-card{border-radius:0 0 24px 24px;border-top-color:#d7e1d1;box-shadow:0 16px 48px rgba(44,38,27,.07)}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:190px;min-height:48px;display:flex;align-items:center;justify-content:center;gap:9px;margin:0 auto 58px;padding:11px 18px;border:0;border-radius:0 0 16px 16px;background:#88aa76;color:#fff;font:800 12px/1 Visuelt,sans-serif;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:background .2s ease,margin .6s cubic-bezier(.4,0,.2,1)}
+.practice-learn-tab:hover{background:#789b68}.practice-learn-tab svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}.practice-learn-tab[aria-expanded="false"]{margin-bottom:32px;border-radius:0 0 16px 16px}.practice-learn-tab[aria-expanded="false"] svg{transform:rotate(180deg)}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:24px}.practice-banner{padding:15px 17px}.practice-banner p{font-size:19px}.practice-banner>span{display:none}body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:174px;min-height:45px;margin-bottom:42px}}
+@media(prefers-reduced-motion:reduce){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section,.practice-learn-tab,.practice-learn-tab svg{transition:none}}

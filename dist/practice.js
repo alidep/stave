@@ -969,6 +969,30 @@
     },{threshold:[.35]});
     featureAutoplayObserver.observe(inputFeature);
   }
+  const homepagePractice = byId('practice');
+  const practiceLearnTab = byId('practice-learn-tab');
+  const homepageHero = byId('homepage-hero');
+  if (homepagePractice && practiceLearnTab && homepageHero) {
+    const tabLabel = practiceLearnTab.querySelector('span');
+    const syncPracticeHeight = () => {
+      if (!homepagePractice.classList.contains('is-retracted')) {
+        homepagePractice.style.setProperty('--practice-open-height', `${homepagePractice.scrollHeight}px`);
+      }
+    };
+    const setPracticeRetracted = retracted => {
+      if (!retracted) syncPracticeHeight();
+      homepagePractice.classList.toggle('is-retracted',retracted);
+      practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
+      tabLabel.textContent = retracted ? 'Start practicing' : 'Learn more';
+      window.setTimeout(() => {
+        (retracted ? homepageHero : homepagePractice).scrollIntoView({behavior:'smooth',block:'start'});
+      },retracted ? 420 : 40);
+    };
+    practiceLearnTab.addEventListener('click',() => setPracticeRetracted(!homepagePractice.classList.contains('is-retracted')));
+    if ('ResizeObserver' in window) new ResizeObserver(syncPracticeHeight).observe(homepagePractice);
+    window.addEventListener('resize',syncPracticeHeight);
+    syncPracticeHeight();
+  }
   renderBenefitFeedback();
   resetPassage();
   applyRoute();
