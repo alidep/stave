@@ -629,3 +629,6 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banne
 .practice-toolbar-bottom{order:1;flex:none}
 .practice-toolbar-top{order:2;flex:none}
 @media(max-width:959px){.practice-toolbar{width:100%;justify-content:flex-end;gap:9px;flex-wrap:nowrap}.practice-toolbar-top,.practice-toolbar-bottom{gap:8px}}
+/* Let each ticker phrase breathe so fewer repeats appear at once. */
+.practice-banner-track span::after{margin-inline:110px}
+@media(max-width:959px){.practice-banner-track span::after{margin-inline:72px}}
