@@ -745,3 +745,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .toolbar-grade-
 body.practice-retracted:not(.song-page):not(.library-page):not(.practice-only-page) .collapsed-grade-picker{display:flex!important;justify-content:flex-end;gap:6px;padding:9px 0 3px;border:0;background:transparent}
 .collapsed-grade-picker button{min-height:34px;padding:0 12px;font-size:11px}.collapsed-grade-picker button strong{font-size:11px}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .toolbar-grade-picker{width:100%;order:-1;overflow-x:auto}.toolbar-grade-picker button{flex:none}.collapsed-grade-picker{overflow-x:auto}}
+/* Compact practice metadata and input instructions. */
+.practice-title-block h3{font-size:22px}.practice-title-block p{margin-top:4px;font-size:11px;letter-spacing:.07em}
+.practice-connect-strip summary{gap:8px;padding:8px 12px;font-size:10px}.practice-connect-instruction{font-size:10px;letter-spacing:.07em}.practice-connect-main{gap:14px}
+@media(max-width:959px){.practice-title-block h3{font-size:19px}.practice-title-block p{font-size:10px}.practice-connect-strip summary,.practice-connect-instruction{font-size:9px}}
