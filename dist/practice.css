@@ -511,6 +511,11 @@ body.song-page:not(.practice-only-page) .closing-actions{display:none}
 .topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:46px;padding-inline:22px;font-size:15px}
 @media(max-width:959px){.topbar-actions .practice-nav-link,.topbar-actions .pick-song-link{min-height:38px;padding-inline:14px;font-size:12px}}
 
+/* Keep the homepage demo and its explanation in one continuous section. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:18px;padding-bottom:18px}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .stave-benefits{margin-top:48px}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:38px;padding-bottom:16px}body:not(.song-page):not(.library-page):not(.practice-only-page) .stave-benefits{margin-top:44px}}
+
 /* A broad, unadorned composer row: circular portraits without record holes or shadows. */
 .repertoire-feature .musician-stack{gap:0;padding-inline:4%}
 .repertoire-feature .musician-stack span,.repertoire-feature .musician-stack span:nth-child(n){width:13%;flex:0 0 13%;margin-left:-1.5%;border:5px solid var(--paper);box-shadow:none!important}
