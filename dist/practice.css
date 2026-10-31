@@ -670,3 +670,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banne
 /* Slightly reduce both ticker phrases. */
 .practice-banner-track span,.practice-banner-learn{font-size:11px}
 @media(max-width:959px){.practice-banner-track span,.practice-banner-learn{font-size:10px}}
+/* Give the attached Learn more control a physical pull-tab shape. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:205px;min-height:54px;border:1px solid rgba(65,94,54,.18);border-top:0;border-radius:0 0 28px 28px;background:#88aa76;box-shadow:0 12px 22px rgba(46,67,38,.2),0 3px 6px rgba(46,67,38,.12)}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab:hover{background:#789b68;box-shadow:0 15px 27px rgba(46,67,38,.24),0 4px 8px rgba(46,67,38,.14)}
+.practice-learn-tab svg{width:20px;height:20px}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:188px;min-height:50px;border-radius:0 0 24px 24px}}
