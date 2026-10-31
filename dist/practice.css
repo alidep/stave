@@ -729,3 +729,5 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:140px;min-height:33px}}
 @media(min-width:960px){.closing-actions{max-width:420px;gap:12px}.closing-actions .pill{flex:0 1 190px;min-height:46px;font-size:15px}}
 @media(min-width:960px){.play-menu-popover{top:calc(100% + 27px);right:0;width:176px;padding:5px;border-radius:12px;box-shadow:0 12px 28px rgba(40,34,25,.12)}.play-menu-popover .practice-nav-link,.play-menu-popover .pick-song-link{min-height:36px;padding:0 11px;border-radius:8px;font-size:13px}}
+@media(min-width:960px){body:not(.practice-retracted):not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:12px}}
+.topbar{z-index:100}
