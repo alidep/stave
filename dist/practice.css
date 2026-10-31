@@ -616,3 +616,11 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn
 .practice-learn-tab:hover{background:#789b68}.practice-learn-tab svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}.practice-learn-tab[aria-expanded="false"]{margin-bottom:32px;border-radius:0 0 16px 16px}.practice-learn-tab[aria-expanded="false"] svg{transform:rotate(180deg)}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:24px}.practice-banner{padding:15px 17px}.practice-banner p{font-size:19px}.practice-banner>span{display:none}body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:174px;min-height:45px;margin-bottom:42px}}
 @media(prefers-reduced-motion:reduce){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section,.practice-learn-tab,.practice-learn-tab svg{transition:none}}
+/* Turn the practice banner into a restrained slow-moving ticker. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{display:block;overflow:hidden;padding:13px 0;border-radius:0;background:#dfe9d9;white-space:nowrap}
+.practice-banner-track{display:flex;width:max-content;align-items:center;animation:practice-banner-marquee 70s linear infinite}
+.practice-banner-track span{display:inline-flex;align-items:center;color:#58704d;font:700 10px/1 JetBrains,monospace;letter-spacing:.16em}
+.practice-banner-track span::after{content:"•";margin:0 46px;color:#88aa76;font-size:9px}
+@keyframes practice-banner-marquee{to{transform:translateX(-50%)}}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{padding:11px 0}.practice-banner-track span{font-size:9px}.practice-banner-track span::after{margin-inline:32px}}
+@media(prefers-reduced-motion:reduce){.practice-banner-track{animation:none}}

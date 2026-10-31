@@ -983,7 +983,7 @@
       if (!retracted) syncPracticeHeight();
       homepagePractice.classList.toggle('is-retracted',retracted);
       practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
-      tabLabel.textContent = retracted ? 'Start practicing' : 'Learn more';
+      tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
       window.setTimeout(() => {
         (retracted ? homepageHero : homepagePractice).scrollIntoView({behavior:'smooth',block:'start'});
       },retracted ? 420 : 40);
