@@ -616,3 +616,12 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawe
 .practice-drawer-toggle[aria-expanded="false"] svg{transform:rotate(180deg)}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle{margin:-25px auto 34px}.practice-drawer-toggle[aria-expanded="false"]{margin:10px auto 28px}}
 @media(prefers-reduced-motion:reduce){.practice-section,.practice-drawer-toggle,.practice-drawer-toggle svg{transition:none}}
+/* Dock the practice drawer control as a prominent persistent rail. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-bottom:0;padding-bottom:34px}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle{width:100vw;min-height:56px;justify-content:center;gap:12px;margin:0 0 46px calc(50% - 50vw);padding:13px 22px;border:0;border-top:1px solid rgba(46,74,37,.16);border-bottom:1px solid rgba(46,74,37,.16);border-radius:0;background:#88aa76;color:#fff;font:800 12px/1 Visuelt,sans-serif;letter-spacing:.05em;box-shadow:none;text-transform:uppercase}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle:hover{transform:none;background:#789b68}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle svg{width:20px;height:20px;stroke-width:2.2}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]{margin:0 0 38px calc(50% - 50vw);background:#789b68}
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]:hover{background:#6d8f5e}
+@media(min-width:960px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{padding-bottom:40px}}
+@media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle,body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-drawer-toggle[aria-expanded="false"]{min-height:52px;margin:0 0 32px calc(50% - 50vw)}}

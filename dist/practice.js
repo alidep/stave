@@ -983,7 +983,7 @@
       practiceDrawer.classList.toggle('is-drawer-collapsed',collapsed);
       practiceDrawerToggle.setAttribute('aria-expanded',String(!collapsed));
       practiceDrawerToggle.setAttribute('aria-label',collapsed ? 'Show practice area' : 'Hide practice area');
-      drawerLabel.textContent = collapsed ? 'Show practice' : 'Hide practice';
+      drawerLabel.textContent = collapsed ? 'Open practice' : 'Close practice';
     };
     practiceDrawerToggle.addEventListener('click',() => setDrawerState(!practiceDrawer.classList.contains('is-drawer-collapsed')));
     if ('ResizeObserver' in window) new ResizeObserver(setDrawerHeight).observe(practiceDrawer);
