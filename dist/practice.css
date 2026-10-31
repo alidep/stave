@@ -667,3 +667,6 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banne
 .practice-banner-learn:hover{background:transparent;color:#2f4927}
 .practice-banner-learn svg{display:none}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{padding-right:0}.practice-banner-track{gap:110px}.practice-banner-learn{font-size:11px;letter-spacing:.21em}}
+/* Slightly reduce both ticker phrases. */
+.practice-banner-track span,.practice-banner-learn{font-size:11px}
+@media(max-width:959px){.practice-banner-track span,.practice-banner-learn{font-size:10px}}
