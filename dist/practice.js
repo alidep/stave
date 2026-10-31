@@ -1009,7 +1009,7 @@
       tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
       window.setTimeout(() => {
         (retracted ? homepageHero : homepagePractice).scrollIntoView({behavior:'smooth',block:retracted ? 'center' : 'start'});
-      },retracted ? 420 : 40);
+      },retracted ? 680 : 40);
     };
     practiceLearnTab.addEventListener('click',() => setPracticeRetracted(!homepagePractice.classList.contains('is-retracted')));
     practiceBannerLearn.forEach(button => button.addEventListener('click',() => setPracticeRetracted(true)));
