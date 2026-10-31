@@ -563,3 +563,17 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 /* Show the complete phone silhouette with breathing room. */
 .play-on-phone .play-on-art{overflow:visible}
 .play-on-phone .play-on-art img,.play-on-phone:hover .play-on-art img{width:100%;height:72%;max-width:100%;max-height:270px;object-fit:contain;transform:rotate(-2deg)}
+
+/* Compact the platform choices into one connected feature band. */
+@media(min-width:960px){
+  .play-on{display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,2.6fr);align-items:center;gap:clamp(28px,4vw,62px);margin:clamp(72px,8vw,112px) 0 clamp(90px,9vw,130px)}
+  .play-on-heading{margin:0;text-align:left}
+  .play-on-heading h2{max-width:300px;font-size:clamp(52px,5.1vw,76px);line-height:.93}
+  .play-on-grid{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1.4vw,24px)}
+  .play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{height:clamp(210px,18vw,270px)}
+  .play-on-card figcaption{margin-top:0}
+  .play-on-card figcaption strong{font-size:clamp(25px,2.1vw,34px)}
+  .play-on-phone .play-on-art img,.play-on-phone:hover .play-on-art img{height:88%;max-height:238px}
+  .play-on-computer .play-on-art img,.play-on-computer:hover .play-on-art img{transform:rotate(1deg) scale(.94)}
+  .play-on-midi .play-on-art img,.play-on-midi:hover .play-on-art img{transform:rotate(-2deg) scale(.94)}
+}
