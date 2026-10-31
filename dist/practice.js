@@ -996,21 +996,28 @@
   const homepageHero = byId('homepage-hero');
   if (homepagePractice && practiceLearnTab && homepageHero) {
     const tabLabel = practiceLearnTab.querySelector('span');
+    let practiceTransitioning = false;
     const syncPracticeHeight = () => {
       if (!homepagePractice.classList.contains('is-retracted')) {
         homepagePractice.style.setProperty('--practice-open-height', `${homepagePractice.scrollHeight}px`);
       }
     };
     const setPracticeRetracted = retracted => {
-      if (!retracted) syncPracticeHeight();
-      homepagePractice.classList.toggle('is-retracted',retracted);
-      document.body.classList.toggle('practice-retracted',retracted);
-      practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
-      tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
-      window.setTimeout(() => {
-        if (retracted) window.scrollTo({top:0,behavior:'smooth'});
-        else homepagePractice.scrollIntoView({behavior:'smooth',block:'start'});
-      },retracted ? 680 : 40);
+      if (practiceTransitioning) return;
+      const applyState = () => {
+        if (!retracted) syncPracticeHeight();
+        homepagePractice.classList.toggle('is-retracted',retracted);
+        document.body.classList.toggle('practice-retracted',retracted);
+        practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
+        tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
+        if (!retracted) window.setTimeout(() => homepagePractice.scrollIntoView({behavior:'smooth',block:'start'}),40);
+        window.setTimeout(() => { practiceTransitioning = false; },retracted ? 640 : 500);
+      };
+      practiceTransitioning = true;
+      if (retracted && window.scrollY > 2) {
+        window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+        window.setTimeout(applyState,420);
+      } else applyState();
     };
     practiceLearnTab.addEventListener('click',() => setPracticeRetracted(!homepagePractice.classList.contains('is-retracted')));
     practiceBannerLearn.forEach(button => button.addEventListener('click',() => setPracticeRetracted(true)));
