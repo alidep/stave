@@ -61,7 +61,7 @@
     @media(max-width:430px){.stage{padding:0}.device{border-radius:0;box-shadow:none}.device-slot{overflow:hidden}}
     @media(prefers-reduced-motion:reduce){.white-key,.black-key,.track span,.lesson-card{transition:none}.hint::after{animation-duration:2.2s!important}}
   </style>
-  <link rel="stylesheet" href="practice.css?v=20261031-2">
+  <link rel="stylesheet" href="practice.css?v=20261031-3">
 </head>
 <body>
   <div class="stage">
@@ -131,6 +131,23 @@
             </section>
             <div class="actions"><button class="pill dark" id="start" type="button">Start playing</button><button class="pill" id="watch" type="button">Watch first</button></div>
           </div>
+          <section class="play-on" aria-labelledby="play-on-title">
+            <div class="play-on-heading"><p>NO SPECIAL SETUP</p><h2 id="play-on-title">Play on:</h2></div>
+            <div class="play-on-grid">
+              <figure class="play-on-card play-on-phone">
+                <div class="play-on-art" aria-hidden="true"><svg viewBox="0 0 360 250" role="presentation"><rect class="device-shell" x="106" y="18" width="148" height="218" rx="30"/><rect class="device-screen" x="117" y="30" width="126" height="194" rx="21"/><rect class="device-speaker" x="161" y="38" width="38" height="6" rx="3"/><g class="mini-staff"><path d="M132 76h96M132 84h96M132 92h96M132 100h96M132 108h96"/><circle cx="155" cy="100" r="5"/><path d="M160 100V78"/><circle cx="185" cy="92" r="5"/><path d="M190 92V70"/><circle cx="215" cy="84" r="5"/><path d="M220 84V62"/></g><g class="phone-keys"><path d="M128 139h104v60H128z"/><path d="M143 139v60M158 139v60M173 139v60M188 139v60M203 139v60M218 139v60"/><path class="key-accent" d="M173 139h15v60h-15z"/><path class="black-keys" d="M138 139h9v35h-9zM153 139h9v35h-9zM183 139h9v35h-9zM198 139h9v35h-9zM213 139h9v35h-9z"/></g></svg></div>
+                <figcaption><strong>Mobile phone</strong><span>Tap the notes anywhere.</span></figcaption>
+              </figure>
+              <figure class="play-on-card play-on-computer">
+                <div class="play-on-art" aria-hidden="true"><svg viewBox="0 0 360 250" role="presentation"><path class="keyboard-base" d="M39 63h282l20 139H19L39 63Z"/><g class="computer-keys"><path d="M56 81h25v25H56zM87 81h25v25H87zM118 81h25v25h-25zM149 81h25v25h-25zM180 81h25v25h-25zM211 81h25v25h-25zM242 81h25v25h-25zM273 81h25v25h-25z"/><path d="M63 114h25v25H63zM94 114h25v25H94zM125 114h25v25h-25zM156 114h25v25h-25zM187 114h25v25h-25zM218 114h25v25h-25zM249 114h25v25h-25z"/><path class="key-accent" d="M73 147h31v31H73zM110 147h31v31h-31zM147 147h31v31h-31zM184 147h31v31h-31zM221 147h31v31h-31z"/></g><g class="key-letters"><text x="88" y="168">Z</text><text x="125" y="168">X</text><text x="162" y="168">C</text><text x="199" y="168">V</text><text x="236" y="168">B</text></g><circle class="status-light" cx="302" cy="182" r="5"/></svg></div>
+                <figcaption><strong>Computer keyboard</strong><span>Play with the keys you know.</span></figcaption>
+              </figure>
+              <figure class="play-on-card play-on-midi">
+                <div class="play-on-art" aria-hidden="true"><svg viewBox="0 0 360 250" role="presentation"><rect class="midi-body" x="18" y="46" width="324" height="160" rx="20"/><g class="midi-knobs"><circle cx="55" cy="79" r="12"/><path d="M55 79V70"/><circle cx="91" cy="79" r="12"/><path d="M91 79V70"/><circle cx="127" cy="79" r="12"/><path d="M127 79V70"/></g><g class="midi-pads"><rect x="194" y="63" width="26" height="26" rx="5"/><rect x="226" y="63" width="26" height="26" rx="5"/><rect x="258" y="63" width="26" height="26" rx="5"/><rect x="290" y="63" width="26" height="26" rx="5"/></g><g class="midi-keys"><path d="M36 115h288v72H36z"/><path d="M60 115v72M84 115v72M108 115v72M132 115v72M156 115v72M180 115v72M204 115v72M228 115v72M252 115v72M276 115v72M300 115v72"/><path class="key-accent" d="M180 115h24v72h-24z"/><path class="black-keys" d="M51 115h15v42H51zM75 115h15v42H75zM123 115h15v42h-15zM147 115h15v42h-15zM171 115h15v42h-15zM219 115h15v42h-15zM243 115h15v42h-15zM291 115h15v42h-15z"/></g></svg></div>
+                <figcaption><strong>MIDI keyboard</strong><span>Plug in and play naturally.</span></figcaption>
+              </figure>
+            </div>
+          </section>
           <section class="stave-benefits" aria-label="Why practice with Real Sight Reader">
             <article class="benefit-feature repertoire-feature"><div class="benefit-visual musician-stack" aria-label="Bach, Liszt, Clara Schumann, Tchaikovsky, Beethoven, Schubert, Debussy, and Handel"><span><img src="assets/composers/bach.webp" alt="Johann Sebastian Bach"></span><span><img src="assets/composers/liszt.png" alt="Franz Liszt"></span><span><img src="assets/composers/clara-schumann.jpg" alt="Clara Schumann"></span><span><img src="assets/composers/tchaikovsky.jpg" alt="Pyotr Ilyich Tchaikovsky"></span><span><img src="assets/composers/beethoven.jpg" alt="Ludwig van Beethoven"></span><span><img src="assets/composers/schubert.jpg" alt="Franz Schubert"></span><span><img src="assets/composers/debussy.jpg" alt="Claude Debussy"></span><span><img src="assets/composers/handel.jpg" alt="George Frideric Handel"></span></div><div class="benefit-copy"><h2>Real repertoire.</h2><span>Bach, Mozart, Chopin, or add your own. Never a made-up exercise.</span></div></article>
             <article class="benefit-feature feedback-feature"><div class="benefit-visual benefit-score-card animated-score" aria-label="Für Elise notes changing color as they are played"><div class="benefit-score-meta"><span>FÜR ELISE</span><span class="benefit-score-actions"><button class="benefit-score-play" id="benefit-score-play" type="button" aria-label="Play Für Elise example"><img src="assets/play.svg" alt="" aria-hidden="true"></button></span></div><div class="benefit-score-progress" aria-hidden="true"><span id="benefit-score-progress"></span></div><div class="benefit-abc" id="benefit-feedback-score"></div></div><div class="benefit-copy"><h2>Feedback on every note.</h2><span>Right, wrong or in between. See where you are having trouble.</span></div></article>
