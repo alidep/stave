@@ -624,3 +624,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banne
 @keyframes practice-banner-marquee{to{transform:translateX(-50%)}}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-banner{padding:11px 0}.practice-banner-track span{font-size:9px}.practice-banner-track span::after{margin-inline:32px}}
 @media(prefers-reduced-motion:reduce){.practice-banner-track{animation:none}}
+/* Keep every practice control in one row, with immediate actions first. */
+.practice-toolbar{flex-direction:row;align-items:center;gap:12px;flex-wrap:nowrap}
+.practice-toolbar-bottom{order:1;flex:none}
+.practice-toolbar-top{order:2;flex:none}
+@media(max-width:959px){.practice-toolbar{width:100%;justify-content:flex-end;gap:9px;flex-wrap:nowrap}.practice-toolbar-top,.practice-toolbar-bottom{gap:8px}}
