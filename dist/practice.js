@@ -1062,20 +1062,21 @@
     const updatePlayOnMotion = () => {
       playOnMotionFrame = 0;
       const rect = playOnSection.getBoundingClientRect();
-      const start = window.innerHeight * .48;
-      const distance = Math.max(window.innerHeight * .5,360);
-      const progress = Math.max(0,Math.min(1,(start-rect.top)/distance));
-      const spread = Math.min(window.innerWidth * .085,132) * progress;
+      const start = window.innerHeight * .56;
+      const distance = Math.max(window.innerHeight * .78,520);
+      const rawProgress = Math.max(0,Math.min(1,(start-rect.top)/distance));
+      const progress = rawProgress*rawProgress*(3-2*rawProgress);
       const moves = [
-        [-spread,spread*.18,-4.5*progress],
-        [0,spread*.3,1.8*progress],
-        [spread,spread*.16,4.5*progress]
+        [-window.innerWidth*.52*progress,-window.innerHeight*.22*progress,-18*progress,1-.12*progress],
+        [window.innerWidth*.04*progress,window.innerHeight*.48*progress,10*progress,1-.1*progress],
+        [window.innerWidth*.52*progress,-window.innerHeight*.18*progress,20*progress,1-.12*progress]
       ];
       playOnArt.forEach((art,index) => {
-        const [x,y,rotate] = moves[index] || [0,0,0];
+        const [x,y,rotate,scale] = moves[index] || [0,0,0,1];
         art.style.setProperty('--device-push-x',`${x.toFixed(1)}px`);
         art.style.setProperty('--device-push-y',`${y.toFixed(1)}px`);
         art.style.setProperty('--device-push-rotate',`${rotate.toFixed(2)}deg`);
+        art.style.setProperty('--device-push-scale',scale.toFixed(3));
       });
     };
     const requestPlayOnMotion = () => {
