@@ -1041,7 +1041,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.body.classList.add('motion-ready');
   if (homepageHero) requestAnimationFrame(() => homepageHero.classList.add('motion-intro'));
-  const motionTargets = [...document.querySelectorAll('.play-on-heading,.play-on-card')];
+  const motionTargets = [];
   motionTargets.forEach(target => target.classList.add('motion-reveal'));
   if (reducedMotion || !('IntersectionObserver' in window)) {
     motionTargets.forEach(target => target.classList.add('is-motion-visible'));
@@ -1054,6 +1054,36 @@
       });
     },{threshold:.16,rootMargin:'0px 0px -7%'});
     motionTargets.forEach(target => motionObserver.observe(target));
+  }
+  const playOnSection = document.querySelector('.play-on');
+  const playOnArt = [...document.querySelectorAll('.play-on-card .play-on-art')];
+  if (playOnSection && playOnArt.length && !reducedMotion) {
+    let playOnMotionFrame = 0;
+    const updatePlayOnMotion = () => {
+      playOnMotionFrame = 0;
+      const rect = playOnSection.getBoundingClientRect();
+      const start = window.innerHeight * .48;
+      const distance = Math.max(window.innerHeight * .5,360);
+      const progress = Math.max(0,Math.min(1,(start-rect.top)/distance));
+      const spread = Math.min(window.innerWidth * .085,132) * progress;
+      const moves = [
+        [-spread,spread*.18,-4.5*progress],
+        [0,spread*.3,1.8*progress],
+        [spread,spread*.16,4.5*progress]
+      ];
+      playOnArt.forEach((art,index) => {
+        const [x,y,rotate] = moves[index] || [0,0,0];
+        art.style.setProperty('--device-push-x',`${x.toFixed(1)}px`);
+        art.style.setProperty('--device-push-y',`${y.toFixed(1)}px`);
+        art.style.setProperty('--device-push-rotate',`${rotate.toFixed(2)}deg`);
+      });
+    };
+    const requestPlayOnMotion = () => {
+      if (!playOnMotionFrame) playOnMotionFrame = requestAnimationFrame(updatePlayOnMotion);
+    };
+    window.addEventListener('scroll',requestPlayOnMotion,{passive:true});
+    window.addEventListener('resize',requestPlayOnMotion);
+    updatePlayOnMotion();
   }
   renderBenefitFeedback();
   resetPassage();
