@@ -1230,7 +1230,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   }
   .play-on-computer figcaption{
     left:52%;
-    bottom:-20px;
+    bottom:16px;
     transform:translateX(-50%) rotate(4deg);
   }
   .play-on-midi figcaption{
@@ -1261,4 +1261,16 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .feature-midi-section .feature-midi-connect{min-height:58px;padding:13px 16px;font-size:11px}
   .feature-input-footer{justify-content:center}
   .feature-input-footer .feature-keyboard-map{margin-inline:auto}
+}
+
+/* Group the mobile playable lesson into one clear card. */
+@media(max-width:959px){
+  .desktop-layout .lesson{width:100%}
+  .desktop-layout .lesson-front{
+    padding:18px 12px 24px;
+    border:1px solid #e6dfd2;
+    border-radius:20px;
+    background:#fffdf7;
+    box-shadow:0 14px 34px rgba(44,38,27,.075);
+  }
 }
