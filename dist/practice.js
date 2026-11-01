@@ -59,7 +59,7 @@
       target.append(button);
     }
     target.children[whiteList.length-1].style.borderTopRightRadius = '8px';
-    const blackWidth = target.classList.contains('full-88') ? 1.25 : target.classList.contains('is-wide') ? 6.5 : whiteList.length <= 7 ? 9 : 7;
+    const blackWidth = target.classList.contains('full-88') ? 1.25 : whiteList.length > 12 ? 72/whiteList.length : whiteList.length <= 7 ? 9 : 7;
     for (const [midi,note,key] of blackList) {
       const button = document.createElement('button');
       button.type = 'button';
@@ -92,14 +92,17 @@
     if (title) title.textContent = `${label} · C${octave}–B${octave}`;
   }
 
-  function buildFullKeyboard() {
+  function buildFullKeyboard(firstMidi=21,lastMidi=108) {
     const whitePitches = new Set([0,2,4,5,7,9,11]);
     const whites = [], blacks = [];
-    for (let midi=21; midi<=108; midi++) {
+    for (let midi=firstMidi; midi<=lastMidi; midi++) {
       const key = [midi,noteName(midi),''];
       (whitePitches.has(midi%12) ? whites : blacks).push(key);
     }
-    appendKeyboard(byId('midi-full-piano'),whites,blacks);
+    const fullPiano = byId('midi-full-piano');
+    fullPiano.classList.toggle('full-88',whites.length > 50);
+    fullPiano.classList.toggle('is-wide',whites.length > 12 && whites.length <= 50);
+    appendKeyboard(fullPiano,whites,blacks);
   }
 
   function keyboardOverview(leftRange,rightRange,expanded=false,palette=null) {
@@ -696,6 +699,19 @@
   window.practiceMidiInput = midi => {
     const expected = passage.steps[currentStep]?.notes.find(note => !completedNotes.has(note.id) && note.midi % 12 === midi % 12);
     playNote(expected?.midi ?? midi);
+  };
+  let detectedMidiLow = null, detectedMidiHigh = null;
+  window.practiceMidiObserve = midi => {
+    detectedMidiLow = detectedMidiLow === null ? midi : Math.min(detectedMidiLow,midi);
+    detectedMidiHigh = detectedMidiHigh === null ? midi : Math.max(detectedMidiHigh,midi);
+    if (detectedMidiHigh-detectedMidiLow < 12) return;
+    buildFullKeyboard(detectedMidiLow,detectedMidiHigh);
+    const keyCount = detectedMidiHigh-detectedMidiLow+1;
+    const label = byId('keyboard-connection-label');
+    if (label) label.textContent = `${keyCount} KEYS · ${noteName(detectedMidiLow)}–${noteName(detectedMidiHigh)}`;
+    const fullKeyboardLabel = document.querySelector('.midi-full-piano-wrap>.practice-keyboard-label');
+    if (fullKeyboardLabel) fullKeyboardLabel.textContent = `${keyCount} KEYS · ${noteName(detectedMidiLow)}–${noteName(detectedMidiHigh)}`;
+    byId('midi-full-piano').setAttribute('aria-label',`Detected MIDI keyboard with ${keyCount} keys, from ${noteName(detectedMidiLow)} through ${noteName(detectedMidiHigh)}`);
   };
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) window.practiceMidiActive = true;

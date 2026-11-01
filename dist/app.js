@@ -310,7 +310,9 @@ function updateMidiConnectionState() {
   const menu = $('practice-connect-menu');
   menu?.classList.toggle('is-connected',!!connected);
   if (connected && menu) menu.open = false;
-  if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'KEYBOARD CONNECTED' : 'CONNECT KEYBOARD';
+  if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'PLAY LOWEST + HIGHEST KEYS' : 'CONNECT KEYBOARD';
+  const fullKeyboardLabel = document.querySelector('.midi-full-piano-wrap>.practice-keyboard-label');
+  if (fullKeyboardLabel) fullKeyboardLabel.textContent = connected ? 'PLAY LOWEST + HIGHEST KEYS' : 'FULL KEYBOARD';
   if (connected && $('midi-dialog').open) $('midi-dialog').close();
   return connected;
 }
@@ -327,6 +329,7 @@ $('midi-connect').onclick = async () => {
         input.onmidimessage = event => {
           const [status, midi, velocity] = event.data;
           if ((status & 0xf0) === 0x90 && velocity > 0) {
+            window.practiceMidiObserve?.(midi);
             if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(midi);
             else {
               const expected = melody[step];
@@ -339,7 +342,7 @@ $('midi-connect').onclick = async () => {
     };
     bind();
     midiAccess.onstatechange = bind;
-    message.textContent = updateMidiConnectionState() ? 'Keyboard connected. Play a note to begin.' : 'MIDI access is ready. Connect or turn on your keyboard.';
+    message.textContent = updateMidiConnectionState() ? 'Keyboard connected. Press its lowest and highest keys once so the on-screen keyboard can match its range.' : 'MIDI access is ready. Connect or turn on your keyboard.';
   } catch (_) {
     message.textContent = 'MIDI access was not granted. You can still use the on-screen keys.';
   }
