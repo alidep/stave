@@ -1256,11 +1256,31 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
 /* The MIDI connection action is a standalone bridge into the final CTA. */
 .feature-midi-section{width:100%;max-width:1080px;margin:54px auto 0}
 .feature-midi-section h2{margin:0 0 24px;text-align:center;font:900 clamp(40px,5vw,68px)/.98 Visuelt,sans-serif;letter-spacing:-.05em}
-.feature-midi-section .feature-midi-connect{width:100%;min-height:60px;padding:14px 24px;font-size:12px}
+.midi-connection-gallery{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+.midi-connection-card{min-width:0;margin:0;padding:18px 18px 14px;border:1px solid #e5ded1;border-radius:22px;background:#fffdf7}
+.midi-connection-art{position:relative;height:260px;overflow:hidden}
+.midi-connection-art img{position:absolute;z-index:2;display:block;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(35,31,25,.12))}
+.midi-to-desktop .midi-host{top:0;left:1%;width:60%;height:66%}
+.midi-to-phone .midi-host{top:-2%;left:9%;width:32%;height:74%}
+.midi-connection-art .midi-controller{right:0;bottom:0;width:67%;height:55%}
+.midi-cable{position:absolute;z-index:1;inset:22% 8% 12%;width:84%;height:66%;overflow:visible}
+.midi-cable path{fill:none;stroke:#55514b;stroke-width:3;stroke-linecap:round}.midi-cable circle{fill:#55514b}
+.midi-connection-card figcaption{text-align:center;font:700 12px/1 JetBrains,monospace;letter-spacing:.12em;text-transform:uppercase}
+.feature-midi-section .feature-midi-connect{width:100%;min-height:56px;padding:0 22px;border-radius:999px;font-size:16px}
+@media(min-width:960px){
+  .feature-midi-section .feature-midi-connect{max-width:420px;min-height:46px;margin-inline:auto;font-size:15px}
+}
 @media(max-width:959px){
   .feature-midi-section{margin-top:42px}
   .feature-midi-section h2{margin-bottom:18px;font-size:clamp(36px,10vw,46px)}
-  .feature-midi-section .feature-midi-connect{min-height:58px;padding:13px 16px;font-size:11px}
+  .midi-connection-gallery{gap:8px;margin-bottom:14px}
+  .midi-connection-card{padding:8px 5px 10px;border-radius:16px}
+  .midi-connection-art{height:clamp(150px,43vw,210px)}
+  .midi-to-desktop .midi-host{width:66%;height:64%}
+  .midi-to-phone .midi-host{left:6%;width:36%;height:72%}
+  .midi-connection-art .midi-controller{width:73%;height:52%}
+  .midi-connection-card figcaption{font-size:10px}
+  .feature-midi-section .feature-midi-connect{min-height:56px;padding:0 16px;font-size:16px}
   .feature-input-footer{justify-content:center}
   .feature-input-footer .feature-keyboard-map{margin-inline:auto}
 }
