@@ -1296,3 +1296,9 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
     box-shadow:0 14px 34px rgba(44,38,27,.075);
   }
 }
+
+/* Desktop feedback copy leads, with the animated score on the right. */
+@media(min-width:960px){
+  .feedback-feature .benefit-copy{order:1}
+  .feedback-feature .benefit-visual{order:2}
+}
