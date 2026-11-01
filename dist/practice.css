@@ -1302,3 +1302,12 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .feedback-feature .benefit-copy{order:1}
   .feedback-feature .benefit-visual{order:2}
 }
+
+/* The composer orbit is a square-edged, full-bleed band. */
+.repertoire-feature .benefit-visual{
+  width:100vw;
+  max-width:none;
+  margin-left:calc(50% - 50vw);
+  border:0;
+  border-radius:0;
+}
