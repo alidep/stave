@@ -494,10 +494,7 @@
   document.querySelectorAll('[data-home-level]').forEach(button => button.addEventListener('click',() => {
     level = Number(button.dataset.homeLevel);
     resetPassage();
-    const practiceSection = byId('practice');
-    const wasRetracted = practiceSection?.classList.contains('is-retracted');
-    if (wasRetracted) byId('practice-learn-tab')?.click();
-    window.setTimeout(() => byId('practice-card')?.scrollIntoView({behavior:'smooth',block:'center'}),wasRetracted ? 720 : 80);
+    window.setTimeout(() => byId('practice-card')?.scrollIntoView({behavior:'smooth',block:'center'}),80);
   }));
   byId('practice-sample-prev').addEventListener('click',() => { if (sampleIndex > 0) { sampleIndex--; resetPassage(); } });
   byId('practice-sample-next').addEventListener('click',() => { if (sampleIndex < sampleKeys().length-1) { sampleIndex++; resetPassage(); } });
@@ -1003,41 +1000,16 @@
     document.addEventListener('click',event => { if (!playMenu.contains(event.target)) playMenu.removeAttribute('open'); });
     document.addEventListener('keydown',event => { if (event.key === 'Escape') playMenu.removeAttribute('open'); });
   }
+  const practiceSheetHandle = byId('practice-sheet-handle');
   const homepagePractice = byId('practice');
-  const practiceLearnTab = byId('practice-learn-tab');
-  const practiceBannerLearn = document.querySelectorAll('.practice-banner-learn');
-  const homepageHero = byId('homepage-hero');
-  if (homepagePractice && practiceLearnTab && homepageHero) {
-    const tabLabel = practiceLearnTab.querySelector('span');
-    let practiceTransitioning = false;
-    const syncPracticeHeight = () => {
-      if (!homepagePractice.classList.contains('is-retracted')) {
-        homepagePractice.style.setProperty('--practice-open-height', `${homepagePractice.scrollHeight}px`);
-      }
-    };
-    const setPracticeRetracted = retracted => {
-      if (practiceTransitioning) return;
-      const applyState = () => {
-        if (!retracted) syncPracticeHeight();
-        homepagePractice.classList.toggle('is-retracted',retracted);
-        document.body.classList.toggle('practice-retracted',retracted);
-        practiceLearnTab.setAttribute('aria-expanded',String(!retracted));
-        tabLabel.textContent = retracted ? 'Start playing' : 'Learn more';
-        if (!retracted) window.setTimeout(() => homepagePractice.scrollIntoView({behavior:'smooth',block:'start'}),40);
-        window.setTimeout(() => { practiceTransitioning = false; },retracted ? 640 : 500);
-      };
-      practiceTransitioning = true;
-      if (retracted && window.scrollY > 2) {
-        window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
-        window.setTimeout(applyState,420);
-      } else applyState();
-    };
-    practiceLearnTab.addEventListener('click',() => setPracticeRetracted(!homepagePractice.classList.contains('is-retracted')));
-    practiceBannerLearn.forEach(button => button.addEventListener('click',() => setPracticeRetracted(true)));
-    if ('ResizeObserver' in window) new ResizeObserver(syncPracticeHeight).observe(homepagePractice);
-    window.addEventListener('resize',syncPracticeHeight);
-    syncPracticeHeight();
+  if (practiceSheetHandle && homepagePractice) {
+    practiceSheetHandle.addEventListener('click',() => {
+      const collapsed = homepagePractice.classList.toggle('is-sheet-collapsed');
+      practiceSheetHandle.setAttribute('aria-expanded',String(!collapsed));
+      practiceSheetHandle.setAttribute('aria-label',collapsed ? 'Expand practice' : 'Collapse practice');
+    });
   }
+  const homepageHero = byId('homepage-hero');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.body.classList.add('motion-ready');
   if (homepageHero) requestAnimationFrame(() => homepageHero.classList.add('motion-intro'));

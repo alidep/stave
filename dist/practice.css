@@ -781,3 +781,315 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .toolbar-grade-
 /* Keep mobile onboarding subordinate to the notation widget. */
 @media(max-width:959px){.mobile-practice-intro{display:grid;grid-template-columns:auto minmax(0,430px);align-items:center;justify-content:center;gap:16px;padding:10px 17px 12px;text-align:left}.mobile-practice-intro h2{max-width:118px;font:700 10px/1.35 JetBrains,monospace;letter-spacing:.13em;text-transform:uppercase}.mobile-grade-picker{margin:0}.mobile-grade-picker button{min-height:36px}.mobile-grade-picker button::before{font-size:13px}}
 @media(max-width:600px){.mobile-practice-intro{display:block;padding:9px 12px 11px;text-align:center}.mobile-practice-intro h2{max-width:none;font-size:9px;white-space:nowrap}.mobile-grade-picker{margin-top:8px}.mobile-grade-picker button{min-height:34px}}
+
+/* Mobile typography: a consistent, readable scale without enlarging desktop. */
+@media(max-width:959px){
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  .topbar .brand{font-size:clamp(18px,5.2vw,22px);line-height:1.1}
+  .mobile-menu-panel>p{font-size:12px;line-height:1.35}
+  .mobile-menu-panel a,.mobile-menu-panel button{font-size:clamp(30px,8.5vw,42px);line-height:1.05}
+  .mobile-menu-panel nav>*::before{font-size:12px}
+  .mobile-menu-panel>small{font-size:12px;line-height:1.5}
+
+  .intro h1{font-size:clamp(44px,12vw,58px);line-height:.97;text-wrap:balance}
+  .intro p{font-size:17px;line-height:1.5}
+  .desktop-layout .actions .pill,.closing-actions .pill{font-size:16px;line-height:1.15}
+  .lesson-meta,.hand-label{font-size:12px;line-height:1.35}
+  .home-feedback,.instrument-caption{font-size:15px;line-height:1.45}
+
+  .mobile-practice-intro h2{font-size:11px;line-height:1.4}
+  .mobile-grade-picker button,.mobile-grade-picker button strong{font-size:12px;line-height:1.15}
+  .practice-title-block h3{font-size:20px;line-height:1.2}
+  .practice-title-block p{font-size:11px;line-height:1.4;letter-spacing:.06em}
+  .practice-keyboard-label{font-size:11px;line-height:1.4}
+  .practice-connect-strip summary{font-size:13px;line-height:1.2}
+  .practice-connect-options button{font-size:14px;line-height:1.35}
+  .practice-learn-tab span{font-size:11px;line-height:1}
+  .completion-kicker{font-size:11px;line-height:1.3}
+  .practice-complete h3{font-size:24px;line-height:1.18}
+  .practice-complete>p:not(.completion-kicker){font-size:16px;line-height:1.45}
+  .completion-actions button{font-size:14px}
+
+  .play-on-heading h2{font-size:12px!important;line-height:1.35!important;letter-spacing:.12em;text-transform:uppercase}
+  .play-on-card figcaption strong{font-size:clamp(27px,7.5vw,32px);line-height:1.08}
+  .play-on-card figcaption em{font-size:17px;line-height:1.3}
+  .play-on-card figcaption span{font-size:16px;line-height:1.5}
+  .benefit-copy h2{font-size:clamp(38px,10.5vw,52px);line-height:.98}
+  .benefit-copy>span{font-size:17px;line-height:1.52}
+  .feature-piece-title,.feature-hand .practice-keyboard-label{font-size:12px;line-height:1.35}
+  .feature-midi-connect{font-size:12px;line-height:1.35}
+  .level-demo label,.benefit-score-meta{font-size:11px;line-height:1.3}
+  .level-demo select{font-size:16px}
+
+  .song-search input{font-size:16px}
+  .library-tabs button{font-size:18px;line-height:1.2}
+  .library-tabs small,.song-picker-heading small{font-size:13px;line-height:1.4}
+  .song-tile strong,.artist-tile strong{font-size:15px;line-height:1.25}
+  .song-tile small,.artist-tile small{font-size:13px;line-height:1.35}
+  .sheet-actions>button{font-size:15px}
+  .related-songs-heading h2{font-size:28px;line-height:1.1}
+  .related-songs-heading>a{font-size:14px}
+
+  dialog h2,#midi-dialog h2{font-size:clamp(27px,8vw,34px);line-height:1.08}
+  dialog p,dialog li,.midi-intro{font-size:16px;line-height:1.5}
+  .midi-method strong{font-size:17px;line-height:1.2}
+  .midi-method small{font-size:14px;line-height:1.4}
+  .keyboard-map-dialog h2{font-size:16px;line-height:1.35}
+  .site-footer{font-size:15px;line-height:1.45}
+}
+@media(max-width:430px){
+  .mobile-grade-picker button,.mobile-grade-picker button strong{font-size:11px}
+  .benefit-copy h2{font-size:clamp(36px,11vw,46px)}
+  .song-tile strong,.artist-tile strong{font-size:14px}
+  .song-tile small,.artist-tile small{font-size:12px}
+}
+
+/* Keep the mobile practice prompt quiet and prevent the level names from colliding. */
+@media(max-width:959px){
+  .mobile-practice-intro{display:block;padding:10px 12px 12px;text-align:center}
+  .mobile-practice-intro h2{max-width:none;margin:0 0 8px;font-size:10px;line-height:1.3;white-space:nowrap}
+  .mobile-grade-picker{width:min(100%,430px);margin:0 auto;padding:4px}
+  .mobile-grade-picker button{min-width:0;min-height:38px;padding:0 6px;overflow:hidden}
+  .mobile-grade-picker button::before{display:none}
+  .mobile-grade-picker button strong{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+}
+@media(max-width:390px){
+  .mobile-grade-picker button strong{font-size:11px}
+}
+
+/* A clear mobile invitation above the compact level control. */
+@media(max-width:959px){
+  .mobile-practice-intro{padding:14px 12px 13px}
+  .mobile-practice-intro h2{margin:0 0 10px;color:var(--ink);font:700 16px/1.35 Visuelt,sans-serif;letter-spacing:-.01em;text-transform:none;white-space:normal}
+  .mobile-grade-picker{max-width:410px;padding:4px;border-color:#ddd6ca;background:#f0ece3;box-shadow:none}
+  .mobile-grade-picker button{min-height:40px;color:#5c5750}
+  .mobile-grade-picker button[aria-pressed="true"]{background:#729663;box-shadow:0 2px 7px rgba(66,91,55,.18)}
+}
+
+/* The mobile practice flow stays focused on the score and playable keys. */
+@media(max-width:959px){
+  .practice-connect-strip{display:none}
+}
+
+/* The homepage practice stays open; the former Learn More drawer is removed. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{
+  max-height:none;
+  overflow:visible;
+  opacity:1;
+  transform:none;
+  transition:none;
+}
+.practice-learn-tab,.practice-banner-learn{display:none!important}
+
+/* On mobile, the two-hand example is a distinct card with the standard small gutter. */
+@media(max-width:959px){
+  .input-feature .benefit-copy{box-sizing:border-box;width:100%;padding-inline:12px}
+  .input-feature .input-demo{
+    width:calc(100% - 16px);
+    min-height:0;
+    margin-inline:auto;
+    padding:26px 14px 30px;
+    border:1px solid #e5ded1;
+    border-radius:20px;
+    box-shadow:0 14px 36px rgba(44,38,27,.07);
+  }
+}
+@media(max-width:430px){
+  .input-feature .input-demo{width:calc(100% - 12px);margin-inline:auto;padding-inline:12px}
+}
+
+/* Match the hero actions to the polished full-width closing actions on mobile. */
+@media(max-width:959px){
+  .desktop-layout .actions{gap:10px;margin-top:20px}
+  .desktop-layout .actions .pill{
+    min-height:56px;
+    padding:0 22px;
+    border-radius:999px;
+    font-size:16px;
+    font-weight:700;
+  }
+  .desktop-layout .actions .pill.dark{border-color:#84a770;background:#84a770;color:#fff}
+  .desktop-layout .actions .pill:not(.dark){border-color:#d9d4c9;background:transparent;color:var(--ink)}
+}
+
+/* Give the mobile practice keyboard more room above the card edge. */
+@media(max-width:959px){
+  .practice-keyboard-wrap{padding-bottom:20px}
+}
+
+/* Keep the mobile device choices compact, playful, and visibly floating. */
+@keyframes mobile-device-bob{
+  0%,100%{transform:translate3d(0,0,0) rotate(-1deg)}
+  50%{transform:translate3d(0,-9px,0) rotate(1deg)}
+}
+@media(max-width:959px){
+  .play-on{margin:42px 0 72px;padding:0}
+  .play-on-heading{margin-bottom:18px!important}
+  .play-on-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .play-on-card,.play-on-card:nth-child(n){display:flex;min-width:0;flex-direction:column;align-items:center;gap:7px;padding:8px 3px 12px}
+  .play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{width:100%;height:clamp(120px,24vw,170px)}
+  .play-on-card .play-on-art{animation:mobile-device-bob 4.8s ease-in-out infinite}
+  .play-on-card:nth-child(2) .play-on-art{animation-delay:-1.7s;animation-duration:5.4s}
+  .play-on-card:nth-child(3) .play-on-art{animation-delay:-3.1s;animation-duration:4.4s}
+  .play-on-card figcaption{margin:0;text-align:center}
+  .play-on-card figcaption strong{font-size:clamp(17px,4.2vw,22px);line-height:1.1}
+  .play-on-phone .play-on-art img,.play-on-phone:hover .play-on-art img{height:88%;max-height:none;transform:rotate(-2deg)}
+  .play-on-computer .play-on-art img,.play-on-computer:hover .play-on-art img{transform:rotate(1deg) scale(.94)}
+  .play-on-midi .play-on-art img,.play-on-midi:hover .play-on-art img{transform:rotate(-2deg) scale(.95)}
+}
+@media(max-width:430px){
+  .play-on-grid{gap:3px}
+  .play-on-card,.play-on-card:nth-child(n){padding-inline:0}
+  .play-on-art,.play-on-card:nth-child(2) .play-on-art,.play-on-card:nth-child(3) .play-on-art{height:122px}
+  .play-on-card figcaption strong{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .play-on-card .play-on-art{animation:none}
+}
+
+/* Phone layout: a loose 3D collage instead of a rigid product grid. */
+@media(max-width:959px){
+  .play-on{margin:42px 0 68px}
+  .play-on-heading{margin-bottom:10px!important}
+  .play-on-grid{position:relative;display:block;height:360px;overflow:visible;background:transparent}
+  .play-on-card,.play-on-card:nth-child(n){position:absolute;display:block;width:auto;height:auto;padding:0;overflow:visible}
+  .play-on-card,.play-on-card .play-on-art,.play-on-card figcaption{background:transparent!important}
+  .play-on-card figcaption{position:absolute;z-index:6;display:block;margin:0;padding:0;text-align:center;white-space:nowrap}
+  .play-on-card figcaption strong{font:500 11px/1 JetBrains,monospace;letter-spacing:.08em;text-transform:uppercase}
+  .play-on-card .play-on-art,.play-on-card:nth-child(n) .play-on-art{width:100%;height:100%}
+  .play-on-phone{z-index:4;top:18px;left:0;width:50%!important;height:255px!important}
+  .play-on-computer{z-index:2;top:4px;right:0;width:58%!important;height:168px!important}
+  .play-on-midi{z-index:3;right:1%;bottom:18px;width:66%!important;height:188px!important}
+  .play-on-phone figcaption{left:30%;bottom:-14px;transform:rotate(-3deg)}
+  .play-on-computer figcaption{left:38%;bottom:-7px;transform:rotate(4deg)}
+  .play-on-midi figcaption{left:34%;bottom:-10px;transform:rotate(-4deg)}
+  .play-on-phone .play-on-art img,.play-on-phone:hover .play-on-art img{width:100%;height:100%;transform:rotate(-5deg) scale(.9)}
+  .play-on-computer .play-on-art img,.play-on-computer:hover .play-on-art img{width:100%;height:100%;transform:rotate(5deg) scale(.88)}
+  .play-on-midi .play-on-art img,.play-on-midi:hover .play-on-art img{width:100%;height:100%;transform:rotate(-4deg) scale(.94)}
+  .play-on-art img{filter:drop-shadow(0 14px 18px rgba(35,31,25,.12))}
+}
+
+/* A small device-like chin beneath the mobile practice keyboard. */
+@media(max-width:959px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-card{position:relative;margin-bottom:58px}
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-card::after{
+    content:"";
+    position:absolute;
+    z-index:0;
+    left:50%;
+    bottom:-52px;
+    width:min(250px,64%);
+    height:60px;
+    transform:translateX(-50%);
+    clip-path:polygon(0 0,100% 0,88% 68%,82% 86%,72% 100%,28% 100%,18% 86%,12% 68%);
+    border-radius:0 0 42px 42px;
+    background:var(--paper);
+    filter:drop-shadow(0 15px 13px rgba(44,38,27,.12));
+  }
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-keyboard-wrap{position:relative;z-index:1}
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-keyboard-wrap::after{
+    content:"";
+    position:absolute;
+    z-index:2;
+    left:50%;
+    bottom:-46px;
+    width:min(120px,34%);
+    height:6px;
+    transform:translateX(-50%);
+    border-radius:999px;
+    background:rgba(28,28,28,.12);
+  }
+}
+
+/* Present the mobile practice area as a top sheet with its grabber inside. */
+@media(max-width:959px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{
+    position:relative;
+    margin-top:8px;
+    padding-bottom:34px;
+    border-radius:0 0 28px 28px;
+    background:linear-gradient(180deg,var(--paper) 0%,#fffdf8 22%,#fffdf8 58%,var(--paper) 100%);
+    box-shadow:0 16px 30px rgba(44,38,27,.1);
+  }
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:13px;
+    width:54px;
+    height:5px;
+    transform:translateX(-50%);
+    border-radius:999px;
+    background:rgba(28,28,28,.22);
+  }
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-card{
+    position:static;
+    margin-bottom:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+  }
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-card::after,
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-keyboard-wrap::after{display:none}
+}
+
+/* Center the editorial feature copy on mobile. */
+@media(max-width:959px){
+  .stave-benefits .benefit-copy{width:100%;max-width:680px;margin-inline:auto;text-align:center}
+  .stave-benefits .benefit-copy>span{margin-right:auto;margin-left:auto;text-align:center}
+}
+
+/* Let the two-hand demo nearly fill the mobile viewport while retaining a small gutter. */
+@media(max-width:959px){
+  .input-feature .input-demo{width:calc(100% + 28px);margin-inline:-14px;border-radius:18px}
+}
+
+/* Center the mobile hero copy. */
+@media(max-width:959px){
+  .intro{width:100%;text-align:center}
+  .intro h1,.intro p{margin-right:auto;margin-left:auto}
+}
+
+/* Interactive top-sheet grabber for the mobile practice panel. */
+.practice-sheet-handle{display:none}
+@media(max-width:959px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{
+    max-height:1400px;
+    overflow:hidden;
+    transition:max-height .65s cubic-bezier(.4,0,.2,1),box-shadow .35s ease;
+  }
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section::after{display:none}
+  .practice-sheet-handle{
+    position:absolute;
+    z-index:8;
+    left:50%;
+    bottom:2px;
+    width:96px;
+    height:30px;
+    display:grid;
+    place-items:center;
+    transform:translateX(-50%);
+    padding:0;
+    border:0;
+    border-radius:999px;
+    background:transparent;
+  }
+  .practice-sheet-handle span{display:block;width:54px;height:5px;border-radius:999px;background:rgba(28,28,28,.22);transition:background .2s ease,transform .2s ease}
+  .practice-sheet-handle:hover span{background:rgba(28,28,28,.34)}
+  .practice-sheet-handle:active span{transform:scaleX(.9)}
+  .practice-section>.mobile-practice-intro,.practice-section>.practice-card{transition:opacity .3s ease,transform .55s cubic-bezier(.4,0,.2,1)}
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section.is-sheet-collapsed{max-height:44px;box-shadow:0 8px 20px rgba(44,38,27,.08)}
+  .practice-section.is-sheet-collapsed>.mobile-practice-intro,.practice-section.is-sheet-collapsed>.practice-card{opacity:0;transform:translateY(-34px);pointer-events:none}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-section,.practice-section>.mobile-practice-intro,.practice-section>.practice-card{transition:none}
+}
+
+/* Real phones use the browser viewport, without the fixed mock-device shell. */
+@media(max-width:959px){
+  .stage{display:block;min-height:100svh;padding:0;overflow:visible;background:var(--paper)}
+  .device-slot{width:100%!important;height:auto!important;overflow:visible}
+  .device{width:100%!important;height:auto!important;min-height:100svh;transform:none!important;overflow:visible;border-radius:0;box-shadow:none}
+  .island,.status,.home-indicator{display:none}
+  .screen{width:100%;height:auto;min-height:100svh;padding:12px 22px 56px;overflow:visible}
+}

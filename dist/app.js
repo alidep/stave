@@ -355,17 +355,10 @@ showSide('intro');
 render();
 
 function fitDevice() {
-  if (window.innerWidth >= 960) {
-    $('device-slot').style.width = '';
-    $('device-slot').style.height = '';
-    $('device').style.transform = '';
-    return;
-  }
-  const scale = Math.min(1, (window.innerWidth - 16) / 402, (window.innerHeight - 16) / 874);
   const slot = $('device-slot');
-  slot.style.width = `${402 * scale}px`;
-  slot.style.height = `${874 * scale}px`;
-  $('device').style.transform = `scale(${scale})`;
+  slot.style.width = '';
+  slot.style.height = '';
+  $('device').style.transform = '';
 }
 fitDevice();
 window.addEventListener('resize', fitDevice);
