@@ -700,18 +700,16 @@
     const expected = passage.steps[currentStep]?.notes.find(note => !completedNotes.has(note.id) && note.midi % 12 === midi % 12);
     playNote(expected?.midi ?? midi);
   };
-  let detectedMidiLow = null, detectedMidiHigh = null;
-  window.practiceMidiObserve = midi => {
-    detectedMidiLow = detectedMidiLow === null ? midi : Math.min(detectedMidiLow,midi);
-    detectedMidiHigh = detectedMidiHigh === null ? midi : Math.max(detectedMidiHigh,midi);
-    if (detectedMidiHigh-detectedMidiLow < 12) return;
-    buildFullKeyboard(detectedMidiLow,detectedMidiHigh);
-    const keyCount = detectedMidiHigh-detectedMidiLow+1;
+  window.practiceMidiConfigure = (lowMidi,highMidi) => {
+    buildFullKeyboard(lowMidi,highMidi);
+    const keyCount = highMidi-lowMidi+1;
+    const lowName = noteName(lowMidi), highName = noteName(highMidi);
     const label = byId('keyboard-connection-label');
-    if (label) label.textContent = `${keyCount} KEYS · ${noteName(detectedMidiLow)}–${noteName(detectedMidiHigh)}`;
+    if (label) label.textContent = `${keyCount} KEYS · ${lowName}–${highName}`;
     const fullKeyboardLabel = document.querySelector('.midi-full-piano-wrap>.practice-keyboard-label');
-    if (fullKeyboardLabel) fullKeyboardLabel.textContent = `${keyCount} KEYS · ${noteName(detectedMidiLow)}–${noteName(detectedMidiHigh)}`;
-    byId('midi-full-piano').setAttribute('aria-label',`Detected MIDI keyboard with ${keyCount} keys, from ${noteName(detectedMidiLow)} through ${noteName(detectedMidiHigh)}`);
+    if (fullKeyboardLabel) fullKeyboardLabel.textContent = `${keyCount} KEYS · ${lowName}–${highName}`;
+    byId('midi-full-piano').setAttribute('aria-label',`Detected MIDI keyboard with ${keyCount} keys, from ${lowName} through ${highName}`);
+    return {count:keyCount,low:lowMidi,high:highMidi,lowName,highName};
   };
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) window.practiceMidiActive = true;

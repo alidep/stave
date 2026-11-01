@@ -304,16 +304,19 @@ document.addEventListener('keydown', event => {
 
 $('connect-midi').onclick = () => { if (!updateMidiConnectionState()) $('midi-dialog').showModal(); };
 $('feature-midi-connect').onclick = $('connect-midi').onclick;
+let midiCalibrationStage = null;
+let midiCalibrationHigh = null;
+let configuredMidiRange = null;
 function updateMidiConnectionState() {
   const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
   document.body.classList.toggle('midi-connected',!!connected);
   const menu = $('practice-connect-menu');
   menu?.classList.toggle('is-connected',!!connected);
   if (connected && menu) menu.open = false;
-  if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? 'PLAY LOWEST + HIGHEST KEYS' : 'CONNECT KEYBOARD';
+  const rangeLabel = configuredMidiRange ? `${configuredMidiRange.count} KEYS · ${configuredMidiRange.lowName}–${configuredMidiRange.highName}` : 'KEYBOARD CONNECTED';
+  if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? rangeLabel : 'CONNECT KEYBOARD';
   const fullKeyboardLabel = document.querySelector('.midi-full-piano-wrap>.practice-keyboard-label');
-  if (fullKeyboardLabel) fullKeyboardLabel.textContent = connected ? 'PLAY LOWEST + HIGHEST KEYS' : 'FULL KEYBOARD';
-  if (connected && $('midi-dialog').open) $('midi-dialog').close();
+  if (fullKeyboardLabel) fullKeyboardLabel.textContent = connected ? rangeLabel : 'FULL KEYBOARD';
   return connected;
 }
 $('midi-connect').onclick = async () => {
@@ -329,7 +332,25 @@ $('midi-connect').onclick = async () => {
         input.onmidimessage = event => {
           const [status, midi, velocity] = event.data;
           if ((status & 0xf0) === 0x90 && velocity > 0) {
-            window.practiceMidiObserve?.(midi);
+            if (midiCalibrationStage === 'high') {
+              midiCalibrationHigh = midi;
+              midiCalibrationStage = 'low';
+              message.textContent = 'Great. Now press the lowest key on your keyboard.';
+              return;
+            }
+            if (midiCalibrationStage === 'low') {
+              if (midi >= midiCalibrationHigh || midiCalibrationHigh-midi < 12) {
+                message.textContent = 'That range looks too small. Press the lowest key on your keyboard.';
+                return;
+              }
+              const range = window.practiceMidiConfigure?.(midi,midiCalibrationHigh);
+              configuredMidiRange = range || null;
+              midiCalibrationStage = null;
+              updateMidiConnectionState();
+              message.textContent = range ? `Set to ${range.count} keys, ${range.lowName} through ${range.highName}.` : 'Keyboard range set.';
+              setTimeout(() => { if ($('midi-dialog').open) $('midi-dialog').close(); },700);
+              return;
+            }
             if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(midi);
             else {
               const expected = melody[step];
@@ -342,7 +363,11 @@ $('midi-connect').onclick = async () => {
     };
     bind();
     midiAccess.onstatechange = bind;
-    message.textContent = updateMidiConnectionState() ? 'Keyboard connected. Press its lowest and highest keys once so the on-screen keyboard can match its range.' : 'MIDI access is ready. Connect or turn on your keyboard.';
+    if (updateMidiConnectionState()) {
+      midiCalibrationStage = 'high';
+      midiCalibrationHigh = null;
+      message.textContent = 'Keyboard connected. Press the highest key on your keyboard.';
+    } else message.textContent = 'MIDI access is ready. Connect or turn on your keyboard.';
   } catch (_) {
     message.textContent = 'MIDI access was not granted. You can still use the on-screen keys.';
   }
