@@ -1093,3 +1093,16 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .island,.status,.home-indicator{display:none}
   .screen{width:100%;height:auto;min-height:100svh;padding:12px 22px 56px;overflow:visible}
 }
+
+/* Mobile feature hierarchy: heading and explanation always precede the visual. */
+@media(max-width:959px){
+  .stave-benefits .benefit-feature{display:flex;flex-direction:column}
+  .stave-benefits .benefit-copy{order:-1!important}
+  .stave-benefits .benefit-visual{order:0!important;width:100%}
+}
+
+/* Remove the oversized legacy gap around the centered mobile hero. */
+@media(max-width:959px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{margin-top:28px}
+  .intro{margin-top:12px;margin-bottom:16px}
+}
