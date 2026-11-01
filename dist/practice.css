@@ -1180,7 +1180,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   left:0!important;
   width:clamp(116px,14vw,184px);
   margin:0;
-  offset-path:ellipse(52% 72% at 50% 103%);
+  offset-path:ellipse(52% 72% at 50% -3%);
   offset-distance:0%;
   offset-rotate:0deg;
   animation:repertoire-orbit 30s linear infinite;
@@ -1202,7 +1202,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .repertoire-feature .musician-stack>span:nth-child(n),
   .repertoire-feature .musician-stack>.musician-add{
     width:clamp(92px,29vw,124px);
-    offset-path:ellipse(58% 70% at 50% 104%);
+    offset-path:ellipse(58% 70% at 50% -4%);
   }
 }
 @media(prefers-reduced-motion:reduce){
