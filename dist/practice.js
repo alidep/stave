@@ -197,9 +197,17 @@
     keyboardMap = new Map((leftOnly ? [...leftWhites,...leftBlacks] : both ? [...rightWhites,...rightBlacks,...leftWhites,...leftBlacks] : [...rightWhites,...rightBlacks]).map(([midi,,key]) => [key.toLowerCase(),midi]));
   }
 
+  let configuredMidiLow = null, configuredMidiHigh = null;
+  function playableMidi(midi) {
+    if (configuredMidiLow === null || configuredMidiHigh === null) return midi;
+    let playable = midi;
+    while (playable < configuredMidiLow) playable += 12;
+    while (playable > configuredMidiHigh) playable -= 12;
+    return playable >= configuredMidiLow && playable <= configuredMidiHigh ? playable : midi;
+  }
   function keyFor(midi) {
     const root = document.body.classList.contains('midi-connected') ? byId('midi-full-piano') : keyboardRoot;
-    return root.querySelector(`[data-midi="${midi}"]`);
+    return root.querySelector(`[data-midi="${playableMidi(midi)}"]`);
   }
 
   const practiceSongKeys = ['elise','joy','twinkle','brother','mary','jingle','bridge','saints','moon'];
@@ -254,9 +262,23 @@
   }
 
   function updateHint() {
-    keyboardRoot.querySelectorAll('.hint').forEach(key => key.classList.remove('hint'));
-    if (hintEnabled && !previewPlaying && !wrongNote && currentStep < passage.steps.length) {
-      passage.steps[currentStep].notes.filter(note => !completedNotes.has(note.id)).forEach(note => keyFor(note.midi)?.classList.add('hint'));
+    document.querySelectorAll('#practice-keyboard-wrap .hint,#midi-full-piano .hint,#midi-full-piano .octave-shift-target').forEach(key => key.classList.remove('hint','octave-shift-target'));
+    const shiftCue = byId('midi-octave-shift-cue');
+    if (shiftCue) shiftCue.hidden = true;
+    if (!previewPlaying && !wrongNote && currentStep < passage.steps.length) {
+      passage.steps[currentStep].notes.filter(note => !completedNotes.has(note.id)).forEach(note => {
+        const key = keyFor(note.midi);
+        if (hintEnabled) key?.classList.add('hint');
+        const mapped = playableMidi(note.midi);
+        if (document.body.classList.contains('midi-connected') && mapped !== note.midi) {
+          key?.classList.add('octave-shift-target');
+          if (shiftCue) {
+            const octaves = Math.abs(mapped-note.midi)/12;
+            shiftCue.textContent = `OCTAVE SHIFT · PLAY ${octaves > 1 ? `${octaves} OCTAVES` : '1 OCTAVE'} ${mapped > note.midi ? 'UP' : 'DOWN'}`;
+            shiftCue.hidden = false;
+          }
+        }
+      });
     }
   }
 
@@ -479,7 +501,7 @@
       wrongNote = step.notes.find(note => !completedNotes.has(note.id))?.id || null;
       key?.classList.add('is-wrong');
       render();
-      wrongTimer = setTimeout(() => { wrongNote = null; key?.classList.remove('is-wrong'); render(); },550);
+      wrongTimer = setTimeout(() => { wrongNote = null; key?.classList.remove('is-wrong'); render(); },1000);
       return;
     }
     wrongNote = null;
@@ -701,6 +723,8 @@
     playNote(expected?.midi ?? midi);
   };
   window.practiceMidiConfigure = (lowMidi,highMidi) => {
+    configuredMidiLow = lowMidi;
+    configuredMidiHigh = highMidi;
     buildFullKeyboard(lowMidi,highMidi);
     const keyCount = highMidi-lowMidi+1;
     const lowName = noteName(lowMidi), highName = noteName(highMidi);
@@ -709,6 +733,15 @@
     const fullKeyboardLabel = document.querySelector('.midi-full-piano-wrap>.practice-keyboard-label');
     if (fullKeyboardLabel) fullKeyboardLabel.textContent = `${keyCount} KEYS · ${lowName}–${highName}`;
     byId('midi-full-piano').setAttribute('aria-label',`Detected MIDI keyboard with ${keyCount} keys, from ${lowName} through ${highName}`);
+    let shiftCue = byId('midi-octave-shift-cue');
+    if (!shiftCue) {
+      shiftCue = document.createElement('div');
+      shiftCue.id = 'midi-octave-shift-cue';
+      shiftCue.className = 'midi-octave-shift-cue';
+      shiftCue.hidden = true;
+      byId('midi-full-piano-wrap').append(shiftCue);
+    }
+    updateHint();
     return {count:keyCount,low:lowMidi,high:highMidi,lowName,highName};
   };
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => {

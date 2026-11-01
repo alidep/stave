@@ -307,6 +307,19 @@ $('feature-midi-connect').onclick = $('connect-midi').onclick;
 let midiCalibrationStage = null;
 let midiCalibrationHigh = null;
 let configuredMidiRange = null;
+function showMidiCalibrationStep(step) {
+  const dialog = $('midi-calibration-dialog');
+  const second = step === 'low';
+  $('midi-setup-kicker').textContent = `STEP ${second ? 2 : 1} OF 2`;
+  $('midi-calibration-title').textContent = second ? 'Now press your lowest key' : 'Press your highest key';
+  $('midi-calibration-copy').textContent = second ? 'Press the key at the far left of your MIDI keyboard.' : 'Press the key at the far right of your MIDI keyboard.';
+  dialog.querySelector('.midi-listening').innerHTML = '<span></span>LISTENING FOR A NOTE';
+  dialog.querySelectorAll('.midi-setup-progress span').forEach((item,index) => item.classList.toggle('is-active',index <= (second ? 1 : 0)));
+  if (!dialog.open) dialog.showModal();
+}
+$('midi-calibration-dialog').addEventListener('close',() => {
+  if (!configuredMidiRange) midiCalibrationStage = null;
+});
 function updateMidiConnectionState() {
   const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
   document.body.classList.toggle('midi-connected',!!connected);
@@ -335,20 +348,23 @@ $('midi-connect').onclick = async () => {
             if (midiCalibrationStage === 'high') {
               midiCalibrationHigh = midi;
               midiCalibrationStage = 'low';
-              message.textContent = 'Great. Now press the lowest key on your keyboard.';
+              showMidiCalibrationStep('low');
               return;
             }
             if (midiCalibrationStage === 'low') {
               if (midi >= midiCalibrationHigh || midiCalibrationHigh-midi < 12) {
-                message.textContent = 'That range looks too small. Press the lowest key on your keyboard.';
+                $('midi-calibration-copy').textContent = 'That range looks too small. Press the key at the far left of your keyboard.';
                 return;
               }
               const range = window.practiceMidiConfigure?.(midi,midiCalibrationHigh);
               configuredMidiRange = range || null;
               midiCalibrationStage = null;
               updateMidiConnectionState();
-              message.textContent = range ? `Set to ${range.count} keys, ${range.lowName} through ${range.highName}.` : 'Keyboard range set.';
-              setTimeout(() => { if ($('midi-dialog').open) $('midi-dialog').close(); },700);
+              $('midi-setup-kicker').textContent = 'SETUP COMPLETE';
+              $('midi-calibration-title').textContent = range ? `${range.count} keys detected` : 'Keyboard range set';
+              $('midi-calibration-copy').textContent = range ? `${range.lowName} through ${range.highName}. The onscreen keyboard now matches yours.` : 'The onscreen keyboard now matches yours.';
+              $('midi-calibration-dialog').querySelector('.midi-listening').textContent = '✓ READY TO PLAY';
+              setTimeout(() => { if ($('midi-calibration-dialog').open) $('midi-calibration-dialog').close(); },1200);
               return;
             }
             if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(midi);
@@ -366,7 +382,8 @@ $('midi-connect').onclick = async () => {
     if (updateMidiConnectionState()) {
       midiCalibrationStage = 'high';
       midiCalibrationHigh = null;
-      message.textContent = 'Keyboard connected. Press the highest key on your keyboard.';
+      if ($('midi-dialog').open) $('midi-dialog').close();
+      showMidiCalibrationStep('high');
     } else message.textContent = 'MIDI access is ready. Connect or turn on your keyboard.';
   } catch (_) {
     message.textContent = 'MIDI access was not granted. You can still use the on-screen keys.';

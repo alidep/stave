@@ -352,6 +352,19 @@ body.song-page:not(.practice-only-page) .pick-song-link:hover{border-color:#6f8f
 .midi-message{margin:17px 0 0;padding:12px 15px;border-radius:11px;background:#f2eee5;color:#5c5851;font:400 14px/1.4 Visuelt,sans-serif}
 .midi-help{margin-top:20px;padding-top:18px;border-top:1px solid #e3e0d8}
 .midi-help button{padding:0;border:0;background:transparent;color:#343841;font:500 14px/1 Visuelt,sans-serif;text-decoration:underline;text-underline-offset:4px}
+#midi-calibration-dialog{width:min(480px,calc(100vw - 32px));padding:38px 36px 42px;border:0;border-radius:28px;background:#fffdf8;text-align:center}
+#midi-calibration-dialog::backdrop{background:rgba(28,28,28,.52)}
+#midi-calibration-dialog .close{top:18px;right:21px;color:#898f97;font-size:30px;font-weight:300}
+.midi-setup-kicker{color:#7e9f6d;font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em}
+.midi-setup-progress{display:flex;gap:8px;justify-content:center;margin:16px 0 30px}
+.midi-setup-progress span{width:54px;height:5px;border-radius:99px;background:#e5e0d6;transition:background .2s}
+.midi-setup-progress span.is-active{background:#86aa73}
+.midi-setup-icon{display:grid;width:82px;height:82px;margin:0 auto 22px;place-items:center;border-radius:50%;background:#edf2e9;color:#71965e;font-size:36px}
+#midi-calibration-dialog h2{margin:0;font:900 32px/1.06 Visuelt,sans-serif;letter-spacing:-.035em}
+#midi-calibration-dialog p{max-width:330px;margin:13px auto 26px;color:#6e685f;font:400 17px/1.45 Visuelt,sans-serif}
+.midi-listening{display:flex;gap:9px;align-items:center;justify-content:center;min-height:50px;padding:0 18px;border:1px solid #ddd5c8;border-radius:999px;color:#555047;font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em}
+.midi-listening span{width:9px;height:9px;border-radius:50%;background:#86aa73;box-shadow:0 0 0 0 rgba(134,170,115,.45);animation:midi-listen 1.4s infinite}
+@keyframes midi-listen{60%{box-shadow:0 0 0 8px rgba(134,170,115,0)}}
 @media(max-width:620px){
   #midi-dialog{padding:32px 22px 26px;border-radius:24px}
   #midi-dialog .close{top:16px;right:18px}
@@ -360,10 +373,16 @@ body.song-page:not(.practice-only-page) .pick-song-link:hover{border-color:#6f8f
   .midi-method{min-height:88px;gap:17px;padding:15px 18px;border-radius:16px}
   .midi-method svg{width:28px;height:28px}.midi-method strong{font-size:18px}.midi-method small{font-size:14px}
   .midi-divider{margin:22px 0;font-size:11px}.midi-microphone{min-height:82px}
+  #midi-calibration-dialog{padding:34px 22px 30px;border-radius:24px}
+  #midi-calibration-dialog h2{font-size:29px}
 }
 
 /* A connected physical piano replaces the hand-specific on-screen keys. */
-.midi-full-piano-wrap{display:none;width:100%;margin:30px auto 0}
+.midi-full-piano-wrap{position:relative;display:none;width:100%;margin:30px auto 0}
+.midi-octave-shift-cue{position:absolute;z-index:5;top:42px;left:50%;translate:-50% 0;width:max-content;max-width:calc(100% - 24px);padding:9px 14px;border-radius:999px;background:#d97757;color:#fff;box-shadow:0 6px 18px rgba(147,73,48,.25);font:800 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-align:center;pointer-events:none}
+.midi-octave-shift-cue[hidden]{display:none}
+.midi-full-piano-wrap .octave-shift-target{background:#f1a074!important;box-shadow:inset 0 0 0 3px #d75f41,0 0 0 4px rgba(215,95,65,.18)!important}
+.midi-full-piano-wrap .practice-black.octave-shift-target{background:#d75f41!important}
 body.midi-connected .practice-keyboard-wrap{display:none!important}
 body.midi-connected .keyboard-map-trigger{display:none!important}
 @media(min-width:960px){
