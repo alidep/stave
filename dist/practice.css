@@ -1237,3 +1237,16 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
     transform:translateX(-50%) rotate(-4deg);
   }
 }
+
+/* Keep animated mobile artwork from moving the page viewport itself. */
+@media(max-width:959px){
+  html,body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+    overscroll-behavior-x:none;
+    touch-action:pan-y;
+  }
+  .stage,.device-slot,.device,.screen{max-width:100%;overflow-x:clip}
+  .play-on,.stave-benefits{overflow-anchor:none}
+}
