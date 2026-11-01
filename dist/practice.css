@@ -747,3 +747,15 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .toolbar-grade-
 .practice-title-block h3{font-size:22px}.practice-title-block p{margin-top:4px;font-size:11px;letter-spacing:.07em}
 .practice-connect-strip summary{gap:8px;padding:8px 12px;font-size:10px}.practice-connect-instruction{font-size:10px;letter-spacing:.07em}.practice-connect-main{gap:14px}
 @media(max-width:959px){.practice-title-block h3{font-size:19px}.practice-title-block p{font-size:10px}.practice-connect-strip summary,.practice-connect-instruction{font-size:9px}}
+/* Clarity, hierarchy, and accessibility refinement pass. */
+.practice-onboarding{display:flex;align-items:baseline;gap:16px;margin:-4px 0 22px;padding:13px 16px;border:1px solid #d4e0cd;border-radius:13px;background:#edf3e9;color:#405238}.practice-onboarding strong{flex:none;font:800 13px/1.2 Visuelt,sans-serif}.practice-onboarding span{color:#56634f;font-size:13px;line-height:1.4}
+.desktop-layout .intro p{max-width:620px;color:#5f5a53;font-size:clamp(18px,1.55vw,23px);line-height:1.45}
+.desktop-layout .actions .pill.dark,.closing-actions .pill.dark{border-color:#557b47;background:#557b47;box-shadow:0 8px 20px rgba(63,94,52,.18)}.desktop-layout .actions .pill.dark:hover,.closing-actions .pill.dark:hover{border-color:#456b39;background:#456b39}.desktop-layout .actions .pill:not(.dark){background:#fffdf7}
+#practice-play{background:#557b47;box-shadow:0 0 0 4px rgba(85,123,71,.12)}#practice-play:hover{background:#456b39}
+.stave-benefits{gap:clamp(58px,7vw,96px)}.input-feature{margin-top:0;padding-top:54px}.benefit-copy>span{color:#625d56}.level-feature .benefit-copy>span{max-width:500px}
+.practice-title-block p{color:#68625b;font-size:12px}.practice-connect-strip summary,.practice-connect-instruction{color:#5d5851;font-size:11px}.toolbar-grade-picker button,.toolbar-grade-picker button strong{font-size:12px}.practice-keyboard-label,.benefit-score-meta,.feature-piece-title{color:#6b655d}
+.site-footer button{padding:0;border:0;background:transparent;color:var(--ink);font:700 14px Visuelt,sans-serif;cursor:pointer}.site-footer button:hover{text-decoration:underline;text-underline-offset:4px}
+:where(button,a,summary,select):focus-visible{outline:3px solid #426b36;outline-offset:3px}.practice-piano button:focus-visible,.piano button:focus-visible{outline:3px solid #426b36;outline-offset:-4px}
+@media(min-width:960px){.desktop-layout .actions .pill{min-width:150px;min-height:48px;font-size:15px}}
+@media(max-width:959px){.practice-onboarding{display:block;margin-bottom:18px;padding:12px 13px}.practice-onboarding strong,.practice-onboarding span{display:block}.practice-onboarding span{margin-top:5px;font-size:12px}.stave-benefits{gap:56px}.input-feature{padding-top:34px}.practice-title-block p{font-size:11px}.practice-connect-strip summary,.practice-connect-instruction{font-size:10px}}
+@media(min-width:960px){.feedback-feature .benefit-copy{order:1}.feedback-feature .benefit-visual{order:2}}

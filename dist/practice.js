@@ -329,7 +329,7 @@
   function render() {
     byId('practice-title').textContent = passage.title;
     byId('practice-subtitle').textContent = passage.subtitle;
-    const playLabel = fullSongId ? 'Play full song' : 'Play passage';
+    const playLabel = fullSongId ? 'Hear full song' : 'Hear this passage';
     byId('practice-play').setAttribute('aria-label',playLabel);
     byId('practice-play').title = playLabel;
     const accuracy = Math.round(passage.events.length/(passage.events.length+mistakeCount)*100);
