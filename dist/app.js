@@ -257,10 +257,7 @@ $('record-action').onclick = () => {
 };
 $('preview-flip').onclick = previewFlip;
 function scrollToPractice(behavior) {
-  const section = $('practice');
-  const retracted = section.classList.contains('is-retracted');
-  if (retracted) $('practice-learn-tab').click();
-  window.setTimeout(() => $('practice-card').scrollIntoView({behavior, block:'center'}),retracted ? 650 : 0);
+  $('practice-card').scrollIntoView({behavior, block:'center'});
 }
 let watchPreviewTimer;
 $('start').onclick = () => {
@@ -275,7 +272,6 @@ $('watch').onclick = () => {
 };
 $('closing-start').onclick = $('start').onclick;
 $('closing-watch').onclick = $('watch').onclick;
-$('footer-how').onclick = () => $('watch-dialog').showModal();
 $('account').onclick = () => {
   let count = 0;
   try { count = Number(localStorage.getItem('sight-reader-completed')) || 0; } catch (_) {}
