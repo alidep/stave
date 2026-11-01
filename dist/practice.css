@@ -1115,3 +1115,39 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .intro{margin-top:6px;margin-bottom:12px}
   .intro h1,.intro p{max-width:100%}
 }
+
+/* Mobile lower-page rhythm: full-bleed examples with consistently inset copy. */
+@media(max-width:959px){
+  .stave-benefits{
+    box-sizing:border-box;
+    width:calc(100% + 24px);
+    margin-top:54px;
+    margin-right:-12px;
+    margin-left:-12px;
+    gap:56px;
+  }
+  .stave-benefits .benefit-feature{width:100%;gap:20px}
+  .stave-benefits .benefit-copy{box-sizing:border-box;width:100%;padding:0 18px}
+  .stave-benefits .benefit-copy h2{font-size:clamp(36px,10vw,46px);line-height:.98}
+  .stave-benefits .benefit-copy>span{max-width:34rem;margin-top:14px;font-size:17px;line-height:1.45}
+  .feedback-feature .benefit-visual,
+  .level-feature .benefit-visual,
+  .input-feature .input-demo{
+    box-sizing:border-box;
+    width:100%;
+    margin:0;
+    border-right:0;
+    border-left:0;
+    border-radius:0;
+  }
+  .feedback-feature .benefit-score-card,
+  .level-feature .benefit-score-card{height:244px;min-height:244px;padding:14px 12px!important}
+  .benefit-score-card .benefit-abc{margin-top:10px;padding:8px 6px}
+  .level-demo .benefit-abc{height:168px;min-height:168px;flex-basis:168px}
+  .repertoire-feature{gap:18px}
+  .repertoire-feature .benefit-visual{padding:0 12px}
+  .input-feature{padding-top:26px;gap:20px}
+  .input-feature .input-demo{padding:24px 12px 28px}
+  .closing-actions{margin-top:58px}
+  .site-footer{margin-top:58px}
+}
