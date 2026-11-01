@@ -278,6 +278,23 @@ $('account').onclick = () => {
   $('account-progress').textContent = `${count} opening phrases completed on this device.`;
   $('account-dialog').showModal();
 };
+const mobileMenuToggle = $('mobile-menu-toggle');
+const mobileMenuPanel = $('mobile-menu-panel');
+function closeMobileMenu() {
+  mobileMenuToggle.setAttribute('aria-expanded','false');
+  mobileMenuToggle.setAttribute('aria-label','Open menu');
+  mobileMenuPanel.hidden = true;
+}
+mobileMenuToggle.onclick = event => {
+  event.stopPropagation();
+  const open = mobileMenuToggle.getAttribute('aria-expanded') !== 'true';
+  mobileMenuToggle.setAttribute('aria-expanded',String(open));
+  mobileMenuToggle.setAttribute('aria-label',open ? 'Close menu' : 'Open menu');
+  mobileMenuPanel.hidden = !open;
+};
+$('mobile-account').onclick = () => { closeMobileMenu(); $('account').click(); };
+document.addEventListener('click',event => { if (!event.target.closest('.topbar-actions')) closeMobileMenu(); });
+document.addEventListener('keydown',event => { if (event.key === 'Escape') closeMobileMenu(); });
 document.querySelectorAll('[data-close]').forEach(button => button.onclick = () => button.closest('dialog').close());
 document.addEventListener('keydown', event => {
   if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
