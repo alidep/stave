@@ -1255,9 +1255,11 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
 
 /* The MIDI connection action is a standalone bridge into the final CTA. */
 .feature-midi-section{width:100%;max-width:1080px;margin:54px auto 0}
+.feature-midi-section h2{margin:0 0 24px;text-align:center;font:900 clamp(40px,5vw,68px)/.98 Visuelt,sans-serif;letter-spacing:-.05em}
 .feature-midi-section .feature-midi-connect{width:100%;min-height:60px;padding:14px 24px;font-size:12px}
 @media(max-width:959px){
   .feature-midi-section{margin-top:42px}
+  .feature-midi-section h2{margin-bottom:18px;font-size:clamp(36px,10vw,46px)}
   .feature-midi-section .feature-midi-connect{min-height:58px;padding:13px 16px;font-size:11px}
   .feature-input-footer{justify-content:center}
   .feature-input-footer .feature-keyboard-map{margin-inline:auto}
