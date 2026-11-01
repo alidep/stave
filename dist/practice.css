@@ -1210,3 +1210,30 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .repertoire-feature .musician-stack>span:nth-child(n),
   .repertoire-feature .musician-stack>.musician-add{animation-play-state:paused}
 }
+
+/* Keep each mobile device label centered beneath its artwork and above overlaps. */
+@media(max-width:959px){
+  .record-stage{width:min(310px,84vw);margin-inline:auto}
+  .play-on-card figcaption{
+    z-index:20;
+    padding:4px 7px;
+    border-radius:6px;
+    background:rgba(252,249,238,.9)!important;
+    color:var(--ink);
+  }
+  .play-on-phone figcaption{
+    left:28%;
+    bottom:-30px;
+    transform:translateX(-50%) rotate(-3deg);
+  }
+  .play-on-computer figcaption{
+    left:52%;
+    bottom:-20px;
+    transform:translateX(-50%) rotate(4deg);
+  }
+  .play-on-midi figcaption{
+    left:50%;
+    bottom:-25px;
+    transform:translateX(-50%) rotate(-4deg);
+  }
+}
