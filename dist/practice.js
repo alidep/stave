@@ -1041,7 +1041,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.body.classList.add('motion-ready');
   if (homepageHero) requestAnimationFrame(() => homepageHero.classList.add('motion-intro'));
-  const motionTargets = [...document.querySelectorAll('.play-on-heading,.play-on-card,.benefit-feature')];
+  const motionTargets = [...document.querySelectorAll('.play-on-heading,.play-on-card')];
   motionTargets.forEach(target => target.classList.add('motion-reveal'));
   if (reducedMotion || !('IntersectionObserver' in window)) {
     motionTargets.forEach(target => target.classList.add('is-motion-visible'));
