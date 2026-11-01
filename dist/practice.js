@@ -1055,37 +1055,6 @@
     },{threshold:.16,rootMargin:'0px 0px -7%'});
     motionTargets.forEach(target => motionObserver.observe(target));
   }
-  const playOnSection = document.querySelector('.play-on');
-  const playOnArt = [...document.querySelectorAll('.play-on-card .play-on-art')];
-  if (playOnSection && playOnArt.length && !reducedMotion) {
-    let playOnMotionFrame = 0;
-    const updatePlayOnMotion = () => {
-      playOnMotionFrame = 0;
-      const rect = playOnSection.getBoundingClientRect();
-      const start = window.innerHeight * .56;
-      const distance = Math.max(window.innerHeight * .78,520);
-      const rawProgress = Math.max(0,Math.min(1,(start-rect.top)/distance));
-      const progress = rawProgress*rawProgress*(3-2*rawProgress);
-      const moves = [
-        [-window.innerWidth*.52*progress,-window.innerHeight*.22*progress,-18*progress,1-.12*progress],
-        [window.innerWidth*.04*progress,window.innerHeight*.48*progress,10*progress,1-.1*progress],
-        [window.innerWidth*.52*progress,-window.innerHeight*.18*progress,20*progress,1-.12*progress]
-      ];
-      playOnArt.forEach((art,index) => {
-        const [x,y,rotate,scale] = moves[index] || [0,0,0,1];
-        art.style.setProperty('--device-push-x',`${x.toFixed(1)}px`);
-        art.style.setProperty('--device-push-y',`${y.toFixed(1)}px`);
-        art.style.setProperty('--device-push-rotate',`${rotate.toFixed(2)}deg`);
-        art.style.setProperty('--device-push-scale',scale.toFixed(3));
-      });
-    };
-    const requestPlayOnMotion = () => {
-      if (!playOnMotionFrame) playOnMotionFrame = requestAnimationFrame(updatePlayOnMotion);
-    };
-    window.addEventListener('scroll',requestPlayOnMotion,{passive:true});
-    window.addEventListener('resize',requestPlayOnMotion);
-    updatePlayOnMotion();
-  }
   renderBenefitFeedback();
   resetPassage();
   applyRoute();

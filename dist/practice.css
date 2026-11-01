@@ -704,7 +704,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn
 @keyframes stave-header-rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes stave-scale-in{from{opacity:0;transform:translateY(24px) scale(.94) rotate(2deg)}to{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
 @keyframes stave-soft-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes device-idle-drift{0%,100%{transform:translate3d(var(--device-push-x,0px),var(--device-push-y,0px),0) rotate(var(--device-push-rotate,0deg)) scale(var(--device-push-scale,1))}50%{transform:translate3d(var(--device-push-x,0px),calc(var(--device-push-y,0px) - 4px),0) rotate(calc(var(--device-push-rotate,0deg) + .7deg)) scale(var(--device-push-scale,1))}}
+@keyframes device-idle-drift{0%,100%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(0,-4px,0) rotate(.7deg)}}
 body.motion-ready .topbar .brand{animation:stave-header-rise .7s cubic-bezier(.2,.75,.25,1) both}
 body.motion-ready .topbar .topbar-actions{animation:stave-header-rise .7s .1s cubic-bezier(.2,.75,.25,1) both}
 body.motion-ready .practice-banner{animation:stave-rise .65s .16s cubic-bezier(.2,.75,.25,1) both}

@@ -9,12 +9,29 @@ let audio, pianoBus, midiAccess, step = 0, locked = false, feedback = '', wrongT
 let demoPlaying = false, demoIndex = -1;
 const demoTimers = [];
 const sampleNotes = [[48, 'C3.mp3'], [51, 'Ds3.mp3'], [54, 'Fs3.mp3'], [57, 'A3.mp3'], [60, 'C4.mp3'], [69, 'A4.mp3'], [72, 'C5.mp3'], [75, 'Ds5.mp3'], [78, 'Fs5.mp3']];
-const sampleDownloads = sampleNotes.map(async ([midi, file]) => {
+const sampleDownloads = location.protocol === 'file:' ? [] : sampleNotes.map(async ([midi, file]) => {
   const response = await fetch(`assets/piano/${file}`);
   if (!response.ok) throw new Error(`Could not load piano sample: ${file}`);
   return [midi, await response.arrayBuffer()];
 });
 let sampleReady;
+function nearestSample(midi) {
+  return sampleNotes.reduce((best,note) => Math.abs(note[0]-midi) < Math.abs(best[0]-midi) ? note : best);
+}
+function playAudioElementSample(midi,decay=1) {
+  const [root,file] = nearestSample(midi);
+  const player = new Audio(new URL(`assets/piano/${file}`,document.baseURI).href);
+  player.preload = 'auto';
+  player.volume = .82;
+  player.playbackRate = 2 ** ((midi-root)/12);
+  player.preservesPitch = false;
+  player.mozPreservesPitch = false;
+  player.webkitPreservesPitch = false;
+  const stopAfter = decay < 1 ? 650 : 2300;
+  const playing = player.play();
+  if (playing?.catch) playing.catch(() => {});
+  window.setTimeout(() => { player.pause(); player.src = ''; },stopAfter);
+}
 const recordArt = document.querySelector('.record-art');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let recordAngle = 0, lastRecordFrame = 0, recordFlipUntil = 0;
@@ -55,9 +72,10 @@ function setupPiano() {
 }
 
 async function sound(midi, decay = 1) {
+  if (location.protocol === 'file:') { playAudioElementSample(midi,decay); return; }
   try {
     if (!audio) setupPiano();
-    if (audio.state === 'suspended') audio.resume();
+    if (audio.state === 'suspended') await audio.resume();
     const samples = await sampleReady;
     const root = [...samples.keys()].reduce((best, note) =>
       Math.abs(note - midi) < Math.abs(best - midi) ? note : best);
@@ -73,7 +91,7 @@ async function sound(midi, decay = 1) {
     source.connect(envelope).connect(pianoBus);
     source.start(now);
     source.stop(now + duration + 0.02);
-  } catch (_) {}
+  } catch (_) { playAudioElementSample(midi,decay); }
 }
 window.playStaveNote = sound;
 window.prepareStaveAudio = () => {
