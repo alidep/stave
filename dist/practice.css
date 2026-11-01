@@ -1106,3 +1106,12 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{margin-top:28px}
   .intro{margin-top:12px;margin-bottom:16px}
 }
+
+/* Keep the mobile page at its designed scale and use the same compact gutter as other sections. */
+@media(max-width:959px){
+  html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  .screen{padding-right:12px;padding-left:12px}
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{margin-top:14px}
+  .intro{margin-top:6px;margin-bottom:12px}
+  .intro h1,.intro p{max-width:100%}
+}
