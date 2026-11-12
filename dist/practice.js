@@ -367,6 +367,7 @@
       const active = preset === 1 ? level < 5 : preset === 5 ? level >= 5 && level < 10 : level === 10;
       button.setAttribute('aria-pressed',String(active));
     });
+    document.querySelector('.practice-try-row .mobile-grade-picker')?.style.setProperty('--selected-level',level < 5 ? 0 : level < 10 ? 1 : 2);
     byId('practice-level-prev').disabled = level === 1;
     byId('practice-level-next').disabled = level === 10;
     byId('practice-sample-prev').disabled = !!fullSongId || sampleIndex === 0;

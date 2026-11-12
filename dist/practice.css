@@ -1403,3 +1403,25 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 /* Keep the introduction compact above the score. */
 body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{padding-top:14px;padding-bottom:10px}
 .practice-try-row{margin-top:2px}
+
+/* One pill contains the invitation and a sliding difficulty selection. */
+.practice-try-row{box-sizing:border-box;width:max-content;max-width:100%;gap:12px;margin:10px auto 0;padding:4px 5px 4px 17px;border:1px solid #e0dacd;border-radius:999px;background:#f0ece3}
+.practice-try-row>p{font-size:12px}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:1;min-width:0;gap:0;width:330px;max-width:100%;border:0}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;display:block;width:calc(100% / 3);border-radius:999px;background:#729663;box-shadow:0 2px 5px rgba(66,91,55,.12);transform:translateX(calc(var(--selected-level,0)*100%));transition:transform .28s cubic-bezier(.2,.75,.25,1)}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button{min-width:0;min-height:38px;padding:0 12px;border-radius:999px;color:#746d63;font-size:12px;white-space:nowrap;transition:color .2s}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button::after{display:none}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{background:transparent;color:#fff}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button:hover:not([aria-pressed="true"]){color:#526d45}
+@media(max-width:600px){
+  .practice-try-row{width:100%;gap:8px;padding-left:12px}
+  .practice-try-row>p{font-size:11px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{width:auto}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding:0 5px;font-size:11px}
+}
+@media(max-width:359px){
+  .practice-try-row{gap:5px;padding-left:9px}
+  .practice-try-row>p,.mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:10px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding-inline:2px}
+}
+@media(prefers-reduced-motion:reduce){.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{transition:none}}
