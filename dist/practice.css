@@ -1408,10 +1408,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 .practice-try-row{box-sizing:border-box;width:max-content;max-width:100%;gap:16px;margin:10px auto 0;padding:4px 4px 4px 20px;border:1px solid rgba(255,255,255,.9);border-radius:999px;background:#fffdf8;box-shadow:none}
 .practice-try-row>p{color:#252623;font-size:14px;font-weight:700}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:none;min-width:0;gap:0;width:330px;max-width:100%;border:0;border-radius:999px;background:#f0f0ed}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;display:block;width:calc(100% / 3);border-radius:999px;background:#5c7c4d;box-shadow:none;transform:translateX(calc(var(--selected-level,0)*100%));transition:transform .25s cubic-bezier(.2,.75,.25,1)}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;display:block;width:calc(100% / 3);border-radius:999px;background:#93b17e;box-shadow:none;transform:translateX(calc(var(--selected-level,0)*100%));transition:transform .25s cubic-bezier(.2,.75,.25,1)}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker button{min-width:0;min-height:40px;padding:0 12px;border-radius:999px;background:transparent;color:#252623;box-shadow:none;font-size:14px;font-weight:700;white-space:nowrap;transition:color .2s}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker button::after{display:none}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{background:transparent;color:#fff;box-shadow:none}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{background:transparent;color:#24351c;box-shadow:none}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker button:hover:not([aria-pressed="true"]){background:rgba(92,124,77,.08);color:#354e2c}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker button:focus-visible{outline:2px solid #354e2c;outline-offset:2px;border-radius:999px}
 @media(max-width:600px){
