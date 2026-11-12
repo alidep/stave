@@ -1429,8 +1429,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 
 @media(prefers-reduced-motion:reduce){.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{transition:none}}
 
-/* Reference composition: 724px heading, 670 × 60px pill, 150 × 48px selection. */
-.mobile-practice-intro{--intro-unit:clamp(.35px,calc((100vw - 40px)/724),1px)}
+/* Preserve the reference proportions at a compact, half-size desktop scale. */
+.mobile-practice-intro{--intro-unit:clamp(.35px,calc((100vw - 40px)/724),.5px)}
 .mobile-practice-intro .practice-intro-copy h2{font-size:calc(60*var(--intro-unit));line-height:1.1}
 .practice-try-row{width:calc(670*var(--intro-unit));height:calc(60*var(--intro-unit));gap:0;margin-top:calc(22*var(--intro-unit));padding:calc(6*var(--intro-unit));border:0;box-shadow:0 calc(16*var(--intro-unit)) calc(38*var(--intro-unit)) rgba(45,40,31,.13)}
 .practice-try-row>p{flex:0 0 calc(196*var(--intro-unit));font-size:calc(24*var(--intro-unit));text-align:center}
