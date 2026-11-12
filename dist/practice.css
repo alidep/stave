@@ -1395,3 +1395,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .mobile-practice-intro .practice-try-row .mobile-grade-picker{gap:12px}
   .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:11px}
 }
+
+/* Center the practice heading and its difficulty invitation. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{text-align:center}
+.practice-try-row{justify-content:center}
