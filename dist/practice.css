@@ -1464,9 +1464,9 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .practice-try-row{flex:0 0 auto;margin:0}
 }
 
-/* Align the practice invitation to the score and give its selector more presence. */
-body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{text-align:left;justify-content:flex-start}
-.practice-try-row{width:min(100%,420px);height:38px;margin-left:0;margin-right:0;padding:4px}
+/* Center the practice invitation with the larger difficulty selector. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{text-align:center;justify-content:center}
+.practice-try-row{width:min(100%,420px);height:38px;margin-left:auto;margin-right:auto;padding:4px}
 .practice-try-row>p{flex-basis:28%;font-size:14px}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:13px}
 @media(min-width:760px) and (max-width:959px){
@@ -1481,3 +1481,5 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 @media(max-width:359px){
   .practice-try-row>p,.mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:11px}
 }
+
+@media(min-width:760px){.practice-try-row{margin-left:0;margin-right:0}}
