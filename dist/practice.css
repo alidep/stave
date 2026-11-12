@@ -1456,3 +1456,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .feature-midi-section .feature-midi-connect{margin-inline:auto}
   .feature-midi-photo{width:min(100%,440px);margin-inline:auto}
 }
+
+/* The heading and difficulty selector share one compact line when space allows. */
+@media(min-width:760px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{display:flex;align-items:center;justify-content:center;gap:24px}
+  .mobile-practice-intro .practice-intro-copy{flex:0 0 auto}
+  .practice-try-row{flex:0 0 auto;margin:0}
+}
