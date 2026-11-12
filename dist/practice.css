@@ -1375,3 +1375,23 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{box-sizing:border-box;width:100%;padding:30px clamp(24px,5vw,72px) 24px}
   .mobile-practice-intro .practice-intro-copy{flex:1}
 }
+
+/* Invite people to choose a difficulty directly below the heading. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{display:block;padding-bottom:18px}
+.mobile-practice-intro .practice-intro-copy h2{font-size:clamp(24px,2.2vw,30px)}
+.practice-try-row{display:flex;align-items:center;gap:18px;margin-top:8px}
+.practice-try-row>p{flex:none;margin:0;color:#777168;font:400 13px/1.4 Visuelt,sans-serif;white-space:nowrap}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker{width:auto;gap:20px;margin:0;border:0}
+@media(max-width:959px){
+  .mobile-practice-intro .practice-intro-copy h2{font-size:clamp(17px,5.1vw,28px)}
+  .practice-try-row{gap:14px;margin-top:9px}
+  .practice-try-row>p{font-size:12px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{gap:16px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:12px}
+}
+@media(max-width:379px){
+  .practice-try-row{gap:10px}
+  .practice-try-row>p{font-size:11px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{gap:12px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:11px}
+}
