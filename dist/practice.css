@@ -1494,3 +1494,10 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .mobile-practice-intro .practice-try-row .mobile-grade-picker{flex:none;width:100%;height:32px}
   .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:12px}
 }
+
+/* Restore the heading above the existing pill without changing its dimensions. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{display:flex;flex-direction:column;align-items:center;gap:14px}
+.mobile-practice-intro .practice-intro-copy{flex:none}
+.practice-try-row{flex:none}
+.practice-try-row>p{min-width:180.36px;text-align:center}
+@media(max-width:759px){.practice-try-row>p{min-width:0}}
