@@ -1404,34 +1404,27 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{padding-top:14px;padding-bottom:10px}
 .practice-try-row{margin-top:2px}
 
-/* One pill contains the invitation and a sliding difficulty selection. */
-.practice-try-row{box-sizing:border-box;width:max-content;max-width:100%;gap:12px;margin:10px auto 0;padding:4px 5px 4px 17px;border:1px solid #e0dacd;border-radius:999px;background:#f0ece3}
-.practice-try-row>p{font-size:12px}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:1;min-width:0;gap:0;width:330px;max-width:100%;border:0}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;display:block;width:calc(100% / 3);border-radius:999px;background:#729663;box-shadow:0 2px 5px rgba(66,91,55,.12);transform:translateX(calc(var(--selected-level,0)*100%));transition:transform .28s cubic-bezier(.2,.75,.25,1)}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker button{min-width:0;min-height:38px;padding:0 12px;border-radius:999px;color:#746d63;font-size:12px;white-space:nowrap;transition:color .2s}
+/* The white shell holds an invitation and one segmented difficulty track. */
+.practice-try-row{box-sizing:border-box;width:max-content;max-width:100%;gap:16px;margin:10px auto 0;padding:4px 4px 4px 20px;border:1px solid rgba(255,255,255,.9);border-radius:999px;background:#fff;box-shadow:0 5px 12px rgba(45,40,31,.04),0 14px 30px rgba(45,40,31,.09)}
+.practice-try-row>p{color:#252623;font-size:14px;font-weight:700}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:none;min-width:0;gap:0;width:330px;max-width:100%;border:0;border-radius:999px;background:#f0f0ed}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;display:block;width:calc(100% / 3);border-radius:999px;background:#5c7c4d;box-shadow:0 2px 4px rgba(58,81,45,.1);transform:translateX(calc(var(--selected-level,0)*100%));transition:transform .25s cubic-bezier(.2,.75,.25,1)}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button{min-width:0;min-height:40px;padding:0 12px;border-radius:999px;background:transparent;color:#252623;box-shadow:none;font-size:14px;font-weight:700;white-space:nowrap;transition:color .2s}
 .mobile-practice-intro .practice-try-row .mobile-grade-picker button::after{display:none}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{background:transparent;color:#fff}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker button:hover:not([aria-pressed="true"]){color:#526d45}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{background:transparent;color:#fff;box-shadow:none}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button:hover:not([aria-pressed="true"]){background:rgba(92,124,77,.08);color:#354e2c}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button:focus-visible{outline:2px solid #354e2c;outline-offset:2px;border-radius:999px}
 @media(max-width:600px){
-  .practice-try-row{width:100%;gap:8px;padding-left:12px}
+  .practice-try-row{width:max-content;gap:10px;padding-left:13px}
+  .practice-try-row>p{font-size:12px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{width:242px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding:0 5px;font-size:12px}
+}
+@media(max-width:379px){
+  .practice-try-row{width:100%;gap:6px;padding-left:9px}
   .practice-try-row>p{font-size:11px}
-  .mobile-practice-intro .practice-try-row .mobile-grade-picker{width:auto}
-  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding:0 5px;font-size:11px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{flex:1;width:auto}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding-inline:3px;font-size:11px}
 }
-@media(max-width:359px){
-  .practice-try-row{gap:5px;padding-left:9px}
-  .practice-try-row>p,.mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:10px}
-  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding-inline:2px}
-}
+@media(pointer:coarse){.mobile-practice-intro .practice-try-row .mobile-grade-picker button{min-height:44px}}
 @media(prefers-reduced-motion:reduce){.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{transition:none}}
-
-/* Fit the pill closely to its labels, with a soft lift on both layers. */
-.practice-try-row{width:max-content;gap:6px;padding:2px 3px 2px 8px;box-shadow:0 2px 5px rgba(54,46,32,.06),0 6px 16px rgba(54,46,32,.05)}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker{flex:none;width:max-content}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker button{min-height:26px;padding-inline:7px;box-shadow:0 1px 3px rgba(54,46,32,.07)}
-.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{box-shadow:0 2px 4px rgba(58,81,45,.16),0 4px 9px rgba(58,81,45,.1)}
-@media(max-width:359px){
-  .practice-try-row{gap:4px;padding-left:6px}
-  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding-inline:4px}
-}
