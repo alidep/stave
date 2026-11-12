@@ -1399,3 +1399,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 /* Center the practice heading and its difficulty invitation. */
 body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{text-align:center}
 .practice-try-row{justify-content:center}
+
+/* Keep the introduction compact above the score. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{padding-top:14px;padding-bottom:10px}
+.practice-try-row{margin-top:2px}
