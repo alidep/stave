@@ -60,14 +60,16 @@
       target.append(button);
     }
     target.children[whiteList.length-1].style.borderTopRightRadius = '8px';
-    const blackWidth = target.classList.contains('full-88') ? 1.25 : whiteList.length > 12 ? 72/whiteList.length : whiteList.length <= 7 ? 9 : 7;
+    const isMidiKeyboard = target.id === 'midi-full-piano';
+    const blackWidth = isMidiKeyboard ? 72/whiteList.length : whiteList.length > 12 ? 72/whiteList.length : whiteList.length <= 7 ? 9 : 7;
     for (const [midi,note,key] of blackList) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'practice-black';
       button.dataset.midi = midi;
       const precedingWhites = whiteList.filter(([whiteMidi]) => whiteMidi < midi).length;
-      button.style.left = `${precedingWhites / whiteList.length * 100 - blackWidth / 2}%`;
+      const left = precedingWhites / whiteList.length * 100 - blackWidth / 2;
+      button.style.left = `${isMidiKeyboard ? Math.max(0,Math.min(100-blackWidth,left)) : left}%`;
       button.style.width = `${blackWidth}%`;
       button.setAttribute('aria-label',key ? `${note} note, ${key} key` : `${note} piano key`);
       button.innerHTML = key ? `<span class="key-label">${key}</span>` : '';

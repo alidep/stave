@@ -387,8 +387,8 @@ $('midi-connect').onclick = async () => {
               return;
             }
             if (midiCalibrationStage === 'low') {
-              if (midi >= midiCalibrationHigh || midiCalibrationHigh-midi < 12) {
-                $('midi-calibration-copy').textContent = 'That range looks too small. Press the key at the far left of your keyboard.';
+              if (midi >= midiCalibrationHigh) {
+                $('midi-calibration-copy').textContent = 'Your lowest key should be below your highest key. Press the key at the far left of your keyboard.';
                 return;
               }
               midiCalibrationLow = midi;
