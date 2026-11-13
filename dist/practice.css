@@ -1183,8 +1183,12 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   }
 }
 
-/* Composer portraits travel around a clipped circular path, revealing only the upper arc. */
-@keyframes repertoire-orbit{to{offset-distance:100%}}
+/* Portraits cross only the upper arc, then reset while off-screen. */
+@keyframes repertoire-arc{
+  0%{offset-distance:50%;visibility:visible}
+  49.99%{offset-distance:100%;visibility:visible}
+  50%,100%{offset-distance:100%;visibility:hidden}
+}
 .repertoire-feature .musician-stack{
   position:relative;
   display:block;
@@ -1204,9 +1208,9 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   width:clamp(116px,14vw,184px);
   margin:0;
   offset-path:ellipse(52% 72% at 50% 103%);
-  offset-distance:0%;
+  offset-distance:50%;
   offset-rotate:0deg;
-  animation:repertoire-orbit 30s linear infinite;
+  animation:repertoire-arc 30s linear infinite;
   opacity:1!important;
   transform:none!important;
   transition:none!important;
@@ -1331,6 +1335,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   gap:0;
 }
 .repertoire-feature .benefit-visual{
+  --composer-size:clamp(112px,25vmin,260px);
   grid-area:1 / 1;
   justify-self:center;
   z-index:2;
@@ -1360,8 +1365,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
 .repertoire-feature .musician-stack>span,
 .repertoire-feature .musician-stack>span:nth-child(n),
 .repertoire-feature .musician-stack>.musician-add{
-  width:clamp(112px,25vmin,260px);
-  offset-path:ellipse(56% 42% at 50% 78%);
+  width:var(--composer-size);
+  offset-path:ellipse(calc(50% + 160px) 19% at 50% calc(53% - var(--composer-size) / 2));
 }
 
 /* A quiet introduction keeps the score at the center of the practice experience. */
