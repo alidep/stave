@@ -1680,6 +1680,18 @@ body:not(.song-page,.library-page,.practice-only-page) .practice-toolbar.is-adju
 }
 @media(prefers-reduced-motion:reduce){.practice-header-levels .mobile-grade-picker::before,.practice-header-levels .mobile-grade-picker button{transition:none}}
 
+/* Center the smaller tagline independently from its explanation link. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:0 16px;text-align:center}
+.mobile-practice-intro .practice-intro-copy{display:block;grid-column:2;grid-row:1;min-height:0;min-width:0;text-align:center}
+.mobile-practice-intro .practice-intro-copy h2{font-size:clamp(20px,2vw,28px);line-height:1.15;text-align:center}
+.mobile-practice-intro .practice-intro-controls{grid-column:3;grid-row:1;justify-self:end;width:auto}
+@media(max-width:759px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{grid-template-columns:minmax(0,1fr);row-gap:4px}
+  .mobile-practice-intro .practice-intro-copy{grid-column:1;width:100%}
+  .mobile-practice-intro .practice-intro-copy h2{font-size:clamp(17px,4.5vw,20px)}
+  .mobile-practice-intro .practice-intro-controls{grid-column:1;grid-row:2;justify-self:center}
+}
+
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}
 .closing-copy h2{margin:0;color:var(--ink);font:900 clamp(38px,4.5vw,60px)/1.02 Visuelt,sans-serif;letter-spacing:-.045em}

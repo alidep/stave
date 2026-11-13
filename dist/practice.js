@@ -240,7 +240,7 @@
     const bars = soloHand === 'left' ? songBars.map(bar => bar.map(note => note.rest ? {...note} : n(note.midi-12,note.duration))) : soloHand === 'right' ? songBars.map(bar => bar.map(fitRightHand)) : songBars;
     const duration = song.meter === '3/8' ? 6 : 8;
     const leftBars = soloHand === 'both' ? songBass.map(root => bassBar(root,duration)) : null;
-    const subtitle = `${song.composer} · ${fullSongId ? song.arrangement || 'full song' : soloHand === 'both' ? 'simplified · both hands' : `${soloHand} hand`} · ${song.meter}`;
+    const subtitle = `${song.composer} · ${song.meter}`;
     const events = [];
     const collect = (voiceBars,hand) => {
       let tick = 0, ordinal = 0;
@@ -1059,6 +1059,17 @@
   }
   const homepageHero = byId('homepage-hero');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelector('.practice-learn-link')?.addEventListener('click',event => {
+    if (!homepageHero || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (location.hash !== '#homepage-hero') history.pushState(null,'','#homepage-hero');
+    homepageHero.tabIndex = -1;
+    homepageHero.focus({preventScroll:true});
+    homepageHero.scrollIntoView({
+      behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block:'start'
+    });
+  });
   const keyboardVideo = byId('feature-midi-video');
   if (keyboardVideo) {
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
