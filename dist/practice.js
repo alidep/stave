@@ -367,10 +367,7 @@
       const active = preset === 1 ? level < 5 : preset === 5 ? level >= 5 && level < 10 : level === 10;
       button.setAttribute('aria-pressed',String(active));
     });
-    const difficultyIndex = level < 5 ? 0 : level < 10 ? 1 : 2;
-    document.querySelector('.player-grade-picker')?.style.setProperty('--selected-level',difficultyIndex);
-    byId('practice-difficulty-name').textContent = ['Beginner','Intermediate','Advanced'][difficultyIndex];
-    byId('practice-level-select').value = String([1,5,10][difficultyIndex]);
+    document.querySelector('.practice-try-row .mobile-grade-picker')?.style.setProperty('--selected-level',level < 5 ? 0 : level < 10 ? 1 : 2);
     byId('practice-level-prev').disabled = level === 1;
     byId('practice-level-next').disabled = level === 10;
     byId('practice-sample-prev').disabled = !!fullSongId || sampleIndex === 0;
@@ -523,11 +520,8 @@
   document.querySelectorAll('[data-home-level]').forEach(button => button.addEventListener('click',() => {
     level = Number(button.dataset.homeLevel);
     resetPassage();
+    window.setTimeout(() => byId('practice-card')?.scrollIntoView({behavior:'smooth',block:'center'}),80);
   }));
-  byId('practice-level-select').addEventListener('change',event => {
-    level = Number(event.target.value);
-    resetPassage();
-  });
   byId('practice-sample-prev').addEventListener('click',() => { if (sampleIndex > 0) { sampleIndex--; resetPassage(); } });
   byId('practice-sample-next').addEventListener('click',() => { if (sampleIndex < sampleKeys().length-1) { sampleIndex++; resetPassage(); } });
   byId('practice-hints').addEventListener('click',() => {
@@ -719,7 +713,7 @@
   byId('upload-sheet').addEventListener('click',() => byId('sheet-file-input').click());
   byId('sheet-file-input').addEventListener('change',event => chooseSheetFile(event.currentTarget));
   document.addEventListener('keydown',event => {
-    if (event.target.closest?.('input,textarea,select,[contenteditable="true"]') || event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]') || !songPicker.hidden) return;
+    if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]') || !songPicker.hidden) return;
     const midi = keyboardMap.get(event.key.toLowerCase());
     if (midi === undefined) return;
     event.preventDefault();
