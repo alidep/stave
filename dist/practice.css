@@ -1711,3 +1711,9 @@ body.practice-only-page .closing-action-buttons{margin-top:0}
   .closing-copy p{font-size:16px}
   .closing-action-buttons{flex-direction:column;gap:10px}
 }
+
+/* Playback controls keep the same green surface in every state and viewport. */
+#practice-play .practice-pause-icon{display:none;width:12px;height:14px;fill:#fff}
+#practice-play[data-state="playing"] img{display:none}
+#practice-play[data-state="playing"] .practice-pause-icon{display:block}
+.benefit-score-play.is-playing::before{width:12px;height:14px;border-radius:0;background:linear-gradient(to right,#fff 0 33%,transparent 33% 67%,#fff 67% 100%)}

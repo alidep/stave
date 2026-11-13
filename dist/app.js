@@ -18,7 +18,8 @@ let sampleReady;
 function nearestSample(midi) {
   return sampleNotes.reduce((best,note) => Math.abs(note[0]-midi) < Math.abs(best[0]-midi) ? note : best);
 }
-function playAudioElementSample(midi,decay=1) {
+function playAudioElementSample(midi,decay=1,signal) {
+  if (signal?.aborted) return;
   const [root,file] = nearestSample(midi);
   const player = new Audio(new URL(`assets/piano/${file}`,document.baseURI).href);
   player.preload = 'auto';
@@ -28,9 +29,16 @@ function playAudioElementSample(midi,decay=1) {
   player.mozPreservesPitch = false;
   player.webkitPreservesPitch = false;
   const stopAfter = decay < 1 ? 650 : 2300;
+  const stop = () => {
+    clearTimeout(stopTimer);
+    player.pause();
+    player.src = '';
+    signal?.removeEventListener('abort',stop);
+  };
+  const stopTimer = window.setTimeout(stop,stopAfter);
+  signal?.addEventListener('abort',stop,{once:true});
   const playing = player.play();
   if (playing?.catch) playing.catch(() => {});
-  window.setTimeout(() => { player.pause(); player.src = ''; },stopAfter);
 }
 const recordArt = document.querySelector('.record-art');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -71,12 +79,14 @@ function setupPiano() {
   });
 }
 
-async function sound(midi, decay = 1) {
-  if (location.protocol === 'file:') { playAudioElementSample(midi,decay); return; }
+async function sound(midi, decay = 1, signal) {
+  if (signal?.aborted) return;
+  if (location.protocol === 'file:') { playAudioElementSample(midi,decay,signal); return; }
   try {
     if (!audio) setupPiano();
     if (audio.state === 'suspended') await audio.resume();
     const samples = await sampleReady;
+    if (signal?.aborted) return;
     const root = [...samples.keys()].reduce((best, note) =>
       Math.abs(note - midi) < Math.abs(best - midi) ? note : best);
     const source = audio.createBufferSource();
@@ -89,9 +99,16 @@ async function sound(midi, decay = 1) {
     envelope.gain.setValueAtTime(0.85, now + duration - 0.16);
     envelope.gain.exponentialRampToValueAtTime(0.0001, now + duration);
     source.connect(envelope).connect(pianoBus);
+    const stop = () => { try { source.stop(); } catch (_) {} };
+    signal?.addEventListener('abort',stop,{once:true});
+    source.onended = () => {
+      signal?.removeEventListener('abort',stop);
+      source.disconnect();
+      envelope.disconnect();
+    };
     source.start(now);
     source.stop(now + duration + 0.02);
-  } catch (_) { playAudioElementSample(midi,decay); }
+  } catch (_) { playAudioElementSample(midi,decay,signal); }
 }
 window.playStaveNote = sound;
 window.prepareStaveAudio = () => {

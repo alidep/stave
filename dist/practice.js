@@ -40,6 +40,7 @@
   const mapDialog = byId('keyboard-map-dialog');
   let level = 2, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
+  let previewPaused = false, previewOffset = 0, previewStartedAt = 0, previewAudio;
   let completedNotes = new Set(), noteResults = new Map(), missedNotes = new Set(), takeNotes = [], takeStartedAt = performance.now(), takeTimers = [];
   let takePlaying = false, takePlaybackOffset = 0, takePlaybackStartedAt = 0;
   const previewTimers = [];
@@ -348,15 +349,13 @@
       note.classList.toggle('is-missed',!previewPlaying && result === 'missed');
       note.classList.toggle('is-wrong',!previewPlaying && id === wrongNote);
     });
-    container.setAttribute('aria-label',previewPlaying ? `Playing ${passage.title}, step ${previewIndex+1} of ${passage.steps.length}` : `${passage.title}, step ${Math.min(currentStep+1,passage.steps.length)} of ${passage.steps.length}`);
+    container.setAttribute('aria-label',previewPlaying ? `${previewPaused ? 'Paused' : 'Playing'} ${passage.title}, step ${previewIndex+1} of ${passage.steps.length}` : `${passage.title}, step ${Math.min(currentStep+1,passage.steps.length)} of ${passage.steps.length}`);
   }
 
   function render() {
     byId('practice-title').textContent = passage.title;
     byId('practice-subtitle').textContent = passage.subtitle;
-    const playLabel = fullSongId ? 'Play full song' : 'Play passage';
-    byId('practice-play').setAttribute('aria-label',playLabel);
-    byId('practice-play').title = playLabel;
+    updatePreviewButton();
     const accuracy = Math.round(passage.events.length/(passage.events.length+mistakeCount)*100);
     byId('completion-score').textContent = `${accuracy}% — ${accuracy === 100 ? 'beautifully read.' : accuracy >= 90 ? 'strong reading.' : accuracy >= 75 ? 'good progress.' : 'keep building.'}`;
     byId('completion-summary').textContent = mistakeCount === 0 ? 'Every note landed. Ready for another?' : `${mistakeCount} ${mistakeCount === 1 ? 'note needs' : 'notes need'} another look.`;
@@ -380,11 +379,28 @@
     updateHint();
   }
 
-  function stopPreview() {
-    const restoreKeyboard = previewPlaying && passage;
+  function updatePreviewButton() {
+    const button = byId('practice-play');
+    const action = previewPlaying ? (previewPaused ? 'Resume' : 'Pause') : 'Play';
+    const label = `${action} ${fullSongId ? 'full song' : 'passage'}`;
+    button.dataset.state = previewPlaying ? (previewPaused ? 'paused' : 'playing') : 'idle';
+    button.setAttribute('aria-label',label);
+    button.title = label;
+  }
+
+  function clearPreviewTimers() {
     previewTimers.forEach(clearTimeout);
     previewTimers.length = 0;
+  }
+
+  function stopPreview() {
+    const restoreKeyboard = previewPlaying && passage;
+    clearPreviewTimers();
+    previewAudio?.abort();
     previewPlaying = false;
+    previewPaused = false;
+    previewOffset = 0;
+    updatePreviewButton();
     previewIndex = -1;
     keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
     if (restoreKeyboard) buildKeyboard();
@@ -464,21 +480,48 @@
     keyboardRoot.querySelectorAll('.is-preview-correct').forEach(key => key.classList.remove('is-preview-correct'));
     passage.steps[index].notes.forEach(note => {
       keyFor(note.midi)?.classList.add('is-preview-correct');
-      window.playStaveNote?.(note.midi,.33);
+      window.playStaveNote?.(note.midi,.33,previewAudio?.signal);
     });
     drawStaff();
     updateHint();
     keepNoteVisible(index);
   }
 
+  function schedulePreview() {
+    previewStartedAt = performance.now();
+    for (let index=previewIndex+1; index<passage.steps.length; index++) {
+      previewTimers.push(setTimeout(() => showPreviewNote(index),Math.max(0,passage.steps[index].time*155-previewOffset)));
+    }
+    previewTimers.push(setTimeout(() => {
+      stopPreview(); render(); keepNoteVisible(currentStep);
+    },Math.max(0,passage.totalTicks*155+150-previewOffset)));
+    updatePreviewButton();
+  }
+
   function playPreview() {
     stopPreview();
+    stopTakePlayback();
     if (microphoneStream) stopMicrophone();
     window.practiceMidiActive = true;
     previewPlaying = true;
+    previewAudio = new AbortController();
     showPreviewNote(0);
-    for (let index=1; index<passage.steps.length; index++) previewTimers.push(setTimeout(() => showPreviewNote(index),passage.steps[index].time*155));
-    previewTimers.push(setTimeout(() => { stopPreview(); render(); keepNoteVisible(currentStep); },passage.totalTicks*155+150));
+    schedulePreview();
+  }
+
+  function togglePreview() {
+    if (!previewPlaying) { playPreview(); return; }
+    if (previewPaused) {
+      previewPaused = false;
+      previewAudio = new AbortController();
+      schedulePreview();
+    } else {
+      previewOffset += performance.now()-previewStartedAt;
+      clearPreviewTimers();
+      previewAudio?.abort();
+      previewPaused = true;
+    }
+    render();
   }
 
   function playNote(midi,fromMicrophone=false) {
@@ -530,7 +573,7 @@
     byId('practice-hints').title = hintEnabled ? 'Hints on' : 'Hints off';
     updateHint();
   });
-  byId('practice-play').addEventListener('click',playPreview);
+  byId('practice-play').addEventListener('click',togglePreview);
   byId('completion-retake').addEventListener('click',resetPassage);
   byId('completion-listen-take').addEventListener('click',playTake);
   byId('completion-next').addEventListener('click',() => {
@@ -819,21 +862,51 @@
     [...container.querySelectorAll('.abcjs-note')].forEach((note,index) => note.classList.add('benefit-result',`result-${index+1}`));
   }
 
-  let benefitPlaybackTimers = [];
+  let benefitPlaybackTimers = [], benefitEvents = [], benefitNextEvent = 0;
+  let benefitState = 'idle', benefitOffset = 0, benefitStartedAt = 0, benefitAudio;
   const benefitMelody = [76,75,76,75,76,71];
   const benefitResults = ['clean','wrong','clean','paused','clean','clean'];
 
-  function stopBenefitPlayback(reset=false) {
+  function updateBenefitButton() {
+    const button = byId('benefit-score-play');
+    const action = benefitState === 'playing' ? 'Pause' : benefitState === 'paused' ? 'Resume' : 'Play';
+    button?.classList.toggle('is-playing',benefitState === 'playing');
+    if (button) button.dataset.state = benefitState;
+    button?.setAttribute('aria-label',`${action} Für Elise example`);
+    if (button) button.title = `${action} Für Elise example`;
+  }
+
+  function clearBenefitTimers() {
     benefitPlaybackTimers.forEach(clearTimeout);
     benefitPlaybackTimers = [];
-    const button = byId('benefit-score-play');
+  }
+
+  function stopBenefitPlayback(reset=false) {
+    clearBenefitTimers();
+    benefitAudio?.abort();
+    benefitState = 'idle';
+    benefitOffset = 0;
+    benefitNextEvent = 0;
+    updateBenefitButton();
     const progress = byId('benefit-score-progress');
-    button?.classList.remove('is-playing');
-    button?.setAttribute('aria-label','Play Für Elise example');
     if (progress) {
       progress.style.transition = 'none';
       if (reset) progress.style.width = '0%';
     }
+  }
+
+  function scheduleBenefitPlayback() {
+    benefitState = 'playing';
+    benefitStartedAt = performance.now();
+    benefitAudio = new AbortController();
+    benefitEvents.slice(benefitNextEvent).forEach((event,offset) => {
+      const index = benefitNextEvent+offset;
+      benefitPlaybackTimers.push(setTimeout(() => {
+        benefitNextEvent = index+1;
+        event.run();
+      },Math.max(0,event.at-benefitOffset)));
+    });
+    updateBenefitButton();
   }
 
   function playBenefitFeedback() {
@@ -841,20 +914,29 @@
     const button = byId('benefit-score-play');
     const progress = byId('benefit-score-progress');
     if (!container || !button || !progress) return;
-    if (button.classList.contains('is-playing')) { stopBenefitPlayback(true); return; }
+    if (benefitState === 'playing') {
+      benefitOffset += performance.now()-benefitStartedAt;
+      clearBenefitTimers();
+      benefitAudio?.abort();
+      const width = getComputedStyle(progress).width;
+      progress.style.transition = 'none';
+      progress.style.width = width;
+      benefitState = 'paused';
+      updateBenefitButton();
+      return;
+    }
+    if (benefitState === 'paused') { scheduleBenefitPlayback(); return; }
     stopBenefitPlayback(true);
+    benefitEvents = [];
     const notes = [...container.querySelectorAll('.abcjs-note')];
     notes.forEach(note => note.classList.remove('is-clean','is-wrong','is-paused','is-current'));
-    button.classList.add('is-playing');
-    button.setAttribute('aria-label','Stop Für Elise example');
     const interval = 520;
     const hesitation = 950;
     const correctionPause = 760;
     let elapsed = 0;
     benefitMelody.forEach((midi,index) => {
       if (benefitResults[index] === 'paused') elapsed += hesitation;
-      const playAt = elapsed;
-      benefitPlaybackTimers.push(setTimeout(() => {
+      benefitEvents.push({at:elapsed,run:() => {
         notes.forEach(note => note.classList.remove('is-current'));
         const playbackResult = benefitResults[index] === 'wrong' ? 'wrong' : 'clean';
         notes[index]?.classList.add('is-current',`is-${playbackResult}`);
@@ -863,28 +945,28 @@
           progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
         }
         const heardMidi = benefitResults[index] === 'wrong' ? midi - 14 : midi;
-        window.playStaveNote?.(heardMidi,.42);
-      },playAt));
+        window.playStaveNote?.(heardMidi,.42,benefitAudio?.signal);
+      }});
       if (benefitResults[index] === 'wrong') {
         elapsed += correctionPause;
-        const correctAt = elapsed;
-        benefitPlaybackTimers.push(setTimeout(() => {
+        benefitEvents.push({at:elapsed,run:() => {
           notes[index]?.classList.remove('is-wrong');
           notes[index]?.classList.add('is-clean','is-current');
           progress.style.transition = 'width 180ms ease-out';
           progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
-          window.playStaveNote?.(midi,.42);
-        },correctAt));
+          window.playStaveNote?.(midi,.42,benefitAudio?.signal);
+        }});
       }
       elapsed += interval;
     });
-    benefitPlaybackTimers.push(setTimeout(() => {
+    benefitEvents.push({at:elapsed,run:() => {
       notes.forEach((note,index) => {
         note.classList.remove('is-current','is-clean','is-wrong','is-paused');
         note.classList.add(`is-${benefitResults[index]}`);
       });
       stopBenefitPlayback(false);
-    },elapsed));
+    }});
+    scheduleBenefitPlayback();
   }
 
   function renderLevelDemo() {
@@ -907,7 +989,7 @@
     const benefitAutoplayObserver = new IntersectionObserver(entries => {
       if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .45)) return;
       benefitAutoplayObserver.disconnect();
-      window.setTimeout(playBenefitFeedback,350);
+      window.setTimeout(() => { if (benefitState === 'idle') playBenefitFeedback(); },350);
     },{threshold:[.45]});
     benefitAutoplayObserver.observe(benefitFeedbackFeature);
   }
