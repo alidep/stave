@@ -1358,11 +1358,9 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .practice-title-block h3{font-size:22px;letter-spacing:-.035em}
   .practice-title-block p{margin-top:5px;font-size:9px;letter-spacing:.055em}
   .practice-toolbar{display:flex;width:auto;gap:2px;align-items:center;justify-content:flex-end}
-  .practice-adjustments,#practice-play{width:44px!important;min-width:44px;height:44px!important;border:0;background:transparent;box-shadow:none}
-  .practice-adjustments{color:#7c786e}
-  #practice-play{background:#e7eddf}
-  #practice-play:hover{background:#dce7d2}
-  #practice-play img{width:13px;height:15px;filter:brightness(.5)}
+  .practice-adjustments,#practice-play{width:44px!important;min-width:44px;height:44px!important;border:0;box-shadow:none}
+  .practice-adjustments{background:transparent;color:#7c786e}
+  #practice-play img{width:13px;height:15px}
   .practice-adjustments svg{width:18px;height:18px}
   .practice-secondary-controls{top:50px}
   .practice-score-viewport{margin-top:16px}
