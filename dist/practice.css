@@ -120,7 +120,7 @@
 .song-tile{min-width:0;padding:0;border:0;background:transparent;color:var(--ink);text-align:center;cursor:pointer}
 .song-tile[hidden]{display:none}
 .song-disc{position:relative;width:min(145px,100%);aspect-ratio:1;display:grid;place-items:center;margin:0 auto 10px;border-radius:50%;overflow:hidden;background:#dad5c9;color:rgba(255,255,255,.92);box-shadow:0 2px 7px rgba(44,38,27,.13);font:700 26px Visuelt,sans-serif;transition:transform .18s ease}
-.song-disc::after{content:"";position:absolute;left:50%;top:50%;width:15%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#fffdf7;box-shadow:0 0 0 1px rgba(0,0,0,.05)}
+.song-disc::after{content:none}
 .song-tile:hover .song-disc{transform:rotate(3deg) scale(1.025)}
 .song-disc.has-art img{width:100%;height:100%;object-fit:cover}
 .disc-moon{background:linear-gradient(145deg,#22324b,#7197af)}.disc-mary{background:linear-gradient(145deg,#d89988,#7c3d45)}.disc-brother{background:linear-gradient(145deg,#e6dcae,#96a45e);color:#596033}.disc-joy{background:linear-gradient(145deg,#303030,#88756e)}.disc-twinkle{background:linear-gradient(145deg,#5574ad,#d5b761)}.disc-jingle{background:linear-gradient(145deg,#c94f43,#326b55)}.disc-bridge{background:linear-gradient(145deg,#8ba5b3,#d1a263)}.disc-saints{background:linear-gradient(145deg,#6a4b84,#c78e75)}
@@ -223,7 +223,7 @@ body.song-page .screen{padding-bottom:36px}
 .song-picker-dialog{position:static;inset:auto;width:100%;max-width:none;max-height:none;margin:42px 0 0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
 .song-library-shell{width:100%;margin:0;padding:0 0 34px}
 .song-page-topbar,.song-picker-close{display:none}
-body.library-page .desktop-layout,body.library-page .practice-section,body.library-page .closing-actions{display:none}
+body.library-page .desktop-layout,body.library-page .closing-actions{display:none}
 body.library-page .stave-benefits,body.song-page .stave-benefits{display:none}
 body.library-page .screen{min-height:100svh}
 @media(max-width:959px){.song-picker-dialog{margin-top:34px}.song-library-shell{width:100%;padding:0 0 38px}}
@@ -1688,9 +1688,16 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 @media(max-width:759px){
   body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{grid-template-columns:minmax(0,1fr);row-gap:4px}
   .mobile-practice-intro .practice-intro-copy{grid-column:1;width:100%}
-  .mobile-practice-intro .practice-intro-copy h2{font-size:clamp(17px,4.5vw,20px)}
+  .mobile-practice-intro .practice-intro-copy h2{font-size:clamp(16px,4.5vw,20px)}
   .mobile-practice-intro .practice-intro-controls{grid-column:1;grid-row:2;justify-self:center}
 }
+
+/* Dedicated play pages contain the player and, for songs, the library below it. */
+body:is(.song-page,.library-page,.practice-only-page) .mobile-practice-intro,
+body:is(.song-page,.library-page,.practice-only-page) .practice-banner,
+body:is(.song-page,.library-page,.practice-only-page) .practice-sheet-handle,
+body:is(.song-page,.library-page,.practice-only-page) .feature-midi-section,
+body:is(.song-page,.library-page,.practice-only-page) .closing-actions{display:none}
 
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}

@@ -582,13 +582,9 @@
     byId('related-songs').hidden = false;
   }
   function showSongLibrary(push=true) {
-    setPassageClosingAction(false);
-    songPicker.hidden = false;
-    byId('related-songs').hidden = true;
+    showSong(fullSongId || 'elise',false);
     document.body.classList.add('library-page');
-    document.body.classList.remove('song-page','practice-only-page');
     if (push) history.pushState({view:'songs'},'', '?view=songs');
-    byId('song-search').focus({preventScroll:true});
   }
   function showSong(songId,push=true) {
     setPassageClosingAction(false);
@@ -597,10 +593,10 @@
     level = location[0];
     fullSongId = songId;
     resetPassage();
-    songPicker.hidden = true;
+    songPicker.hidden = false;
     document.body.classList.remove('library-page','practice-only-page');
     document.body.classList.add('song-page');
-    renderRelatedSongs(songId);
+    byId('related-songs').hidden = true;
     if (push) history.pushState({song:songId},'', `?song=${songId}`);
     window.scrollTo({top:0,behavior:'smooth'});
   }
