@@ -319,7 +319,7 @@ document.addEventListener('keydown', event => {
   if (note) { event.preventDefault(); play(note[0]); }
 });
 
-$('connect-midi').onclick = () => { if (!updateMidiConnectionState()) $('midi-dialog').showModal(); };
+$('connect-midi').onclick = () => { if (!startMidiCalibration()) $('midi-dialog').showModal(); };
 $('feature-midi-connect').onclick = $('connect-midi').onclick;
 let midiCalibrationStage = null;
 let midiCalibrationHigh = null;
@@ -334,6 +334,14 @@ function showMidiCalibrationStep(step) {
   dialog.querySelectorAll('.midi-setup-progress span').forEach((item,index) => item.classList.toggle('is-active',index <= (second ? 1 : 0)));
   if (!dialog.open) dialog.showModal();
 }
+function startMidiCalibration() {
+  if (!updateMidiConnectionState()) return false;
+  midiCalibrationStage = 'high';
+  midiCalibrationHigh = null;
+  if ($('midi-dialog').open) $('midi-dialog').close();
+  showMidiCalibrationStep('high');
+  return true;
+}
 $('midi-calibration-dialog').addEventListener('close',() => {
   if (!configuredMidiRange) midiCalibrationStage = null;
 });
@@ -342,6 +350,7 @@ function updateMidiConnectionState() {
   document.body.classList.toggle('midi-connected',!!connected);
   const menu = $('practice-connect-menu');
   menu?.classList.toggle('is-connected',!!connected);
+  if (menu) menu.querySelector('summary').title = connected ? 'Set keyboard range' : 'Connect keyboard';
   if (connected && menu) menu.open = false;
   const rangeLabel = configuredMidiRange ? `${configuredMidiRange.count} KEYS · ${configuredMidiRange.lowName}–${configuredMidiRange.highName}` : 'KEYBOARD CONNECTED';
   if ($('keyboard-connection-label')) $('keyboard-connection-label').textContent = connected ? rangeLabel : 'CONNECT KEYBOARD';
@@ -385,10 +394,7 @@ $('midi-connect').onclick = async () => {
               return;
             }
             if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(midi);
-            else {
-              const expected = melody[step];
-              play(expected !== undefined && expected % 12 === midi % 12 ? expected : midi);
-            }
+            else play(midi);
           }
         };
       }
@@ -396,12 +402,7 @@ $('midi-connect').onclick = async () => {
     };
     bind();
     midiAccess.onstatechange = bind;
-    if (updateMidiConnectionState()) {
-      midiCalibrationStage = 'high';
-      midiCalibrationHigh = null;
-      if ($('midi-dialog').open) $('midi-dialog').close();
-      showMidiCalibrationStep('high');
-    } else message.textContent = 'MIDI access is ready. Connect or turn on your keyboard.';
+    if (!startMidiCalibration()) message.textContent = 'MIDI access is ready. Connect or turn on your keyboard.';
   } catch (_) {
     message.textContent = 'MIDI access was not granted. You can still use the on-screen keys.';
   }

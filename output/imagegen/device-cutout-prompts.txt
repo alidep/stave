@@ -1,0 +1,10 @@
+Mode: built-in image_gen
+Transparent background: true
+Original v2 assets retained.
+
+keyboard_cutout
+Use case: background-extraction. Edit target: the supplied website device image. Remove ONLY the entire cream/beige background and floor; produce a genuinely transparent alpha background. Keep the cream and sage computer keyboard and matching mouse, including every printed key legend exactly unchanged: same geometry, angle, materials, colors, object scale, placement, edges and details. Preserve a subtle natural semitransparent contact shadow directly beneath the objects, but no opaque floor, no cream halo and no rectangular backdrop. Maintain the original square canvas and exact composition. Do not redraw, relabel, add, remove or reposition any device parts. This is a clean background removal only.
+
+midi_cutout
+Use case: background-extraction. Edit target: the supplied website device image. Remove ONLY the entire cream/beige background and floor; produce a genuinely transparent alpha background. Keep the charcoal and sage MIDI piano, including every white/black key, pad, knob, and wheel exactly unchanged: same geometry, angle, materials, colors, object scale, placement, edges and details. Preserve a subtle natural semitransparent contact shadow directly beneath the objects, but no opaque floor, no cream halo and no rectangular backdrop. Maintain the original square canvas and exact composition. Do not redraw, relabel, add, remove or reposition any device parts. This is a clean background removal only.
+

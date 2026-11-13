@@ -200,15 +200,15 @@
 
   let configuredMidiLow = null, configuredMidiHigh = null;
   function playableMidi(midi) {
-    if (configuredMidiLow === null || configuredMidiHigh === null) return midi;
+    if (!document.body.classList.contains('midi-connected') || configuredMidiLow === null || configuredMidiHigh === null) return midi;
     let playable = midi;
     while (playable < configuredMidiLow) playable += 12;
     while (playable > configuredMidiHigh) playable -= 12;
     return playable >= configuredMidiLow && playable <= configuredMidiHigh ? playable : midi;
   }
-  function keyFor(midi) {
+  function keyFor(midi,allowOctaveShift=true) {
     const root = document.body.classList.contains('midi-connected') ? byId('midi-full-piano') : keyboardRoot;
-    return root.querySelector(`[data-midi="${playableMidi(midi)}"]`);
+    return root.querySelector(`[data-midi="${allowOctaveShift ? playableMidi(midi) : midi}"]`);
   }
 
   const practiceSongKeys = ['elise','joy','twinkle','brother','mary','jingle','bridge','saints','moon'];
@@ -524,7 +524,7 @@
     render();
   }
 
-  function playNote(midi,fromMicrophone=false) {
+  function playNote(midi,fromMicrophone=false,scoreMidi=midi) {
     window.practiceMidiActive = true;
     if (previewPlaying) stopPreview();
     if (currentStep === passage.steps.length) return;
@@ -532,13 +532,13 @@
     const playedAt = performance.now();
     if (!takeNotes.length) takeStartedAt = playedAt;
     takeNotes.push({midi,at:Math.min(playedAt-takeStartedAt,120000)});
-    const key = keyFor(midi);
+    const key = keyFor(midi,false);
     key?.classList.add('is-pressed');
     setTimeout(() => key?.classList.remove('is-pressed'),160);
     clearTimeout(wrongTimer);
     keyboardRoot.querySelectorAll('.is-correct,.is-wrong').forEach(button => button.classList.remove('is-correct','is-wrong'));
     const step = passage.steps[currentStep];
-    const matched = step.notes.find(note => note.midi === midi && !completedNotes.has(note.id));
+    const matched = step.notes.find(note => note.midi === scoreMidi && !completedNotes.has(note.id));
     if (!matched) {
       mistakeCount++;
       step.notes.filter(note => !completedNotes.has(note.id)).forEach(note => missedNotes.add(note.id));
@@ -590,7 +590,7 @@
     event.preventDefault();
     window.practiceMidiActive = true;
     const menu = byId('practice-connect-menu');
-    if (menu.classList.contains('is-connected')) { menu.open = false; return; }
+    if (menu.classList.contains('is-connected')) { menu.open = false; window.startMidiCalibration?.(); return; }
     byId('midi-dialog').showModal();
   });
   byId('keyboard-map-close').addEventListener('click',() => mapDialog.close());
@@ -761,8 +761,12 @@
     playNote(midi);
   });
   window.practiceMidiInput = midi => {
-    const expected = passage.steps[currentStep]?.notes.find(note => !completedNotes.has(note.id) && note.midi % 12 === midi % 12);
-    playNote(expected?.midi ?? midi);
+    const pending = passage.steps[currentStep]?.notes.filter(note => !completedNotes.has(note.id)) || [];
+    // Preserve the physical pitch for audio, highlights, and recordings. Only
+    // grading may fold an unreachable score note into the calibrated range.
+    const expected = pending.find(note => note.midi === midi)
+      || pending.find(note => playableMidi(note.midi) === midi);
+    playNote(midi,false,expected?.midi ?? midi);
   };
   window.practiceMidiConfigure = (lowMidi,highMidi) => {
     configuredMidiLow = lowMidi;
