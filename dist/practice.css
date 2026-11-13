@@ -1521,3 +1521,25 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .mobile-practice-intro .practice-try-row .mobile-grade-picker{flex-basis:210px;width:210px}
   .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:11px;padding-inline:2px}
 }
+
+/* Pair the familiar invitation typography with a direct link into the page. */
+.practice-try-row{padding-right:14px}
+.practice-try-row>p{color:#252623;font:700 14px/1.3 Visuelt,sans-serif;letter-spacing:normal;text-transform:none}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{color:#fff}
+.practice-learn-link{display:flex;align-items:center;align-self:stretch;flex:none;margin-left:2px;padding-left:12px;border-left:1px solid #e2e4d9;color:#526c43;font:700 12px/1.2 Visuelt,sans-serif;text-decoration:none;white-space:nowrap}
+.practice-learn-link:hover{text-decoration:underline;text-underline-offset:3px;color:#344d28}
+.practice-learn-link:focus-visible{outline:2px solid #5c7c4d;outline-offset:3px;border-radius:3px}
+#homepage-hero{scroll-margin-top:24px}
+@media(max-width:759px){
+  .practice-try-row{gap:7px;padding-right:10px}
+  .practice-try-row>p{font-size:11px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{flex:0 1 216px;width:216px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:11px}
+  .practice-learn-link{padding-left:8px;font-size:11px}
+}
+@media(max-width:359px){
+  .practice-try-row{display:grid;grid-template-columns:minmax(0,1fr) auto;width:100%;height:auto;gap:6px 10px;padding:8px;border-radius:22px}
+  .practice-try-row>p{grid-column:1/-1;text-align:center}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker{width:100%;height:30px}
+  .practice-learn-link{grid-column:2;grid-row:2;padding-inline:8px}
+}
