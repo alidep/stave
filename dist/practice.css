@@ -1597,3 +1597,67 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .practice-section{width:calc(100% + 24px);margin-left:-12px;margin-right:-12px}
   .practice-card{padding-left:12px;padding-right:12px}
 }
+
+/* Let the interface examples explain the product without competing portrait accents. */
+.feedback-feature::before,.level-feature::after{display:none;content:none;animation:none}
+@media(min-width:960px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout{min-height:520px;margin-top:40px}
+  .play-on{margin-top:32px;margin-bottom:40px}
+}
+.stave-benefits{gap:64px;margin-top:44px}
+.repertoire-feature{gap:24px}
+.repertoire-feature .musician-stack{height:280px}
+.input-feature{margin-top:0;padding-top:0;gap:24px}
+.feature-midi-section{margin-top:56px}
+.site-footer{margin-top:56px}
+
+/* Persistent feedback makes the meaning visible before anyone presses play. */
+.feedback-feature .benefit-score-card{height:auto!important;min-height:340px;padding:22px!important}
+.feedback-feature .benefit-abc{flex:none;min-height:140px;margin-top:14px;padding:12px}
+.feedback-example-key{display:flex;justify-content:space-between;gap:12px;margin-top:18px;color:#686257;font:500 12px/1.3 Visuelt,sans-serif}
+.feedback-example-key>span{display:flex;align-items:center;gap:6px}
+.feedback-example-key i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;font-style:normal;font-weight:700}
+.feedback-correct{background:#e6eedf;color:#526f42}
+.feedback-missed{background:#f8e6df;color:#b64c40}
+.feedback-position{background:#e2edf6;color:#337cad}
+.feedback-example-caption,.level-example-caption{margin:14px 0 0;color:#777168;font:400 13px/1.45 Visuelt,sans-serif}
+.feedback-note-marker{fill:#3b94d9;fill-opacity:.1;stroke:#3b94d9;stroke-width:1.5}
+.animated-score .abcjs-note.is-current:not(.is-wrong):not(.is-clean) path{fill:#3b94d9!important;stroke:#3b94d9!important}
+
+/* The same melody gains notation detail through ten visitor-controlled levels. */
+.level-feature .benefit-score-card{height:auto!important;min-height:370px;padding:22px!important}
+.level-demo label{margin-top:16px;font-size:11px}
+.level-demo select{height:40px;border-radius:999px;background:#f0ece3;font-size:14px}
+.level-demo .benefit-abc{height:180px;min-height:180px;flex:0 0 180px;margin-top:14px;padding:8px;overflow:hidden}
+.level-example-caption{margin-top:10px;font-size:12px}
+
+/* A clear return to the player, with reassurance beside the primary action. */
+.closing-actions{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:24px;max-width:none;margin:48px auto 0}
+.closing-primary{display:flex;align-items:center;gap:16px}
+.closing-primary .pill{display:flex;align-items:center;justify-content:center;gap:12px;flex:none;min-width:155px;min-height:46px;padding:0 22px;font-size:15px}
+.closing-primary p{margin:0;color:#777168;font:400 13px/1.3 Visuelt,sans-serif;white-space:nowrap}
+.closing-actions #closing-watch{flex:none;width:auto;min-width:0;min-height:36px;padding:0;border:0;background:transparent;color:#686257;font:500 14px/1.2 Visuelt,sans-serif;text-decoration:underline;text-underline-offset:4px}
+.closing-actions #closing-watch:hover{color:#526c43}
+body.practice-only-page .closing-primary{display:none}
+@media(max-width:959px){
+  .stave-benefits{gap:40px;margin-top:36px}
+  .play-on{margin-top:30px;margin-bottom:32px}
+  .repertoire-feature .musician-stack{height:190px}
+  .feedback-feature .benefit-score-card,.level-feature .benefit-score-card{padding:18px 12px!important}
+  .feedback-feature .benefit-score-card{min-height:310px}
+  .level-feature .benefit-score-card{min-height:340px}
+  .feedback-feature .benefit-abc{min-height:130px}
+  .feedback-example-key{font-size:11px;gap:8px}
+  .input-feature{padding-top:0;gap:20px}
+  .feature-midi-section{margin-top:40px}
+  .closing-actions{flex-direction:column;gap:12px;margin-top:36px}
+  .closing-primary{width:100%;flex-direction:column;gap:10px}
+  .closing-primary .pill{width:100%}
+  .site-footer{margin-top:36px}
+}
+/* Undo the old hidden selector and absolute score positioning. */
+.level-demo label,.level-demo select{position:static;clip:auto;overflow:visible;white-space:normal}
+.level-demo label{width:auto;height:auto;margin:16px 0 8px;padding:0}
+.level-demo select{width:100%;height:40px;margin:0;padding:0 14px;border:1px solid #ded8ca}
+.feedback-feature .benefit-abc svg{position:static;inset:auto;transform:none;width:100%!important}
+.level-demo .benefit-abc svg{width:100%!important;height:100%!important;max-height:100%;margin:0!important;border:0;border-radius:0}

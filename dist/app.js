@@ -270,7 +270,11 @@ $('watch').onclick = () => {
   scrollToPractice('smooth');
   watchPreviewTimer = setTimeout(() => window.playPracticePreview?.(), 1200);
 };
-$('closing-start').onclick = $('start').onclick;
+$('closing-start').onclick = () => {
+  clearTimeout(watchPreviewTimer);
+  $('practice').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
+  $('practice-play').focus({preventScroll:true});
+};
 $('closing-watch').onclick = $('watch').onclick;
 $('account').onclick = () => {
   let count = 0;

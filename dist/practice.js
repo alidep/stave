@@ -813,9 +813,16 @@
   });
 
   const benefitLevelScores = {
-    1: `X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2 D2 E2 B2|`,
-    5: `X:1\n%%score {R|L}\nM:3/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] E2 ^D2 E2 D2 E2 B2|\n[V:L] A,,4 E,4 A,4|`,
-    10: `X:1\n%%score {R|L}\nM:3/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:Am\n[V:R] E2 ^D2 E2 D2 E2 B2|\n[V:L] [A,,E,]4 [E,B,]4 [A,,E,]4|`
+    1: {abc:"X:1\nM:4/4\nL:1/8\nK:C\nE2 E2 F2 G2|",description:"One hand \u00b7 quarter notes"},
+    2: {abc:"X:1\nM:4/4\nL:1/8\nK:C\nE2 E2 F2 G2|G2 F2 E2 D2|",description:"One hand \u00b7 a longer phrase"},
+    3: {abc:"X:1\nM:4/4\nL:1/8\nK:C\nE2 E F G2 G2|G2 F2 E2 D2|",description:"One hand \u00b7 eighth notes"},
+    4: {abc:"X:1\nM:4/4\nL:1/8\nK:C\nE3 E F2 G2|G2 F E E2 D2|",description:"One hand \u00b7 dotted rhythms"},
+    5: {abc:"X:1\n%%score {R|L}\nM:4/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:C\n[V:R] E2 E2 F2 G2|G2 F2 E2 D2|\n[V:L] C,,8|G,,8|",description:"Two hands \u00b7 sustained bass"},
+    6: {abc:"X:1\n%%score {R|L}\nM:4/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:C\n[V:R] E2 E2 F2 G2|G2 F2 E2 D2|\n[V:L] C,,4 G,,4|G,,4 D,4|",description:"Two hands \u00b7 moving bass"},
+    7: {abc:"X:1\n%%score {R|L}\nM:4/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:C\n[V:R] E2 E2 F2 G2|G2 F2 E2 D2|\n[V:L] C,,2 E,,2 G,,2 C,2|G,,2 B,,2 D,2 G,2|",description:"Two hands \u00b7 broken chords"},
+    8: {abc:"X:1\n%%score {R|L}\nM:4/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:C\n[V:R] [CE]2 [CE]2 [DF]2 [EG]2|[EG]2 [DF]2 [CE]2 [BD]2|\n[V:L] C,,2 E,,2 G,,2 C,2|G,,2 B,,2 D,2 G,2|",description:"Two hands \u00b7 melody in chords"},
+    9: {abc:"X:1\n%%score {R|L}\nM:4/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:C\n[V:R] [CE]3 [CE] [DF]2 [EG]2|[EG]2 [DF] [CE] [BD]4|\n[V:L] [C,,G,,]2 E,,2 G,,2 C,2|[G,,D,]2 B,,2 D,2 G,2|",description:"Two hands \u00b7 chords and dotted rhythms"},
+    10: {abc:"X:1\n%%score {R|L}\nM:4/4\nL:1/8\nV:R clef=treble\nV:L clef=bass\nK:C\n[V:R] (3E^FE E F [EG]2 [EG]2|[EG]2 [DF] [CE] [BD]4|\n[V:L] [C,,G,,]2 E,, G,, C,2 G,,2|[G,,D,]2 B,, D, G,2 D,2|",description:"Two hands \u00b7 ornaments and fuller voicings"},
   };
 
   function renderBenefitFeedback() {
@@ -824,7 +831,29 @@
     window.ABCJS.renderAbc(container,`X:1\nM:3/4\nL:1/8\nK:Am\nE2 ^D2 E2 D2 E2 B2|`,{
       add_classes:true,staffwidth:440,scale:1.5,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
     });
-    [...container.querySelectorAll('.abcjs-note')].forEach((note,index) => note.classList.add('benefit-result',`result-${index+1}`));
+    const svg = container.querySelector('svg');
+    if (svg) svg.setAttribute('viewBox',`0 0 ${svg.getAttribute('width')} ${svg.getAttribute('height')}`);
+    showFeedbackSnapshot();
+  }
+
+
+  function markFeedbackPosition(note) {
+    byId('benefit-feedback-score').querySelectorAll('.feedback-note-marker').forEach(marker => marker.remove());
+    if (!note) return;
+    const box = note.getBBox();
+    const marker = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    marker.setAttribute('class','feedback-note-marker');
+    for (const [name,value] of Object.entries({x:box.x-7,y:box.y-8,width:box.width+14,height:box.height+16,rx:6})) marker.setAttribute(name,value);
+    note.prepend(marker);
+  }
+  function showFeedbackSnapshot() {
+    const notes = [...byId('benefit-feedback-score').querySelectorAll('.abcjs-note')];
+    notes.forEach(note => note.classList.remove('is-clean','is-wrong','is-paused','is-current'));
+    notes[0]?.classList.add('is-clean');
+    notes[1]?.classList.add('is-wrong');
+    notes[2]?.classList.add('is-current');
+    markFeedbackPosition(notes[2]);
+    byId('benefit-feedback-caption').textContent = 'E was correct. D♯ needs another try. The blue note is next.';
   }
 
   let benefitPlaybackTimers = [];
@@ -842,6 +871,7 @@
       progress.style.transition = 'none';
       if (reset) progress.style.width = '0%';
     }
+    showFeedbackSnapshot();
   }
 
   function playBenefitFeedback() {
@@ -866,6 +896,8 @@
         notes.forEach(note => note.classList.remove('is-current'));
         const playbackResult = benefitResults[index] === 'wrong' ? 'wrong' : 'clean';
         notes[index]?.classList.add('is-current',`is-${playbackResult}`);
+        markFeedbackPosition(notes[index]);
+        byId('benefit-feedback-caption').textContent = playbackResult === 'wrong' ? 'Wrong key on D♯. Pause and try that note again.' : `Note ${index+1} of 6: correct. Follow the blue marker.`;
         if (benefitResults[index] !== 'wrong') {
           progress.style.transition = 'width 180ms ease-out';
           progress.style.width = `${(index+1)/benefitMelody.length*100}%`;
@@ -901,34 +933,22 @@
     if (!select || !container || !window.ABCJS) return;
     const requested = Number(select.value);
     const demoLevel = Math.max(1,Math.min(10,requested));
-    window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel],{
+    window.ABCJS.renderAbc(container,benefitLevelScores[demoLevel].abc,{
       add_classes:true,staffwidth:400,scale:1.5,paddingtop:0,paddingbottom:0,paddingleft:0,paddingright:0
     });
+    const svg = container.querySelector('svg');
+    if (svg) {
+      svg.setAttribute('viewBox',`0 0 ${svg.getAttribute('width')} ${svg.getAttribute('height')}`);
+      svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+    }
     byId('benefit-level-label').textContent = `LEVEL ${requested}`;
+    byId('benefit-level-description').textContent = benefitLevelScores[demoLevel].description;
     container.setAttribute('aria-label',`Level ${requested} music example${demoLevel >= 5 ? ' with two hands' : ''}`);
   }
 
   const benefitLevelSelect = byId('benefit-level-select');
   byId('benefit-score-play')?.addEventListener('click',playBenefitFeedback);
-  const benefitFeedbackFeature = document.querySelector('.feedback-feature');
-  if (benefitFeedbackFeature && 'IntersectionObserver' in window) {
-    const benefitAutoplayObserver = new IntersectionObserver(entries => {
-      if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .45)) return;
-      benefitAutoplayObserver.disconnect();
-      window.setTimeout(playBenefitFeedback,350);
-    },{threshold:[.45]});
-    benefitAutoplayObserver.observe(benefitFeedbackFeature);
-  }
   benefitLevelSelect?.addEventListener('change',renderLevelDemo);
-  if (benefitLevelSelect && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const animatedLevels = ['1','5','10'];
-    let animatedLevelIndex = 0;
-    window.setInterval(() => {
-      animatedLevelIndex = (animatedLevelIndex + 1) % animatedLevels.length;
-      benefitLevelSelect.value = animatedLevels[animatedLevelIndex];
-      renderLevelDemo();
-    }, 1800);
-  }
 
   buildFullKeyboard();
   appendKeyboard(byId('feature-left-piano'),leftWhiteKeys,leftBlackKeys);
