@@ -448,10 +448,17 @@
     takeTimers.push(setTimeout(stopTakePlayback,Math.max(0,takeNotes.at(-1).at+650-takePlaybackOffset)));
   }
 
+  function clearKeyboardFeedback() {
+    for (const root of [keyboardRoot,byId('midi-full-piano')]) {
+      root.querySelectorAll('.is-correct,.is-wrong').forEach(key => key.classList.remove('is-correct','is-wrong'));
+    }
+  }
+
   function resetPassage() {
     stopPreview();
     stopTakePlayback();
     clearTimeout(wrongTimer);
+    clearKeyboardFeedback();
     currentStep = 0;
     mistakeCount = 0;
     stepStartedAt = performance.now();
@@ -538,7 +545,7 @@
     key?.classList.add('is-pressed');
     setTimeout(() => key?.classList.remove('is-pressed'),160);
     clearTimeout(wrongTimer);
-    keyboardRoot.querySelectorAll('.is-correct,.is-wrong').forEach(button => button.classList.remove('is-correct','is-wrong'));
+    clearKeyboardFeedback();
     const step = passage.steps[currentStep];
     const matched = step.notes.find(note => note.midi === scoreMidi && !completedNotes.has(note.id));
     if (!matched) {
@@ -547,7 +554,7 @@
       wrongNote = step.notes.find(note => !completedNotes.has(note.id))?.id || null;
       key?.classList.add('is-wrong');
       render();
-      wrongTimer = setTimeout(() => { wrongNote = null; key?.classList.remove('is-wrong'); render(); },1000);
+      wrongTimer = setTimeout(() => { wrongNote = null; clearKeyboardFeedback(); render(); },2000);
       return;
     }
     wrongNote = null;
