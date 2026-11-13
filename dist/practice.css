@@ -1323,7 +1323,17 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
 }
 
 /* The composer orbit fills one stable viewport without rounded edges. */
+.stave-benefits .repertoire-feature{
+  position:relative;
+  isolation:isolate;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:0;
+}
 .repertoire-feature .benefit-visual{
+  grid-area:1 / 1;
+  justify-self:center;
+  z-index:2;
   width:100vw;
   max-width:none;
   height:100vh;
@@ -1332,12 +1342,26 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   margin:0;
   border:0;
   border-radius:0;
+  pointer-events:none;
 }
+.repertoire-feature .benefit-copy{
+  position:relative;
+  grid-area:1 / 1;
+  z-index:1;
+  align-self:center;
+  justify-self:center;
+  width:min(100%,690px);
+  margin:0;
+  transform:translateY(6vh);
+  transform:translateY(6svh);
+  text-align:center;
+}
+.repertoire-feature .benefit-copy>span{margin-inline:auto}
 .repertoire-feature .musician-stack>span,
 .repertoire-feature .musician-stack>span:nth-child(n),
 .repertoire-feature .musician-stack>.musician-add{
   width:clamp(112px,25vmin,260px);
-  offset-path:ellipse(56% 64% at 50% 86%);
+  offset-path:ellipse(56% 42% at 50% 78%);
 }
 
 /* A quiet introduction keeps the score at the center of the practice experience. */
