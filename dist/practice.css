@@ -1602,6 +1602,18 @@ body.song-page .device-style-exploration,body.library-page .device-style-explora
 .device-style-final .device-style-grid figure:first-child img{width:85%;margin:0 auto -12px;aspect-ratio:1;object-fit:contain;object-position:center}
 .device-style-final .device-style-grid figcaption{margin-top:6px}
 
+/* Float the final selection independently while its captions stay anchored. */
+@keyframes final-device-float{
+  0%,100%{transform:translate3d(0,0,0) rotate(calc(var(--device-tilt) - .8deg))}
+  50%{transform:translate3d(0,-8px,0) rotate(calc(var(--device-tilt) + .8deg))}
+}
+.device-style-final .device-style-grid img{--device-tilt:-3deg;transform-origin:50% 60%;animation:final-device-float 7.2s -1.2s ease-in-out infinite}
+.device-style-final .device-style-grid figure:nth-child(2) img{--device-tilt:3deg;animation-duration:8.4s;animation-delay:-5.1s}
+.device-style-final .device-style-grid figure:nth-child(3) img{--device-tilt:-2deg;animation-duration:6.7s;animation-delay:-3.8s}
+@media(prefers-reduced-motion:reduce){
+  .device-style-final .device-style-grid img{animation:none;transform:rotate(var(--device-tilt))}
+}
+
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}
 .closing-copy h2{margin:0;color:var(--ink);font:900 clamp(38px,4.5vw,60px)/1.02 Visuelt,sans-serif;letter-spacing:-.045em}
