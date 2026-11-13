@@ -297,7 +297,7 @@ document.addEventListener('click',event => { if (!event.target.closest('.topbar-
 document.addEventListener('keydown',event => { if (event.key === 'Escape') closeMobileMenu(); });
 document.querySelectorAll('[data-close]').forEach(button => button.onclick = () => button.closest('dialog').close());
 document.addEventListener('keydown', event => {
-  if (event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
+  if (event.target.closest?.('input,textarea,select,[contenteditable="true"]') || event.repeat || event.altKey || event.metaKey || event.ctrlKey || document.querySelector('dialog[open]')) return;
   const note = [...whites,...blacks].find(([,key]) => key.toLowerCase() === event.key.toLowerCase());
   if (note) { event.preventDefault(); play(note[0]); }
 });
