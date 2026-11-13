@@ -762,7 +762,7 @@
   });
   window.practiceMidiInput = midi => {
     const pending = passage.steps[currentStep]?.notes.filter(note => !completedNotes.has(note.id)) || [];
-    // Preserve the physical pitch for audio, highlights, and recordings. Only
+    // Preserve the calibrated pitch for audio, highlights, and recordings. Only
     // grading may fold an unreachable score note into the calibrated range.
     const expected = pending.find(note => note.midi === midi)
       || pending.find(note => playableMidi(note.midi) === midi);

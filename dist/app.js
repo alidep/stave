@@ -322,28 +322,37 @@ document.addEventListener('keydown', event => {
 $('connect-midi').onclick = () => { if (!startMidiCalibration()) $('midi-dialog').showModal(); };
 $('feature-midi-connect').onclick = $('connect-midi').onclick;
 let midiCalibrationStage = null;
-let midiCalibrationHigh = null;
+let midiCalibrationHigh = null, midiCalibrationLow = null, midiPitchOffset = 0, midiCalibrationCloseTimer;
 let configuredMidiRange = null;
 function showMidiCalibrationStep(step) {
   const dialog = $('midi-calibration-dialog');
-  const second = step === 'low';
-  $('midi-setup-kicker').textContent = `STEP ${second ? 2 : 1} OF 2`;
-  $('midi-calibration-title').textContent = second ? 'Now press your lowest key' : 'Press your highest key';
-  $('midi-calibration-copy').textContent = second ? 'Press the key at the far left of your MIDI keyboard.' : 'Press the key at the far right of your MIDI keyboard.';
+  const index = ['high','low','middle'].indexOf(step);
+  const titles = ['Press your highest key','Now press your lowest key','Now press middle C'];
+  const descriptions = [
+    'Press the key at the far right of your MIDI keyboard.',
+    'Press the key at the far left of your MIDI keyboard.',
+    'Press the C key you use as middle C. We’ll align it with middle C in the score.'
+  ];
+  $('midi-setup-kicker').textContent = `STEP ${index+1} OF 3`;
+  $('midi-calibration-title').textContent = titles[index];
+  $('midi-calibration-copy').textContent = descriptions[index];
   dialog.querySelector('.midi-listening').innerHTML = '<span></span>LISTENING FOR A NOTE';
-  dialog.querySelectorAll('.midi-setup-progress span').forEach((item,index) => item.classList.toggle('is-active',index <= (second ? 1 : 0)));
+  dialog.querySelectorAll('.midi-setup-progress span').forEach((item,position) => item.classList.toggle('is-active',position <= index));
   if (!dialog.open) dialog.showModal();
 }
 function startMidiCalibration() {
   if (!updateMidiConnectionState()) return false;
+  clearTimeout(midiCalibrationCloseTimer);
   midiCalibrationStage = 'high';
   midiCalibrationHigh = null;
+  midiCalibrationLow = null;
   if ($('midi-dialog').open) $('midi-dialog').close();
   showMidiCalibrationStep('high');
   return true;
 }
 $('midi-calibration-dialog').addEventListener('close',() => {
-  if (!configuredMidiRange) midiCalibrationStage = null;
+  midiCalibrationStage = null;
+  clearTimeout(midiCalibrationCloseTimer);
 });
 function updateMidiConnectionState() {
   const connected = midiAccess && [...midiAccess.inputs.values()].some(input => input.state === 'connected');
@@ -382,19 +391,38 @@ $('midi-connect').onclick = async () => {
                 $('midi-calibration-copy').textContent = 'That range looks too small. Press the key at the far left of your keyboard.';
                 return;
               }
-              const range = window.practiceMidiConfigure?.(midi,midiCalibrationHigh);
+              midiCalibrationLow = midi;
+              midiCalibrationStage = 'middle';
+              showMidiCalibrationStep('middle');
+              return;
+            }
+            if (midiCalibrationStage === 'middle') {
+              if (midi < midiCalibrationLow || midi > midiCalibrationHigh) {
+                $('midi-calibration-copy').textContent = 'Press middle C within the highest and lowest keys you just played.';
+                return;
+              }
+              const offset = 60-midi;
+              const low = midiCalibrationLow+offset, high = midiCalibrationHigh+offset;
+              if (low < 0 || high > 127) {
+                $('midi-calibration-copy').textContent = 'Please check your middle C key. This setting would put part of the keyboard outside the supported range.';
+                return;
+              }
+              const range = window.practiceMidiConfigure?.(low,high);
+              midiPitchOffset = offset;
               configuredMidiRange = range || null;
               midiCalibrationStage = null;
               updateMidiConnectionState();
               $('midi-setup-kicker').textContent = 'SETUP COMPLETE';
               $('midi-calibration-title').textContent = range ? `${range.count} keys detected` : 'Keyboard range set';
-              $('midi-calibration-copy').textContent = range ? `${range.lowName} through ${range.highName}. The onscreen keyboard now matches yours.` : 'The onscreen keyboard now matches yours.';
+              $('midi-calibration-copy').textContent = range ? `${range.lowName} through ${range.highName}. Middle C is aligned with the score.` : 'Middle C is aligned with the score.';
               $('midi-calibration-dialog').querySelector('.midi-listening').textContent = '✓ READY TO PLAY';
-              setTimeout(() => { if ($('midi-calibration-dialog').open) $('midi-calibration-dialog').close(); },1200);
+              midiCalibrationCloseTimer = setTimeout(() => { if ($('midi-calibration-dialog').open) $('midi-calibration-dialog').close(); },1600);
               return;
             }
-            if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(midi);
-            else play(midi);
+            const calibratedMidi = midi+midiPitchOffset;
+            if (calibratedMidi < 0 || calibratedMidi > 127) return;
+            if (window.practiceMidiActive && window.practiceMidiInput) window.practiceMidiInput(calibratedMidi);
+            else play(calibratedMidi);
           }
         };
       }
