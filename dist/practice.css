@@ -1568,3 +1568,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .mobile-practice-intro .practice-intro-controls .mobile-grade-picker button{font-size:10px;padding-inline:1px}
   .practice-intro-controls .practice-learn-link{font-size:10px}
 }
+
+/* Keep the longer input label legible beside the overlapping device artwork. */
+.play-on-computer figcaption strong{line-height:1.15}
+@media(max-width:959px){.play-on-computer figcaption{width:max-content;max-width:90%;white-space:normal}}
