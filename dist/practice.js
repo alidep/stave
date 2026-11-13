@@ -38,6 +38,7 @@
   const keyboardRoot = byId('practice-keyboard-wrap');
   const card = byId('practice-card');
   const mapDialog = byId('keyboard-map-dialog');
+  const keyFeedbackDuration = 200;
   let level = 2, sampleIndex = 0, currentStep = 0, wrongNote = null, wrongTimer, hintEnabled = true, fullSongId = null, mistakeCount = 0, stepStartedAt = performance.now();
   let passage, previewPlaying = false, previewIndex = -1, noteCoordinates = [];
   let previewPaused = false, previewOffset = 0, previewStartedAt = 0, previewAudio;
@@ -554,7 +555,7 @@
       wrongNote = step.notes.find(note => !completedNotes.has(note.id))?.id || null;
       key?.classList.add('is-wrong');
       render();
-      wrongTimer = setTimeout(() => { wrongNote = null; clearKeyboardFeedback(); render(); },2000);
+      wrongTimer = setTimeout(() => { wrongNote = null; clearKeyboardFeedback(); render(); },keyFeedbackDuration);
       return;
     }
     wrongNote = null;
@@ -564,7 +565,7 @@
     if (step.notes.every(note => completedNotes.has(note.id))) { currentStep++; stepStartedAt = performance.now(); buildKeyboard(); }
     render();
     keepNoteVisible(currentStep);
-    setTimeout(() => key?.classList.remove('is-correct'),200);
+    setTimeout(() => key?.classList.remove('is-correct'),keyFeedbackDuration);
   }
 
   byId('practice-level-prev').addEventListener('click',() => { if (level > 1) { level--; resetPassage(); } });
