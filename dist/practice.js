@@ -1059,6 +1059,28 @@
   }
   const homepageHero = byId('homepage-hero');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const keyboardVideo = byId('feature-midi-video');
+  if (keyboardVideo) {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let videoVisible = !('IntersectionObserver' in window);
+    keyboardVideo.muted = true;
+    const syncKeyboardVideo = () => {
+      if (videoVisible && !document.hidden && !motionPreference.matches) {
+        keyboardVideo.play().catch(() => {});
+      } else {
+        keyboardVideo.pause();
+      }
+    };
+    syncKeyboardVideo();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        videoVisible = entry.isIntersecting;
+        syncKeyboardVideo();
+      },{threshold:.1}).observe(keyboardVideo);
+    }
+    motionPreference.addEventListener('change',syncKeyboardVideo);
+    document.addEventListener('visibilitychange',syncKeyboardVideo);
+  }
   document.body.classList.add('motion-ready');
   if (homepageHero) requestAnimationFrame(() => homepageHero.classList.add('motion-intro'));
   const motionTargets = [];
