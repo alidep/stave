@@ -1543,3 +1543,28 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
   .mobile-practice-intro .practice-try-row .mobile-grade-picker{width:100%;height:30px}
   .practice-learn-link{grid-column:2;grid-row:2;padding-inline:8px}
 }
+
+/* A small left-aligned tagline sits beside the pill and its separate explanation link. */
+body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:24px;text-align:left}
+.mobile-practice-intro .practice-intro-copy{flex:0 1 auto;min-width:0}
+.mobile-practice-intro .practice-intro-copy h2{font-size:clamp(16px,1.5vw,20px);line-height:1.2;letter-spacing:-.025em}
+.practice-intro-controls{display:flex;align-items:center;gap:18px;min-width:0}
+.practice-intro-controls .practice-try-row{flex:none;margin:0;padding-right:4px}
+.practice-intro-controls .practice-learn-link{align-self:center;min-height:36px;margin:0;padding:0;border:0}
+@media(max-width:959px){
+  body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practice-intro{flex-wrap:wrap;gap:12px;padding-left:22px;padding-right:22px}
+  .mobile-practice-intro .practice-intro-copy h2{font-size:17px}
+  .practice-intro-controls{gap:12px;max-width:100%}
+}
+@media(max-width:759px){
+  .practice-intro-controls{width:100%;gap:10px}
+  .practice-intro-controls .practice-try-row{flex:1;min-width:0;width:auto;gap:5px;padding-left:9px}
+  .practice-intro-controls .mobile-grade-picker{flex:1!important;width:auto!important;min-width:0}
+  .practice-intro-controls .practice-learn-link{font-size:11px}
+}
+@media(max-width:359px){
+  .practice-intro-controls .practice-try-row{display:flex;grid-template-columns:none;height:36px;border-radius:999px;padding:4px 4px 4px 8px;gap:4px}
+  .practice-intro-controls .practice-try-row>p{font-size:10px;padding:0;text-align:left}
+  .mobile-practice-intro .practice-intro-controls .mobile-grade-picker button{font-size:10px;padding-inline:1px}
+  .practice-intro-controls .practice-learn-link{font-size:10px}
+}
