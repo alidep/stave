@@ -1326,17 +1326,25 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .feedback-feature .benefit-visual{order:2}
 }
 
-/* The composer orbit fills one stable viewport without rounded edges. */
+/* Keep the full-width arc, with the section ending immediately after its copy. */
 .stave-benefits .repertoire-feature{
   position:relative;
   isolation:isolate;
   display:grid;
   grid-template-columns:minmax(0,1fr);
+  width:100%;
+  justify-self:center;
   gap:0;
+  padding:44vh 0 0;
+  padding-top:44svh;
+  margin-bottom:calc(64px - clamp(88px,10vw,140px));
 }
 .repertoire-feature .benefit-visual{
   --composer-size:clamp(112px,25vmin,260px);
-  grid-area:1 / 1;
+  position:absolute;
+  top:0;
+  left:calc(50% - 50vw);
+  grid-area:auto;
   justify-self:center;
   z-index:2;
   width:100vw;
@@ -1357,11 +1365,11 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   justify-self:center;
   width:min(100%,690px);
   margin:0;
-  transform:translateY(6vh);
-  transform:translateY(6svh);
+  transform:none;
   text-align:center;
 }
 .repertoire-feature .benefit-copy>span{margin-inline:auto}
+@media(max-width:959px){.stave-benefits .repertoire-feature{margin-bottom:0}}
 .repertoire-feature .musician-stack>span,
 .repertoire-feature .musician-stack>span:nth-child(n),
 .repertoire-feature .musician-stack>.musician-add{
