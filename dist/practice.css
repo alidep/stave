@@ -1501,3 +1501,21 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 .practice-try-row{flex:none}
 .practice-try-row>p{min-width:180.36px;text-align:center}
 @media(max-width:759px){.practice-try-row>p{min-width:0}}
+
+/* A quiet invitation label sits beside a balanced, warm segmented control. */
+.practice-try-row{display:flex;flex-direction:row;align-items:center;width:min(100%,520px);height:42px;gap:12px;padding:4px 4px 4px 16px;border:1px solid #d9e1d2;border-radius:999px;background:#fffdf8;box-shadow:none}
+.practice-try-row>p{flex:0 0 100px;min-width:0;margin:0;padding:0;color:#777168;font:600 10px/1.2 JetBrains,monospace;letter-spacing:.08em;text-align:left;text-transform:uppercase;white-space:nowrap}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker{flex:1;min-width:0;width:auto;height:100%;background:#f0ece3}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button{padding-inline:6px;color:#686257;font-size:13px;font-weight:700}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker button[aria-pressed="true"]{color:#24351c}
+.mobile-practice-intro .practice-try-row .mobile-grade-picker::before{background:#93b17e;box-shadow:none}
+@media(max-width:759px){
+  .practice-try-row{width:min(100%,390px);gap:6px;padding-left:12px}
+  .practice-try-row>p{flex-basis:77px;font-size:9px;letter-spacing:.055em}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:12px;padding-inline:3px}
+}
+@media(max-width:359px){
+  .practice-try-row{gap:4px;padding-left:9px}
+  .practice-try-row>p{flex-basis:68px;font-size:8px}
+  .mobile-practice-intro .practice-try-row .mobile-grade-picker button{font-size:11px;padding-inline:2px}
+}
