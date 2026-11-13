@@ -1643,6 +1643,43 @@ body.song-page .device-style-exploration,body.library-page .device-style-explora
 .device-style-final .device-style-grid figure:first-child img{width:78%;margin:0 auto -12px;aspect-ratio:1;object-fit:contain;object-position:center}
 .device-style-final .device-style-grid figcaption{margin-top:14px}
 
+/* The level pill floats centrally within the player header. */
+body:not(.song-page,.library-page,.practice-only-page) .practice-topline{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:24px}
+body:not(.song-page,.library-page,.practice-only-page) .practice-topline .practice-title-block{grid-column:1;grid-row:1;min-width:0;white-space:normal}
+body:not(.song-page,.library-page,.practice-only-page) .practice-topline .practice-title-block p{white-space:normal}
+body:not(.song-page,.library-page,.practice-only-page) .practice-topline .practice-toolbar{position:relative;grid-column:3;grid-row:1;justify-self:end;width:auto;margin:0}
+.practice-topline .practice-header-levels{position:relative;z-index:3;grid-column:2;grid-row:1;justify-self:center;display:flex;flex-direction:row;align-items:center;flex:none;gap:10px;width:max-content;max-width:100%;height:42px;margin:0;padding:4px 4px 4px 16px;border:1px solid #d9e1d2;border-radius:999px;background:#fffdf8;box-shadow:0 6px 20px rgba(44,38,27,.1),0 1px 3px rgba(44,38,27,.04)}
+.practice-header-levels>p{flex:none;min-width:0;margin:0;padding:0;color:#252623;font:700 14px/1.2 Visuelt,sans-serif;letter-spacing:normal;text-transform:none;white-space:nowrap}
+.practice-header-levels .mobile-grade-picker{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:0 0 270px;gap:0;width:270px;max-width:100%;height:32px;margin:0;padding:0;border:0;border-radius:999px;background:#f0ece3;box-shadow:none;overflow:visible}
+.practice-header-levels .mobile-grade-picker::before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;width:calc(100% / 3);border-radius:999px;background:#93b17e;transform:translateX(calc(var(--selected-level,0)*100%));transition:transform .25s cubic-bezier(.2,.75,.25,1)}
+.practice-header-levels .mobile-grade-picker button{position:relative;display:grid;place-items:center;min-width:0;min-height:32px;height:100%;margin:0;padding:0 6px;border:0;border-radius:999px;background:transparent;color:#686257;box-shadow:none;font:700 13px/1.2 Visuelt,sans-serif;white-space:nowrap;transition:color .2s ease}
+.practice-header-levels .mobile-grade-picker button strong{font:inherit}
+.practice-header-levels .mobile-grade-picker button::before,.practice-header-levels .mobile-grade-picker button::after{display:none}
+.practice-header-levels .mobile-grade-picker button[aria-pressed="true"]{background:transparent;color:#fff;box-shadow:none}
+.practice-header-levels .mobile-grade-picker button:focus-visible{outline:2px solid #5c7c4d;outline-offset:2px}
+body:is(.song-page,.library-page,.practice-only-page) .practice-header-levels{display:none}
+body:not(.song-page,.library-page,.practice-only-page) .practice-toolbar .practice-secondary-controls{position:absolute;z-index:20;top:calc(100% + 12px);right:0;display:flex;flex-wrap:wrap;justify-content:flex-end;width:min(420px,calc(100vw - 48px));height:auto;max-width:none;max-height:none;padding:12px;border:1px solid #ded8ca;border-radius:16px;background:#fffdf7;box-shadow:0 15px 35px rgba(40,34,25,.13);opacity:0;visibility:hidden;transform:translateY(-5px);pointer-events:none}
+body:not(.song-page,.library-page,.practice-only-page) .practice-toolbar.is-adjustments-open .practice-secondary-controls{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+@media(max-width:1099px){
+  body:not(.song-page,.library-page,.practice-only-page) .practice-topline{grid-template-columns:minmax(0,1fr) auto;row-gap:14px}
+  body:not(.song-page,.library-page,.practice-only-page) .practice-topline .practice-toolbar{grid-column:2}
+  .practice-topline .practice-header-levels{grid-column:1 / -1;grid-row:2}
+}
+@media(max-width:759px){
+  .mobile-practice-intro .practice-intro-controls{width:auto}
+  .mobile-practice-intro .practice-intro-controls .practice-learn-link{min-height:20px}
+  .practice-topline .practice-header-levels{width:min(100%,378px);gap:6px;padding-left:12px}
+  .practice-header-levels>p{font-size:12px}
+  .practice-header-levels .mobile-grade-picker{flex:1;min-width:0;width:auto}
+  .practice-header-levels .mobile-grade-picker button{font-size:11px;padding-inline:3px}
+}
+@media(max-width:359px){
+  .practice-topline .practice-header-levels{padding-left:9px}
+  .practice-header-levels>p{font-size:11px}
+  .practice-header-levels .mobile-grade-picker button{font-size:10.5px;padding-inline:1px}
+}
+@media(prefers-reduced-motion:reduce){.practice-header-levels .mobile-grade-picker::before,.practice-header-levels .mobile-grade-picker button{transition:none}}
+
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}
 .closing-copy h2{margin:0;color:var(--ink);font:900 clamp(38px,4.5vw,60px)/1.02 Visuelt,sans-serif;letter-spacing:-.045em}
