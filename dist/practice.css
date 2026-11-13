@@ -1322,13 +1322,22 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   .feedback-feature .benefit-visual{order:2}
 }
 
-/* The composer orbit is a square-edged, full-bleed band. */
+/* The composer orbit fills one stable viewport without rounded edges. */
 .repertoire-feature .benefit-visual{
   width:100vw;
   max-width:none;
-  margin-left:calc(50% - 50vw);
+  height:100vh;
+  height:100svh;
+  align-self:center;
+  margin:0;
   border:0;
   border-radius:0;
+}
+.repertoire-feature .musician-stack>span,
+.repertoire-feature .musician-stack>span:nth-child(n),
+.repertoire-feature .musician-stack>.musician-add{
+  width:clamp(112px,25vmin,260px);
+  offset-path:ellipse(56% 64% at 50% 86%);
 }
 
 /* A quiet introduction keeps the score at the center of the practice experience. */
