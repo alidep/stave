@@ -435,7 +435,7 @@ body.midi-connected .keyboard-map-trigger{display:none!important}
 .level-demo label,.level-demo select{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .level-demo svg{margin:0;border:0;background:transparent}
 .benefit-copy h2{font-size:36px}
-.benefit-copy>span{font-size:clamp(19px,1.7vw,23px);line-height:1.38}
+.benefit-copy>span,.closing-copy p{font-size:clamp(19px,1.7vw,23px);line-height:1.38}
 @media(max-width:959px){
  .stave-benefits{gap:76px}.repertoire-feature{gap:28px}.repertoire-feature .benefit-visual{min-height:100px}
  .musician-stack{padding:0}.musician-stack span,.musician-stack span:nth-child(n){width:17%;flex-basis:17%;margin-left:-4%}
@@ -575,8 +575,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .desktop-layout
 .play-on-computer:hover .play-on-art img{transform:rotate(2deg) scale(.96)}
 .play-on-midi:hover .play-on-art img{transform:rotate(-2deg) scale(.98)}
 .benefit-copy{max-width:650px}
-.benefit-copy h2{font:900 clamp(48px,5.2vw,76px)/.96 Visuelt,sans-serif;letter-spacing:-.055em}
-@media(max-width:959px){.benefit-copy h2{font-size:clamp(42px,8vw,62px)}}
+.benefit-copy h2,.closing-copy h2{font:900 clamp(48px,5.2vw,76px)/.96 Visuelt,sans-serif;letter-spacing:-.055em}
+@media(max-width:959px){.benefit-copy h2,.closing-copy h2{font-size:clamp(42px,8vw,62px)}}
 .play-on-card figcaption em{display:block;margin-top:5px;font:700 18px/1.2 Visuelt,sans-serif;color:#716b63;font-style:normal}
 
 /* Keep product images fully inside their image row. */
@@ -749,9 +749,9 @@ body.motion-ready .desktop-layout.motion-intro .record-stage{animation:stave-sca
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:148px;min-height:34px;padding:7px 12px;border:0;border-radius:0 0 10px 10px;background:#88aa76;box-shadow:0 2px 3px rgba(46,67,38,.12),0 7px 12px rgba(46,67,38,.065);filter:none;font-size:9px}
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab::before,body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab::after{display:none}
 body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab:hover{background:#789b68;box-shadow:0 2px 4px rgba(46,67,38,.14),0 8px 14px rgba(46,67,38,.075);filter:none}
-@media(min-width:960px){.screen{padding-top:8px}.topbar{min-height:58px;padding-bottom:10px}.topbar .brand,.topbar .topbar-actions{transform:none}.topbar .brand{font-size:19px;gap:9px}.topbar .brand-mark{width:38px;height:38px}.desktop-layout .actions{gap:10px}.desktop-layout .actions .pill{flex:0 0 auto;min-width:132px;min-height:42px;padding:0 20px;font-size:14px}.play-menu summary{min-height:34px;padding:0 14px;font-size:13px}.topbar .account{width:34px;height:34px}.topbar-actions{gap:9px}body.practice-retracted .topbar{padding-bottom:10px}}
+@media(min-width:960px){.screen{padding-top:8px}.topbar{min-height:58px;padding-bottom:10px}.topbar .brand,.topbar .topbar-actions{transform:none}.topbar .brand{font-size:19px;gap:9px}.topbar .brand-mark{width:38px;height:38px}.desktop-layout .actions{gap:10px}.desktop-layout .actions .pill,.closing-actions .pill{flex:0 0 auto;min-width:132px;min-height:42px;padding:0 20px;font-size:14px}.play-menu summary{min-height:34px;padding:0 14px;font-size:13px}.topbar .account{width:34px;height:34px}.topbar-actions{gap:9px}body.practice-retracted .topbar{padding-bottom:10px}}
 @media(max-width:959px){body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-learn-tab{width:140px;min-height:33px}}
-@media(min-width:960px){.closing-actions{max-width:420px;gap:12px}.closing-actions .pill{flex:0 1 190px;min-height:46px;font-size:15px}}
+@media(min-width:960px){.closing-actions{max-width:420px;gap:12px}}
 @media(min-width:960px){.play-menu-popover{top:calc(100% + 27px);right:0;width:176px;padding:5px;border-radius:12px;box-shadow:0 12px 28px rgba(40,34,25,.12)}.play-menu-popover .practice-nav-link,.play-menu-popover .pick-song-link{min-height:36px;padding:0 11px;border-radius:8px;font-size:13px}}
 @media(min-width:960px){body:not(.practice-retracted):not(.song-page):not(.library-page):not(.practice-only-page) .practice-section{margin-top:12px}}
 .topbar{z-index:100}
@@ -924,7 +924,7 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
 /* Match the hero actions to the polished full-width closing actions on mobile. */
 @media(max-width:959px){
   .desktop-layout .actions{gap:10px;margin-top:20px}
-  .desktop-layout .actions .pill{
+  .desktop-layout .actions .pill,.closing-actions .pill{
     min-height:56px;
     padding:0 22px;
     border-radius:999px;
@@ -1151,8 +1151,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   }
   .stave-benefits .benefit-feature{width:100%;gap:20px}
   .stave-benefits .benefit-copy{box-sizing:border-box;width:100%;padding:0 18px}
-  .stave-benefits .benefit-copy h2{font-size:clamp(36px,10vw,46px);line-height:.98}
-  .stave-benefits .benefit-copy>span{max-width:34rem;margin-top:14px;font-size:17px;line-height:1.45}
+  .stave-benefits .benefit-copy h2,.closing-copy h2{font-size:clamp(36px,10vw,46px);line-height:.98}
+  .stave-benefits .benefit-copy>span,.closing-copy p{max-width:34rem;margin-top:14px;font-size:17px;line-height:1.45}
   .feedback-feature .benefit-visual,
   .level-feature .benefit-visual,
   .input-feature .input-demo{
@@ -1702,14 +1702,14 @@ body.practice-only-page .closing-actions{margin-top:32px}
 
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}
-.closing-copy h2{margin:0;color:var(--ink);font:900 clamp(38px,4.5vw,60px)/1.02 Visuelt,sans-serif;letter-spacing:-.045em}
-.closing-copy p{margin:12px 0 0;color:#777168;font:400 17px/1.4 Visuelt,sans-serif}
-.closing-action-buttons{display:flex;justify-content:center;gap:12px;width:min(100%,420px);margin-top:26px}
+.closing-copy h2{margin:0;color:var(--ink)}
+.closing-copy p{margin:20px 0 0;color:#716b63;font-weight:400}
+.closing-action-buttons{display:flex;justify-content:center;gap:10px;width:max-content;max-width:100%;margin-top:26px}
 body.practice-only-page .closing-copy{display:none}
 body.practice-only-page .closing-action-buttons{margin-top:0}
-@media(max-width:759px){
-  .closing-copy p{font-size:16px}
-  .closing-action-buttons{flex-direction:column;gap:10px}
+@media(max-width:959px){
+  .closing-copy p{margin-top:14px}
+  .closing-action-buttons{flex-direction:column;gap:10px;width:min(100%,420px)}
 }
 
 /* Playback controls keep the same green surface in every state and viewport. */
