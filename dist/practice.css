@@ -1337,10 +1337,11 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   gap:0;
   padding:44vh 0 0;
   padding-top:44svh;
-  margin-bottom:calc(64px - clamp(88px,10vw,140px));
+  margin-bottom:calc(96px - clamp(88px,10vw,140px));
 }
 .repertoire-feature .benefit-visual{
   --composer-size:clamp(112px,25vmin,260px);
+  --composer-arc-center:62%;
   position:absolute;
   top:0;
   left:calc(50% - 50vw);
@@ -1369,12 +1370,15 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .practice-secti
   text-align:center;
 }
 .repertoire-feature .benefit-copy>span{margin-inline:auto}
-@media(max-width:959px){.stave-benefits .repertoire-feature{margin-bottom:0}}
+@media(max-width:959px){
+  .stave-benefits .repertoire-feature{margin-bottom:24px}
+  .repertoire-feature .benefit-visual{--composer-arc-center:59%}
+}
 .repertoire-feature .musician-stack>span,
 .repertoire-feature .musician-stack>span:nth-child(n),
 .repertoire-feature .musician-stack>.musician-add{
   width:var(--composer-size);
-  offset-path:ellipse(calc(50% + 160px) 19% at 50% calc(53% - var(--composer-size) / 2));
+  offset-path:ellipse(calc(50% + 160px) 28% at 50% calc(var(--composer-arc-center) - var(--composer-size) / 2));
 }
 
 /* A quiet introduction keeps the score at the center of the practice experience. */
@@ -1636,7 +1640,7 @@ body.song-page .device-style-exploration,body.library-page .device-style-explora
 /* Trim empty artwork space so the final captions sit beside the devices. */
 .device-style-final .device-style-grid{align-items:end}
 .device-style-final .device-style-grid img{width:90%;margin-inline:auto;aspect-ratio:1.7;object-fit:cover;object-position:center 40%}
-.device-style-final .device-style-grid figure:first-child img{width:85%;margin:0 auto -12px;aspect-ratio:1;object-fit:contain;object-position:center}
+.device-style-final .device-style-grid figure:first-child img{width:78%;margin:0 auto -12px;aspect-ratio:1;object-fit:contain;object-position:center}
 .device-style-final .device-style-grid figcaption{margin-top:14px}
 
 /* Give the final invitation a clear heading above its existing actions. */
