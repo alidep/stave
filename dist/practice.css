@@ -1596,6 +1596,12 @@ body.song-page .device-style-exploration,body.library-page .device-style-explora
   .device-style-grid figcaption{margin-top:8px;font-size:17px}
 }
 
+/* Trim empty artwork space so the final captions sit beside the devices. */
+.device-style-final .device-style-grid{align-items:end}
+.device-style-final .device-style-grid img{aspect-ratio:1.7;object-fit:cover;object-position:center 40%}
+.device-style-final .device-style-grid figure:first-child img{width:85%;margin:0 auto -12px;aspect-ratio:1;object-fit:contain;object-position:center}
+.device-style-final .device-style-grid figcaption{margin-top:6px}
+
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}
 .closing-copy h2{margin:0;color:var(--ink);font:900 clamp(38px,4.5vw,60px)/1.02 Visuelt,sans-serif;letter-spacing:-.045em}
