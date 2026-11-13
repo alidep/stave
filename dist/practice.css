@@ -1697,8 +1697,8 @@ body:not(.song-page):not(.library-page):not(.practice-only-page) .mobile-practic
 body:is(.song-page,.library-page,.practice-only-page) .mobile-practice-intro,
 body:is(.song-page,.library-page,.practice-only-page) .practice-banner,
 body:is(.song-page,.library-page,.practice-only-page) .practice-sheet-handle,
-body:is(.song-page,.library-page,.practice-only-page) .feature-midi-section,
-body:is(.song-page,.library-page,.practice-only-page) .closing-actions{display:none}
+body:is(.song-page,.library-page,.practice-only-page) .feature-midi-section{display:none}
+body.practice-only-page .closing-actions{margin-top:32px}
 
 /* Give the final invitation a clear heading above its existing actions. */
 .closing-actions{flex-direction:column;align-items:center;gap:0;max-width:none;text-align:center}

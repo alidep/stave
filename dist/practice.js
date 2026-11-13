@@ -561,12 +561,14 @@
     startButton.hidden = enabled;
     document.querySelector('.closing-actions').setAttribute('aria-label',enabled ? 'Continue practicing' : 'Start practicing');
     if (enabled) {
+      document.querySelector('.closing-actions').removeAttribute('aria-labelledby');
       actionButton.innerHTML = '<span>Next passage</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4"/></svg>';
       actionButton.onclick = () => {
         byId('completion-next').click();
-        byId('practice').scrollIntoView({behavior:'smooth',block:'start'});
+        byId('practice').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'});
       };
     } else {
+      document.querySelector('.closing-actions').setAttribute('aria-labelledby','closing-title');
       actionButton.textContent = 'Watch first';
       actionButton.onclick = byId('watch').onclick;
     }
